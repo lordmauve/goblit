@@ -31,7 +31,7 @@ WIZARD TOX: Spells to prepare, armies to enchant...
 WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
 {Take SOCK}
-{Use SOCK with TEA CADDY}
+{Use SOCK with LOOSE TEA}
 {Use TEA SOCK with CUP}
 {Use CUP with KETTLE}
 
@@ -113,7 +113,6 @@ WIZARD TOX: And don't touch anything, catch fire, etc, etc.
 Scene 2
 -------
 
-# TODO: Scene with RALPH discussing the princess
 [RALPH enters]
 GOBLIT: Hey Ralph.
 RALPH: Hey, man. You get the job then?
@@ -213,6 +212,8 @@ Act 2
 Scene 1
 -------
 
+GOBLIT: Nothing. Nothing of any use.
+
 [PRINCESS enters]
 PRINCESS: Your glasses look ridiculous.
 
@@ -229,10 +230,11 @@ PRINCESS: Your glasses look ridiculous.
 
 [GOBLIT removes glasses]
 
+# TODO: More dialogue
+
 Scene 2
 -------
 
-GOBLIT: Nothing. Nothing of any use.
 
 [RALPH enters]
 RALPH: Ha ha. I hear you're now Grand Wizard!
@@ -263,14 +265,40 @@ RALPH: Anyway, whoever she is, I bet she likes flowers.
 RALPH: And I'm your mate, so I'm sorting you out.
 RALPH: I picked this in the castle gardens.
 [RALPH gives FLOWER]
+GOBLIT: It's a bit wilted.
+RALPH: It's been in my pocket.
 
-Scene 2
+{Use TEA}
+GOBLIT: Urgh, that's really awful. Why did I make that?
+{Use KETTLE with CUP}
+{Use FLOWER with CUP}
+GOBLIT: That'll be just fine.
+
+RALPH: I was thinking about your war problem.
+RALPH: Why don't you make an invincibility potion?
+RALPH: Give it to the troops.
+RALPH: Anyway, I've got to go. Necromancer Vox is going to teach me to cast FIREBALLS.
+GOBLIT: Awesome.
+[RALPH leaves]
+
+{Use BOOKSHELF}
+
+Scene 3
 -------
 
-# Make a magic potion.
-# Ingredients are in the room.
-# Final ingredient is FLOUR. Add your FLOWER.
+GOBLIT: According to the spell, I'm going to need EGGS, FLOUR and MILK.
 
+{Take X MARKS THE SPOT}
+{Take FLOWER}
+{Take CUP}
+{Use CUP with CAT}
+{Use CAT MILK with POTION}
+{Use X MARKS THE SPOT with POTION}
+{Use FLOWER with POTION}
+
+GOBLIT: That looks excellent.
+GOBLIT: I'll go tell Queen Joan.
+[GOBLIT leaves]
 
 Act 3
 =====
@@ -278,9 +306,19 @@ Act 3
 Scene 1
 -------
 
-# Guard enters with Ralph.
-# Guard reports potion had wrong effect.
-
+[QUEEN enters]
+QUEEN: GOBLIT!
+GOBLIT: M-maam?
+QUEEN: Why did you give my men an invisibility potion?
+GOBLIT: An invisibility potion?
+QUEEN: It was a disaster! Our men couldn't see EACH OTHER!
+QUEEN: Swords and spears all over the place! It's a miracle nobody lost an eye!
+QUEEN: Meanwhile, the clever ones took the opportunity and left!
+QUEEN: It took me ages to press-gang all those men!
+[pause]
+GOBLIT: It was meant to be an invincibility potion.
+QUEEN: GOBLIT, I want results. Don't fail me again!
+[QUEEN leaves]
 
 Scene 2
 -------
