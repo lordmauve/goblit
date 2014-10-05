@@ -14,7 +14,7 @@ GOBLIT: I've got a level one certificate in wizarding...
 GOBLIT: I can do the three basic spells:
 GOBLIT: Turning people into frogs...
 GOBLIT: ...sawing women in half...
-GOBLIT: ...and finding coins behind children's ears.
+GOBLIT: ...and finding coins in children's ears.
 WIZARD TOX: Hmph. Well, fine.
 WIZARD TOX: Don't touch anything, don't break anything, don't set anything on fire.
 WIZARD TOX: Including yourself.
@@ -128,8 +128,26 @@ GOBLIT: Doesn't matter.
     RALPH: I'm researching a spell to summon the Great Lords of Hell.
     GOBLIT: That sounds... dangerous.
     RALPH: Oh, sure. But Necromancer Vox likes the big showy spells.
-    GOBLIT: That's why he's the richest wizard in the kingdom.
+    RALPH: That's why he's the richest wizard in the kingdom.
+    GOBLIT: Why isn't he helping with the war?
+    RALPH: There's a war?
 
+.. choice:: Princess Amelia
+
+    GOBLIT: Do you know anything about women?
+    RALPH: Oh, sure. Women are easy.
+    RALPH: First, you have to wear some snazzy sunglasses.
+    RALPH: Second, you have to act cool.
+    RALPH: Third, you have to give them a gift, like perfume or something.
+    [pause]
+    GOBLIT: You don't know anything about women, do you?
+    RALPH: ...no.
+
+[RALPH leaves]
+
+{Take GLASSES}
+{Use GLASSES on PURPLE GOO}
+GOBLIT: Hmm, snazzy.
 
 Scene 3
 -------
@@ -137,8 +155,7 @@ Scene 3
 [QUEEN enters]
 QUEEN: Where is the apprentice?
 
-{Use CLOAK}
-{Use PURPLE GOO on CLOAK}
+{Use CLOAK on PURPLE GOO}
 
 QUEEN: You! Are you Tox's apprentice?
 
@@ -194,15 +211,56 @@ Act 2
 Scene 1
 -------
 
+[PRINCESS enters]
+PRINCESS: Your glasses look ridiculous.
+
+.. choice:: Er... they are for a spell.
+
+    GOBLIT: Oh, these? They are... for... scrying.
+    PRINCESS: Scrying?
+    GOBLIT: Scrying... on purple things.
+
+.. choice:: Not snazzy?
+
+    GOBLIT: You don't think they are kind of snazzy?
+    PRINCESS: ...no.
+
+[GOBLIT removes glasses]
+
+Scene 2
+-------
+
 GOBLIT: Nothing. Nothing of any use.
 
 [RALPH enters]
 RALPH: Ha ha. I hear you're now Grand Wizard!
 RALPH: This is priceless.
 RALPH: You're the worst wizard in the kingdom.
+RALPH: You only just passed the basic certification!
 
-# Ralph and Goblit discuss spellcraft.
-# Ralph brings you a flower to give to princess.
+.. choice:: I turned someone into a frog!
+
+    GOBLIT: I turned a man into a frog!
+    RALPH: That was a toad. And he still had man lips.
+
+.. choice:: I sawed a women in half!
+
+    GOBLIT: I sawed a woman in half!
+    RALPH: Sure. But you put her legs back on the wrong way round afterwards.
+
+.. choice:: I pulled a coin from a child's ear!
+
+    GOBLIT: I pulled a coin from a child's ear!
+    RALPH: And then you tried to put it back in.
+
+RALPH: Anyway, I remembered you were talking about a girl.
+GOBLIT: Ah... Princess Amelia...
+RALPH: PRINCESS AMELIA?!
+GOBLIT: *blush* What? No.
+RALPH: Anyway, whoever she is, I bet she likes flowers.
+RALPH: And I'm your mate, so I'm sorting you out.
+RALPH: I picked this in the castle gardens.
+[RALPH gives FLOWER]
 
 Scene 2
 -------
@@ -210,14 +268,6 @@ Scene 2
 # Make a magic potion.
 # Ingredients are in the room.
 # Final ingredient is FLOUR. Add your FLOWER.
-
-
-Scene 3
--------
-
-# Princess re-enters with Queen.
-# Give potion to Queen.
-# Give flower to Princess. It is rather dead and pathetic at this point.
 
 
 Act 3
@@ -279,6 +329,7 @@ MEPHISTOPHELES: *sigh* How can I help you lovely folks?
 
 MEPHISTOPHELES: Can't stand wars, me.
 MEPHISTOPHELES: Consider it done.
+[pause]
 MEPHISTOPHELES: There's just the simple matter of payment.
 PRINCESS: Payment? What price do you command?
 MEPHISTOPHELES: Oh, hey. Wow, you're a pretty one.
@@ -288,6 +339,7 @@ MEPHISTOPHELES: Like, a date.
 PRINCESS: No!
 MEPHISTOPHELES: Tell you what, I'll stop the war, you come on a date with me...
 MEPHISTOPHELES: And we'll it quits! How about it?
+[pause]
 PRINCESS: Should I, Goblit?
 
 .. choice:: Yes, that's a great deal!
@@ -318,6 +370,7 @@ PRINCESS: You... you're my... dad?
 MEPHISTOPHELES: Search your feelings. You know it to be true.
 PRINCESS: Nooooooooo!
 QUEEN: Oh, honey. I'm sorry. I never told you... it was just too hard.
+[pause]
 GOBLIT: Um. This is awkward.
 
 {Take CRYSTAL}
