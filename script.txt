@@ -1,0 +1,66 @@
+Act 1
+=====
+
+[GOBLIT enters]
+GOBLIT: Hello?
+WIZARD TOX: hmm.
+GOBLIT: I say, hello?
+WIZARD TOX: *sigh* Yes?
+GOBLIT: I was told you need an assistant?
+GOBLIT: I've got a basic certificate in wizarding...
+WIZARD TOX: Hmph.
+WIZARD TOX: Well, fine. I suppose you'll do.
+
+{SPEAK to WIZARD TOX}
+WIZARD TOX: Look, I'm very busy - there's a war on, you know?
+WIZARD TOX: As Grant Master Wizard, I'm basically our only hope.
+WIZARD TOX: Spells to prepare, armies to enchant...
+
+{SPEAK to WIZARD TOX}
+WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
+
+{Take SOCK}
+{Use SOCK with TEA CADDY}
+{Use TEA SOCK with CUP}
+{Use CUP with KETTLE}
+
+[PRINCESS enters]
+PRINCESS: ...
+PRINCESS: Hello? Who are you?
+
+.. choice:: Just Goblit.
+
+    GOBLIT: I'm Goblit... I...
+    PRINCESS: I guess you're the new assistant?
+    GOBLIT: New assistant... yes, yes! I just started.
+    PRINCESS: Oh, cool! What an amazing job!
+
+.. choice:: I'm Apprentice Wizard Goblit!
+
+    GOBLIT: I'm Goblit, the new apprentice wizard here!
+    PRINCESS: Oh, wow!
+
+.. choice:: So far, I just make tea.
+
+    GOBLIT: My name is Goblit. I make the tea around here.
+    PRINCESS: Oh, wow!
+    PRINCESS: I bet you get to see some wonderful magic spells being cast!
+
+PRINCESS: I'm a big fan of magic actually.
+PRINCESS: Sometimes I come here to read the magic books.
+PRINCESS: But, as a princess, they don't really let me play around with the dark arts!
+GOBLIT: You're... you're Princess Venus!
+PRINCESS: *blush*
+GOBLIT: Um... Would you like a cup of tea?
+PRINCESS: Sure!
+
+{Take WAND}
+{Use WAND with TEA}
+{Give TEA to PRINCESS}
+
+PRINCESS: *gack*
+PRINCESS: Well, thank you for the thought anyway.
+PRINCESS: I can't stay, anyway. I just came to drop this back.
+[PRINCESS gives SPELLBOOK]
+PRINCESS: I guess I'll see you around, Goblit!
+[PRINCESS leaves]
