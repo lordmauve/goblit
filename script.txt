@@ -115,6 +115,7 @@ Scene 2
 
 # TODO: Scene with RALPH discussing the princess
 [RALPH enters]
+GOBLIT: Hey Ralph.
 RALPH: Hey, man. You get the job then?
 GOBLIT: I think so.
 RALPH: Why are you standing like that?
