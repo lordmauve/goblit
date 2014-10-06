@@ -10,6 +10,18 @@ GOBLIT = Animation({
     ], loop)
 })
 
+TOX = Animation({
+    'default': Sequence([
+        Frame(load_image('tox-standing'), (-31, -95))
+    ], loop),
+    'sitting-at-desk': Sequence([
+        Frame(load_image('tox-sitting-desk'), (-37, -99))
+    ], loop),
+    'sitting': Sequence([
+        Frame(load_image('tox-sitting'), (-41, -91))
+    ], loop)
+})
+
 FONT_NAME = 'fonts/RosesareFF0000.ttf'
 FONT = Font(FONT_NAME, 16)
 
@@ -48,14 +60,18 @@ class SpeechBubble(FontBubble):
 
 class Goblit(object):
     COLOR = (255, 255, 255)
+    SPRITE = GOBLIT
 
-    def __init__(self):
-        self.sprite = GOBLIT.create_instance((100, 400))
+    def __init__(self, pos, dir='right', initial='default'):
+        self.sprite = self.SPRITE.create_instance(pos)
         self.sprite.dir = 'right'
         self.words = None
-
-    def say(self, line):
-        x, y = self.sprite.pos
+        self.sprite.play(initial)
 
     def draw(self, screen):
         self.sprite.draw(screen)
+
+
+class Tox(Goblit):
+    COLOR = (180, 50, 255)
+    SPRITE = TOX

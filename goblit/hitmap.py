@@ -19,7 +19,6 @@ class HitMap:
             id = e.get('id')
             regions[id] = Rect(x, y, w, h)
         assert regions, "No regions loaded from %s" % filename
-        print(regions)
         return cls(regions)
 
     def __init__(self, regions):

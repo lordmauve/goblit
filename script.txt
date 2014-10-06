@@ -14,7 +14,7 @@ Scene 1
 
 [GOBLIT enters]
 GOBLIT: Hello?
-WIZARD TOX: hmm.
+WIZARD TOX: hmm?
 [pause]
 GOBLIT: I say, hello? Grand Wizard Tox?
 WIZARD TOX: *sigh* Yes?

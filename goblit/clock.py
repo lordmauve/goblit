@@ -18,7 +18,8 @@ class Clock:
         heapq.heappush(self.events, (self.t + delay, callback, delay))
 
     def unschedule(self, callback):
-        self.events.remove(callback)
+        self.events = [e for e in self.events if e[1] is callback]
+        heapq.heapify(self.events)
 
     def tick(self, dt):
         self.t += dt
