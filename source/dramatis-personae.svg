@@ -59,8 +59,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="676.45967"
-     inkscape:cy="924.05911"
+     inkscape:cx="650.3944"
+     inkscape:cy="707.26273"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -214,16 +214,6 @@
        inkscape:export-ydpi="90"
        transform="translate(-212,126)">
       <path
-         style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         d="m 316,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
-         id="path3891"
-         inkscape:connector-curvature="0" />
-      <path
-         style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         d="m 329.25,130.86218 c 0,15 -0.25,17.5 -0.25,17.5"
-         id="path3893"
-         inkscape:connector-curvature="0" />
-      <path
          style="color:#000000;fill:#2d1650;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          d="m 315.21482,137.39113 16.06474,-2.5 c 4.92248,-0.76604 10.84903,-8.73845 10.29767,-12.9047 l -4.16089,-31.441127 c -0.2048,-1.5475 -2.29803,-5.32842 -3.60202,-5.32842 l -19.5995,0 c -1.30398,0 -4.28724,13.262887 -4.35376,14.828417 -0.16666,3.92247 -16.58333,6.34493 -16.25,22.5174 0.24235,11.75802 20.31529,15.02894 21.60376,14.82843 z"
          id="path3895"
@@ -248,11 +238,11 @@
          sodipodi:cy="83.625893"
          sodipodi:rx="1.2374369"
          sodipodi:ry="1.2374369"
-         d="m 98.641398,83.625893 a 1.2374369,1.2374369 0 1 1 -2.474874,0 1.2374369,1.2374369 0 1 1 2.474874,0 z"
+         d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
          transform="matrix(1.6148755,0,0,1.0271655,154.49088,-4.0187421)" />
       <path
          transform="matrix(1.6148755,0,0,1.0271655,161.376,-3.939234)"
-         d="m 98.641398,83.625893 a 1.2374369,1.2374369 0 1 1 -2.474874,0 1.2374369,1.2374369 0 1 1 2.474874,0 z"
+         d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
          sodipodi:ry="1.2374369"
          sodipodi:rx="1.2374369"
          sodipodi:cy="83.625893"
@@ -355,7 +345,7 @@
              sodipodi:cy="83.625893"
              sodipodi:rx="1.2374369"
              sodipodi:ry="1.2374369"
-             d="m 98.641398,83.625893 a 1.2374369,1.2374369 0 1 1 -2.474874,0 1.2374369,1.2374369 0 1 1 2.474874,0 z"
+             d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
              transform="matrix(1.6148755,0,0,1.6148755,-57.009115,-52.180379)" />
           <path
              style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1201,7 +1191,7 @@
     </g>
     <g
        id="g6985"
-       transform="translate(173.59977,0)"
+       transform="translate(173.59977,-1)"
        inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-1.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1250,7 +1240,7 @@
            style="fill:#ffffff;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
         <path
            transform="matrix(1.6148755,0,0,1.6148755,-57.009115,-52.180379)"
-           d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
+           d="m 98.641398,83.625893 a 1.2374369,1.2374369 0 1 1 -2.474874,0 1.2374369,1.2374369 0 1 1 2.474874,0 z"
            sodipodi:ry="1.2374369"
            sodipodi:rx="1.2374369"
            sodipodi:cy="83.625893"
@@ -1266,7 +1256,7 @@
            sodipodi:cy="83.625893"
            sodipodi:rx="1.2374369"
            sodipodi:ry="1.2374369"
-           d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
+           d="m 98.641398,83.625893 a 1.2374369,1.2374369 0 1 1 -2.474874,0 1.2374369,1.2374369 0 1 1 2.474874,0 z"
            transform="matrix(1.6148755,0,0,1.6148755,-50.874,-52.180379)" />
         <path
            sodipodi:nodetypes="cc"
@@ -1277,7 +1267,7 @@
       </g>
     </g>
     <g
-       transform="translate(270.59977,0)"
+       transform="translate(270.59977,-1)"
        id="g7007"
        inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-2.png"
        inkscape:export-xdpi="90"
@@ -1333,11 +1323,11 @@
            sodipodi:cy="83.625893"
            sodipodi:rx="1.2374369"
            sodipodi:ry="1.2374369"
-           d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
+           d="m 98.641398,83.625893 a 1.2374369,1.2374369 0 1 1 -2.474874,0 1.2374369,1.2374369 0 1 1 2.474874,0 z"
            transform="matrix(1.6148755,0,0,1.6148755,-57.009115,-52.180379)" />
         <path
            transform="matrix(1.6148755,0,0,1.6148755,-50.874,-52.180379)"
-           d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
+           d="m 98.641398,83.625893 a 1.2374369,1.2374369 0 1 1 -2.474874,0 1.2374369,1.2374369 0 1 1 2.474874,0 z"
            sodipodi:ry="1.2374369"
            sodipodi:rx="1.2374369"
            sodipodi:cy="83.625893"
@@ -1355,7 +1345,7 @@
     </g>
     <g
        id="g7029"
-       transform="translate(367.59977,0)"
+       transform="translate(367.59977,-1)"
        inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-3.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1430,7 +1420,7 @@
       </g>
     </g>
     <g
-       transform="translate(466.59977,0)"
+       transform="translate(466.59977,-1)"
        id="g7051"
        inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-4.png"
        inkscape:export-xdpi="90"
@@ -1504,6 +1494,1212 @@
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="cc" />
       </g>
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-1.png"
+       transform="translate(173.59977,-290)"
+       id="g7075">
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(489.12698,215.58252)"
+         id="use7077"
+         xlink:href="#g6966"
+         y="0"
+         x="0" />
+      <g
+         transform="translate(184.93934,-23.849874)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+         id="g7079">
+        <path
+           sodipodi:nodetypes="cc"
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 102.5,130.61218 c -5,4 -8.5,13.75 -8.5,13.75"
+           id="path7081"
+           inkscape:connector-curvature="0" />
+        <path
+           sodipodi:nodetypes="cc"
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 115.75,130.86218 c 0.25,7.75 2.25,16 2.25,16"
+           id="path7083"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-2.png"
+       id="g7097"
+       transform="translate(270.59977,-290)">
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g6966"
+         id="use7099"
+         transform="translate(489.12698,215.58252)"
+         width="744.09448"
+         height="1052.3622" />
+      <g
+         id="g7101"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         transform="translate(184.93934,-23.849874)">
+        <path
+           sodipodi:nodetypes="cc"
+           inkscape:connector-curvature="0"
+           id="path7103"
+           d="m 102.5,130.61218 c -0.25,7.25 -3.75,17.25 -3.75,17.25"
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           sodipodi:nodetypes="cc"
+           inkscape:connector-curvature="0"
+           id="path7105"
+           d="m 115.75,130.86218 c 1.75,9 9.5,17 9.5,17"
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-3.png"
+       transform="translate(367.59977,-290)"
+       id="g7119">
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(489.12698,215.58252)"
+         id="use7121"
+         xlink:href="#g6966"
+         y="0"
+         x="0" />
+      <g
+         transform="translate(184.93934,-23.849874)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+         id="g7123">
+        <path
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 102.5,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+           id="path7125"
+           inkscape:connector-curvature="0" />
+        <path
+           sodipodi:nodetypes="cc"
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 110.75,131.36218 c 0,15 11.75,11.75 11.75,11.75"
+           id="path7127"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-4.png"
+       id="g7141"
+       transform="translate(466.59977,-290)">
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g6966"
+         id="use7143"
+         transform="translate(489.12698,215.58252)"
+         width="744.09448"
+         height="1052.3622" />
+      <g
+         id="g7145"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         transform="translate(184.93934,-23.849874)">
+        <path
+           inkscape:connector-curvature="0"
+           id="path7147"
+           d="m 107.62652,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path7149"
+           d="m 106.33058,130.4783 c -9.192384,14.29289 7.15381,12.63388 7.15381,12.63388"
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           sodipodi:nodetypes="cc" />
+      </g>
+    </g>
+    <g
+       transform="translate(-105,126)"
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/source/tox-standing.png"
+       id="g7225">
+      <path
+         inkscape:connector-curvature="0"
+         id="path7227"
+         d="m 316,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+         style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path7229"
+         d="m 329.25,130.86218 c 0,15 -0.25,17.5 -0.25,17.5"
+         style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g4098"
+         id="use7268"
+         transform="translate(211.75,-126)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       id="g7296"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/tox-walking-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-1.png"
+         transform="translate(313.59977,146)"
+         id="g7163">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7165"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7167">
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 102.5,130.61218 c -5,4 -8.5,13.75 -8.5,13.75"
+             id="path7169"
+             inkscape:connector-curvature="0" />
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 115.75,130.86218 c 0.25,7.75 2.25,16 2.25,16"
+             id="path7171"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(496.84276,-4)"
+         id="use7288"
+         xlink:href="#g4098"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       id="g7304"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/tox-walking-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-2.png"
+         id="g7173"
+         transform="translate(410.59977,146)">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7175"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7177"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7179"
+             d="m 102.5,130.61218 c -0.25,7.25 -3.75,17.25 -3.75,17.25"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7181"
+             d="m 115.75,130.86218 c 1.75,9 9.5,17 9.5,17"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g4098"
+         id="use7290"
+         transform="translate(593.84276,-4)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       id="g7312"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/tox-walking-3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-3.png"
+         transform="translate(507.59977,146)"
+         id="g7183">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7185"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7187">
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 102.5,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             id="path7189"
+             inkscape:connector-curvature="0" />
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 110.75,131.36218 c 0,15 11.75,11.75 11.75,11.75"
+             id="path7191"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(690.84276,-4)"
+         id="use7292"
+         xlink:href="#g4098"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       id="g7320"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/tox-walking-4.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-4.png"
+         id="g7193"
+         transform="translate(606.59977,146)">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7195"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7197"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7199"
+             d="m 107.62652,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7201"
+             d="m 106.33058,130.4783 c -9.192384,14.29289 7.15381,12.63388 7.15381,12.63388"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g4098"
+         id="use7294"
+         transform="translate(789.84276,-4)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       id="g7328"
+       transform="translate(0,132)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/amelia-walking-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g7330"
+         transform="translate(313.59977,146)"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-1.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7332"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7334"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7336"
+             d="m 102.5,130.61218 c -5,4 -8.5,13.75 -8.5,13.75"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7338"
+             d="m 115.75,130.86218 c 0.25,7.75 2.25,16 2.25,16"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g7384"
+         id="use7340"
+         transform="translate(342.84276,-126)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       id="g7342"
+       transform="translate(0,132)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/amelia-walking-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="translate(410.59977,146)"
+         id="g7344"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-2.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7346"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7348">
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 102.5,130.61218 c -0.25,7.25 -3.75,17.25 -3.75,17.25"
+             id="path7350"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 115.75,130.86218 c 1.75,9 9.5,17 9.5,17"
+             id="path7352"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(439.84276,-126)"
+         id="use7354"
+         xlink:href="#g7384"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       id="g7356"
+       transform="translate(0,132)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/amelia-walking-3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g7358"
+         transform="translate(507.59977,146)"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-3.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7360"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7362"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7364"
+             d="m 102.5,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7366"
+             d="m 110.75,131.36218 c 0,15 11.75,11.75 11.75,11.75"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g7384"
+         id="use7368"
+         transform="translate(536.84276,-126)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       id="g7370"
+       transform="translate(5,132)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/amelia-walking-4.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="translate(606.59977,146)"
+         id="g7372"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-4.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7374"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7376">
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 107.62652,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             id="path7378"
+             inkscape:connector-curvature="0" />
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 106.33058,130.4783 c -9.192384,14.29289 7.15381,12.63388 7.15381,12.63388"
+             id="path7380"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(635.84276,-126)"
+         id="use7382"
+         xlink:href="#g7384"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/source/amelia-standing.png"
+       transform="translate(154.75,244)"
+       id="g7384">
+      <g
+         id="g7386">
+        <path
+           style="fill:#ffffff;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 426.297,99.535793 c -1.65489,-8.461432 -1.68119,-17.181756 -0.63558,-25.720594 3.21843,-7.094168 12.33095,-2.69327 17.50889,-0.559027 5.49341,4.292059 6.82129,11.715351 9.73883,17.714578 3.66699,8.167321 -7.04899,11.05943 -13.12088,10.93425 -4.47884,-0.21264 -9.76656,0.73388 -13.49126,-2.369207 z"
+           id="path7388"
+           inkscape:connector-curvature="0"
+           transform="translate(-330.75,0)" />
+        <path
+           sodipodi:type="inkscape:offset"
+           inkscape:radius="0.26630011"
+           inkscape:original="M 432.65625 63.8125 C 429.32512 63.961655 428.83621 65.174595 429.125 67 C 427.78914 66.234801 426.90165 68.884855 424.25 70.625 C 421.42157 72.481155 423.3678 74.083947 422.21875 74.4375 C 421.0697 74.791053 420.55086 77.175095 419.84375 79.03125 C 419.13665 80.887405 422.48299 82.56786 421.6875 82.65625 C 420.892 82.74464 420.46783 85.647524 419.9375 89.625 C 419.40717 93.602476 420.55209 92.364277 426.5625 92.1875 C 426.5625 92.1875 425.68581 92.452665 427.71875 92.1875 C 429.75167 91.922335 427.625 88.148129 427.625 86.46875 C 427.625 84.789372 428.32138 82.397208 427.4375 80.1875 C 426.55362 77.977791 427.96967 77.709709 428.5 75.5 C 429.03033 73.290293 428.69026 73.806219 430.28125 73.1875 C 431.05249 72.887573 431.39072 72.722894 431.53125 72.53125 C 432.05498 72.58389 432.75922 72.60944 433.8125 72.65625 C 437.78997 72.833027 446.01348 85.378679 447.78125 87.5 C 449.54901 89.62132 449.82062 91.15089 451.5 91.0625 C 453.17937 90.97411 456.16437 90.348192 457.84375 89.90625 C 459.52313 89.464308 461.03569 87.68382 460.59375 85.5625 C 460.1518 83.44118 461.83486 79.919576 462.71875 78.59375 C 463.60263 77.267925 458.10615 73.27589 456.25 73.1875 C 454.39384 73.09911 454.67586 69.293656 453.96875 67.4375 C 453.26164 65.581345 446.1829 63.99464 443.53125 63.90625 C 440.8796 63.81786 438.75444 65.605394 438.3125 66.3125 C 437.87056 67.019607 438.57827 63.547335 432.65625 63.8125 z "
+           style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           id="path7390"
+           d="m 432.65625,63.53125 c -1.69721,0.07599 -2.73357,0.428812 -3.3125,1.0625 -0.49608,0.543008 -0.57439,1.275194 -0.5,2.0625 -0.28022,-0.04819 -0.56453,-0.03959 -0.8125,0.09375 -0.36774,0.197737 -0.66598,0.539742 -1.03125,0.9375 -0.73054,0.795516 -1.62087,1.875222 -2.90625,2.71875 -1.46703,0.96274 -1.73852,1.956326 -1.75,2.6875 -0.006,0.365587 0.0174,0.673438 0,0.84375 -0.009,0.08516 -0.008,0.125716 -0.0312,0.15625 -0.0234,0.03053 -0.081,0.06098 -0.1875,0.09375 -0.72456,0.222941 -1.12941,0.981418 -1.5,1.875 -0.37059,0.893582 -0.68348,1.962118 -1.03125,2.875 -0.20641,0.541828 -0.0979,1.0676 0.125,1.53125 0.22286,0.46365 0.54081,0.877131 0.875,1.21875 0.33419,0.341619 0.67116,0.632519 0.84375,0.8125 -0.0776,0.04342 -0.15825,0.05984 -0.21875,0.125 -0.11764,0.126697 -0.22508,0.31047 -0.3125,0.5 -0.17483,0.37906 -0.3308,0.873628 -0.46875,1.5 -0.27591,1.252744 -0.48473,2.979205 -0.75,4.96875 -0.134,1.005017 -0.18056,1.699523 -0.0312,2.21875 0.0747,0.259613 0.21331,0.469231 0.40625,0.625 0.19294,0.155769 0.41586,0.234951 0.6875,0.28125 1.03496,0.176397 2.73449,-0.111305 5.46875,-0.21875 0.0457,0.03108 0.0978,0.05651 0.125,0.0625 0.0356,0.0078 0.0608,-0.0018 0.0937,0 0.0659,0.0036 0.14242,0.0066 0.25,0 0.21516,-0.01313 0.55105,-0.05829 1.0625,-0.125 0.29724,-0.03877 0.53646,-0.136292 0.71875,-0.3125 0.18229,-0.176208 0.29267,-0.409818 0.34375,-0.65625 0.10215,-0.492864 0.0172,-1.048246 -0.125,-1.65625 -0.28443,-1.216008 -0.78125,-2.61647 -0.78125,-3.34375 0,-1.605761 0.70766,-4.058977 -0.21875,-6.375 -0.42235,-1.055876 -0.29169,-1.541798 0,-2.125 0.29169,-0.583202 0.78535,-1.251471 1.0625,-2.40625 0.26708,-1.112841 0.34527,-1.541282 0.4375,-1.65625 0.0461,-0.05748 0.12524,-0.08779 0.3125,-0.15625 0.18726,-0.06846 0.46859,-0.15445 0.875,-0.3125 0.67629,-0.263002 1.02164,-0.427075 1.25,-0.65625 0.52725,0.04843 1.19181,0.111999 2.1875,0.15625 0.85885,0.03817 2.09696,0.78162 3.4375,2 1.34054,1.21838 2.7739,2.887666 4.15625,4.59375 2.76471,3.412167 5.23709,7.02201 6.15625,8.125 0.86802,1.041631 1.38556,1.960553 1.90625,2.625 0.52069,0.664447 1.11029,1.110972 2.03125,1.0625 1.72872,-0.09099 4.71161,-0.741542 6.40625,-1.1875 1.81156,-0.476726 3.41025,-2.387033 2.9375,-4.65625 -0.20121,-0.965776 0.0947,-2.3364 0.5625,-3.625 0.46777,-1.2886 1.10639,-2.487722 1.53125,-3.125 0.16292,-0.244384 0.17704,-0.559955 0.0937,-0.84375 -0.0833,-0.283795 -0.24696,-0.57818 -0.46875,-0.875 -0.44359,-0.59364 -1.11494,-1.215501 -1.875,-1.8125 -0.76006,-0.596999 -1.62722,-1.146274 -2.40625,-1.5625 -0.77903,-0.416226 -1.47832,-0.723669 -2.03125,-0.75 -0.37303,-0.01776 -0.59628,-0.180736 -0.8125,-0.53125 -0.21622,-0.350514 -0.37782,-0.884766 -0.5,-1.46875 -0.24437,-1.167968 -0.33945,-2.56684 -0.71875,-3.5625 -0.2249,-0.590372 -0.85911,-1.045384 -1.6875,-1.46875 -0.82839,-0.423366 -1.86352,-0.802069 -2.96875,-1.125 -2.21047,-0.645862 -4.66028,-1.0793 -6.03125,-1.125 -1.38793,-0.04626 -2.61194,0.425929 -3.5625,0.96875 -0.83667,0.477785 -1.40162,0.959704 -1.71875,1.375 -0.093,-0.228711 -0.2115,-0.558069 -0.5,-0.90625 -0.67608,-0.815939 -2.08132,-1.666135 -5.09375,-1.53125 z"
+           transform="translate(-330.75,0)" />
+        <path
+           style="color:#000000;fill:#decd87;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 96.71482,141.14113 27.06474,0.125 c 4.98168,0.023 -2.83668,-18.34474 -2.45233,-22.5297 l 2.58911,-28.191127 c 0.14276,-1.554451 -2.29803,-5.32842 -3.60202,-5.32842 l -19.5995,0 c -1.30398,0 3.38893,12.785784 -1.103757,16.328417 -2.457411,1.93776 -11.670403,7.37792 -1.25,17.81688 l -4,18.95052 c -0.323615,1.53317 1.049791,2.82241 2.353757,2.82843 z"
+           id="path7396"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ssssssscss" />
+        <path
+           style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 111.83104,102.1978 c 13.17982,-1.44001 16.6767,-2.800122 18.39708,-4.143976 1.72037,-1.343853 1.40322,-8.085788 -0.83373,-8.444687 -4.61553,-0.740516 -28.71946,1.626298 -31.864888,2.948021 -1.82209,0.765652 -5.979244,3.053969 -5.864044,4.108355 0.115201,1.054385 0.186144,4.958857 2.068237,5.909117 1.882113,0.95025 18.097355,-0.37683 18.097365,-0.37683 z"
+           id="path7398"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="csssssc" />
+        <path
+           style="fill:#aa4400;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 95.81217,92.19956 c -6.01041,0.176777 -7.15946,1.414214 -6.62913,-2.563262 0.53033,-3.977476 0.97227,-6.894291 1.76777,-6.98268 0.79549,-0.08839 -2.56326,-1.767767 -1.85616,-3.623922 0.70711,-1.856155 1.23744,-4.242641 2.38649,-4.596194 1.14905,-0.353553 -0.7955,-1.944544 2.03293,-3.800699 2.82843,-1.856155 3.62392,-4.772971 5.12652,-3.447145 1.50261,1.325825 2.20971,3.71231 2.20971,4.507805 0,0.795495 0.26517,0.883884 -1.32582,1.502602 -1.59099,0.618719 -1.23744,0.08839 -1.76777,2.298097 -0.53033,2.209709 -1.94454,2.474874 -1.06066,4.684583 0.88388,2.209708 0.17678,4.596194 0.17678,6.275572 0,1.679379 2.12132,5.480078 0.0884,5.745243 -2.03294,0.265165 -1.14905,0 -1.14905,0 z"
+           id="path7400"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#ffffff;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 96.462709,73.896159 c 3.984351,-2.207011 7.570321,-1.255156 8.737981,-0.228812 1.16767,1.026344 16.16469,14.347555 14.88647,20.075003 -1.27822,5.727448 -19.10285,4.541834 -22.937832,4.095189 -3.834982,-0.446646 -0.686619,-23.94138 -0.686619,-23.94138 z"
+           id="path7402"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 118,107.61218 c -3,10.5 -11,20 -11,20"
+           id="path7404"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cc" />
+        <path
+           style="fill:#aa4400;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 99.524475,72.223793 c -0.53033,-4.596194 -3.53553,-8.131728 2.386485,-8.396893 5.92202,-0.265165 5.21491,3.181981 5.65685,2.474874 0.44194,-0.707106 2.56326,-2.474873 5.21491,-2.386485 2.65165,0.08839 9.72272,1.679378 10.42983,3.535533 0.70711,1.856156 0.44194,5.656855 2.2981,5.745243 1.85615,0.08839 7.33623,4.065864 6.45235,5.391689 -0.88389,1.325826 -2.56327,4.86136 -2.12132,6.98268 0.44194,2.12132 -1.06066,3.889087 -2.74004,4.331029 -1.67938,0.441942 -4.68459,1.06066 -6.36396,1.149048 -1.67938,0.08839 -1.94455,-1.414213 -3.71231,-3.535533 -1.76777,-2.121321 -9.98789,-14.672466 -13.96536,-14.849243 -3.977475,-0.176777 -3.535535,-0.441942 -3.535535,-0.441942 z"
+           id="path7406"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="csssssssssssc" />
+        <g
+           id="g7408"
+           transform="matrix(1.1604329,-0.31047471,0.31365238,1.1486763,-43.340524,18.33623)">
+          <path
+             transform="matrix(1.6148755,0,0,1.6148755,-57.009115,-52.180379)"
+             d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
+             sodipodi:ry="1.2374369"
+             sodipodi:rx="1.2374369"
+             sodipodi:cy="83.625893"
+             sodipodi:cx="97.403961"
+             id="path7410"
+             style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:70;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:type="arc" />
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7412"
+             d="m 101.75563,81.898415 0.0625,-3.522209"
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7414"
+             d="m 99.457533,82.075191 -0.70266,-2.674937"
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7416"
+             d="M 98.57365,81.898415 98.13171,81.014532"
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="M 100.34142,81.810026 99.638756,78.869924"
+             id="path7418"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7420"
+             d="M 101.13692,81.633249 100.7878,78.781535"
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        </g>
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g4056"
+           id="use7422"
+           transform="matrix(-1,0,0,1,205.97207,0)"
+           width="744.09448"
+           height="1052.3622" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 435.375,93.612181 c 2.125,0 3.25,-1.875 3.25,-1.875"
+           id="path7424"
+           inkscape:connector-curvature="0"
+           transform="translate(-330.75,0)" />
+      </g>
+    </g>
+    <g
+       transform="translate(0,263)"
+       id="g7479"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/ralph-walking-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-1.png"
+         transform="translate(313.59977,146)"
+         id="g7481">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7483"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7485">
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 102.5,130.61218 c -5,4 -8.5,13.75 -8.5,13.75"
+             id="path7487"
+             inkscape:connector-curvature="0" />
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 115.75,130.86218 c 0.25,7.75 2.25,16 2.25,16"
+             id="path7489"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(345.84276,-244)"
+         id="use7491"
+         xlink:href="#g7535"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       transform="translate(0,263)"
+       id="g7493"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/ralph-walking-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-2.png"
+         id="g7495"
+         transform="translate(410.59977,146)">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7497"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7499"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7501"
+             d="m 102.5,130.61218 c -0.25,7.25 -3.75,17.25 -3.75,17.25"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7503"
+             d="m 115.75,130.86218 c 1.75,9 9.5,17 9.5,17"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g7535"
+         id="use7505"
+         transform="translate(442.84276,-244)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       transform="translate(0,263)"
+       id="g7507"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/ralph-walking-3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-3.png"
+         transform="translate(507.59977,146)"
+         id="g7509">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7511"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7513">
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 102.5,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             id="path7515"
+             inkscape:connector-curvature="0" />
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 110.75,131.36218 c 0,15 11.75,11.75 11.75,11.75"
+             id="path7517"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(539.84276,-244)"
+         id="use7519"
+         xlink:href="#g7535"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       transform="translate(5,263)"
+       id="g7521"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/ralph-walking-4.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-4.png"
+         id="g7523"
+         transform="translate(606.59977,146)">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7525"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7527"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7529"
+             d="m 107.62652,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7531"
+             d="m 106.33058,130.4783 c -9.192384,14.29289 7.15381,12.63388 7.15381,12.63388"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g7535"
+         id="use7533"
+         transform="translate(638.84276,-244)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/ralph-standing.png"
+       transform="translate(151,365)"
+       id="g7535">
+      <path
+         sodipodi:nodetypes="sssssssss"
+         inkscape:connector-curvature="0"
+         id="path7541"
+         d="m 100.71482,134.89113 17.06474,0 c 4.98173,0 10.84903,-8.73845 10.29767,-12.9047 l -4.16089,-31.441127 c -0.2048,-1.5475 -2.29803,-5.32842 -3.60202,-5.32842 l -19.5995,0 c -1.30398,0 -2.353757,1.26147 -2.353757,2.82842 l 0,44.017397 c 0,1.56695 1.049777,2.82843 2.353757,2.82843 z"
+         style="color:#000000;fill:#004455;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path7543"
+         d="m 118,107.61218 c -3,10.5 -11,20 -11,20"
+         style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+      <g
+         transform="matrix(0.99251069,0.12215781,-0.12215781,0.99251069,11.292456,-13.034064)"
+         id="g7545">
+        <path
+           style="fill:#004455;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 96.474876,70.594413 c 4.885954,-2.585877 10.825054,-1.390613 15.468944,1.116435 5.78721,3.124283 11.28661,7.2751 14.80024,12.826883 2.52066,3.982819 3.71033,8.716697 3.8355,13.649851 0.054,2.126668 -1.23314,3.126128 -2.9785,3.213338 -9.8021,0.4898 -19.61036,0.65026 -29.425244,0.59887 -1.80203,-0.009 -4.64668,-0.12848 -4.73787,-2.303865 -0.12871,-3.07069 -0.13579,-6.171829 -0.12525,-9.260583 0.019,-5.557872 -0.086,-11.128004 0.26823,-16.672405 0.0977,-1.529712 1.62336,-2.496072 2.89395,-3.168524 z"
+           id="path7547"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ssssssssss" />
+        <path
+           style="fill:#ffffff;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 97.387536,73.896156 c 3.828884,-2.207011 7.274934,-1.255156 8.397024,-0.228812 1.12211,1.026344 15.53396,14.347556 14.30562,20.075004 -1.22835,5.727448 -18.35748,4.541834 -22.042824,4.095189 -3.68534,-0.446646 -0.65982,-23.941381 -0.65982,-23.941381 z"
+           id="path7549"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:#333333;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 96.749996,81.237179 c 0,0 16.375004,-1.375 16.375004,-0.25 0,1.125 1.25,6.375 -3.625,6.25 -4.875,-0.125 -5.875,-3.75 -5.875,-3.75 0,0 -1.5,3.875 -5.000004,3.75 -3.5,-0.125 -4.25,-3.5 -4.125,-5 0.125,-1.5 2.25,-1 2.25,-1 z"
+           id="path7551"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <g
+       id="g7582"
+       transform="translate(0,387)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/joan-walking-1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g7584"
+         transform="translate(313.59977,146)"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-1.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7586"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7588"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7590"
+             d="m 102.5,130.61218 c -5,4 -8.5,13.75 -8.5,13.75"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7592"
+             d="m 115.75,130.86218 c 0.25,7.75 2.25,16 2.25,16"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g7638"
+         id="use7594"
+         transform="translate(344.84276,-370)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       id="g7596"
+       transform="translate(0,387)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/joan-walking-2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="translate(410.59977,146)"
+         id="g7598"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-2.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7600"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7602">
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 102.5,130.61218 c -0.25,7.25 -3.75,17.25 -3.75,17.25"
+             id="path7604"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 115.75,130.86218 c 1.75,9 9.5,17 9.5,17"
+             id="path7606"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(441.84276,-370)"
+         id="use7608"
+         xlink:href="#g7638"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       id="g7610"
+       transform="translate(0,387)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/joan-walking-3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g7612"
+         transform="translate(507.59977,146)"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-3.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           x="0"
+           y="0"
+           xlink:href="#g6966"
+           id="use7614"
+           transform="translate(489.12698,215.58252)"
+           width="744.09448"
+           height="1052.3622" />
+        <g
+           id="g7616"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(184.93934,-23.849874)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path7618"
+             d="m 102.5,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path7620"
+             d="m 110.75,131.36218 c 0,15 11.75,11.75 11.75,11.75"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             sodipodi:nodetypes="cc" />
+        </g>
+      </g>
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g7638"
+         id="use7622"
+         transform="translate(538.84276,-370)"
+         width="744.09448"
+         height="1052.3622" />
+    </g>
+    <g
+       id="g7624"
+       transform="translate(5,387)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/joan-walking-4.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="translate(606.59977,146)"
+         id="g7626"
+         inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-walking-4.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="translate(489.12698,215.58252)"
+           id="use7628"
+           xlink:href="#g6966"
+           y="0"
+           x="0" />
+        <g
+           transform="translate(184.93934,-23.849874)"
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/home/mauve/dev/goblit/graphics/goblit-standing.png"
+           id="g7630">
+          <path
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 107.62652,130.61218 c -0.25,7.25 -0.25,17.25 -0.25,17.25"
+             id="path7632"
+             inkscape:connector-curvature="0" />
+          <path
+             sodipodi:nodetypes="cc"
+             style="color:#000000;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 106.33058,130.4783 c -9.192384,14.29289 7.15381,12.63388 7.15381,12.63388"
+             id="path7634"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(637.84276,-370)"
+         id="use7636"
+         xlink:href="#g7638"
+         y="0"
+         x="0" />
+    </g>
+    <g
+       transform="translate(-312,491)"
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/source/queen-standing.png"
+       id="g7638">
+      <g
+         id="g7640"
+         transform="translate(466.75,0)">
+        <path
+           transform="translate(-330.75,0)"
+           inkscape:connector-curvature="0"
+           id="path7642"
+           d="m 426.297,99.535793 c -1.65489,-8.461432 -1.68119,-17.181756 -0.63558,-25.720594 3.21843,-7.094168 12.33095,-2.69327 17.50889,-0.559027 5.49341,4.292059 6.82129,11.715351 9.73883,17.714578 3.66699,8.167321 -7.04899,11.05943 -13.12088,10.93425 -4.47884,-0.21264 -9.76656,0.73388 -13.49126,-2.369207 z"
+           style="fill:#ffffff;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           transform="translate(-330.75,0)"
+           d="m 432.65625,63.53125 c -1.69721,0.07599 -2.73357,0.428812 -3.3125,1.0625 -0.49608,0.543008 -0.57439,1.275194 -0.5,2.0625 -0.28022,-0.04819 -0.56453,-0.03959 -0.8125,0.09375 -0.36774,0.197737 -0.66598,0.539742 -1.03125,0.9375 -0.73054,0.795516 -1.62087,1.875222 -2.90625,2.71875 -1.46703,0.96274 -1.73852,1.956326 -1.75,2.6875 -0.006,0.365587 0.0174,0.673438 0,0.84375 -0.009,0.08516 -0.008,0.125716 -0.0312,0.15625 -0.0234,0.03053 -0.081,0.06098 -0.1875,0.09375 -0.72456,0.222941 -1.12941,0.981418 -1.5,1.875 -0.37059,0.893582 -0.68348,1.962118 -1.03125,2.875 -0.20641,0.541828 -0.0979,1.0676 0.125,1.53125 0.22286,0.46365 0.54081,0.877131 0.875,1.21875 0.33419,0.341619 0.67116,0.632519 0.84375,0.8125 -0.0776,0.04342 -0.15825,0.05984 -0.21875,0.125 -0.11764,0.126697 -0.22508,0.31047 -0.3125,0.5 -0.17483,0.37906 -0.3308,0.873628 -0.46875,1.5 -0.27591,1.252744 -0.48473,2.979205 -0.75,4.96875 -0.134,1.005017 -0.18056,1.699523 -0.0312,2.21875 0.0747,0.259613 0.21331,0.469231 0.40625,0.625 0.19294,0.155769 0.41586,0.234951 0.6875,0.28125 1.03496,0.176397 2.73449,-0.111305 5.46875,-0.21875 0.0457,0.03108 0.0978,0.05651 0.125,0.0625 0.0356,0.0078 0.0608,-0.0018 0.0937,0 0.0659,0.0036 0.14242,0.0066 0.25,0 0.21516,-0.01313 0.55105,-0.05829 1.0625,-0.125 0.29724,-0.03877 0.53646,-0.136292 0.71875,-0.3125 0.18229,-0.176208 0.29267,-0.409818 0.34375,-0.65625 0.10215,-0.492864 0.0172,-1.048246 -0.125,-1.65625 -0.28443,-1.216008 -0.78125,-2.61647 -0.78125,-3.34375 0,-1.605761 0.70766,-4.058977 -0.21875,-6.375 -0.42235,-1.055876 -0.29169,-1.541798 0,-2.125 0.29169,-0.583202 0.78535,-1.251471 1.0625,-2.40625 0.26708,-1.112841 0.34527,-1.541282 0.4375,-1.65625 0.0461,-0.05748 0.12524,-0.08779 0.3125,-0.15625 0.18726,-0.06846 0.46859,-0.15445 0.875,-0.3125 0.67629,-0.263002 1.02164,-0.427075 1.25,-0.65625 0.52725,0.04843 1.19181,0.111999 2.1875,0.15625 0.85885,0.03817 2.09696,0.78162 3.4375,2 1.34054,1.21838 2.7739,2.887666 4.15625,4.59375 2.76471,3.412167 5.23709,7.02201 6.15625,8.125 0.86802,1.041631 1.38556,1.960553 1.90625,2.625 0.52069,0.664447 1.11029,1.110972 2.03125,1.0625 1.72872,-0.09099 4.71161,-0.741542 6.40625,-1.1875 1.81156,-0.476726 3.41025,-2.387033 2.9375,-4.65625 -0.20121,-0.965776 0.0947,-2.3364 0.5625,-3.625 0.46777,-1.2886 1.10639,-2.487722 1.53125,-3.125 0.16292,-0.244384 0.17704,-0.559955 0.0937,-0.84375 -0.0833,-0.283795 -0.24696,-0.57818 -0.46875,-0.875 -0.44359,-0.59364 -1.11494,-1.215501 -1.875,-1.8125 -0.76006,-0.596999 -1.62722,-1.146274 -2.40625,-1.5625 -0.77903,-0.416226 -1.47832,-0.723669 -2.03125,-0.75 -0.37303,-0.01776 -0.59628,-0.180736 -0.8125,-0.53125 -0.21622,-0.350514 -0.37782,-0.884766 -0.5,-1.46875 -0.24437,-1.167968 -0.33945,-2.56684 -0.71875,-3.5625 -0.2249,-0.590372 -0.85911,-1.045384 -1.6875,-1.46875 -0.82839,-0.423366 -1.86352,-0.802069 -2.96875,-1.125 -2.21047,-0.645862 -4.66028,-1.0793 -6.03125,-1.125 -1.38793,-0.04626 -2.61194,0.425929 -3.5625,0.96875 -0.83667,0.477785 -1.40162,0.959704 -1.71875,1.375 -0.093,-0.228711 -0.2115,-0.558069 -0.5,-0.90625 -0.67608,-0.815939 -2.08132,-1.666135 -5.09375,-1.53125 z"
+           id="path7644"
+           style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           inkscape:original="M 432.65625 63.8125 C 429.32512 63.961655 428.83621 65.174595 429.125 67 C 427.78914 66.234801 426.90165 68.884855 424.25 70.625 C 421.42157 72.481155 423.3678 74.083947 422.21875 74.4375 C 421.0697 74.791053 420.55086 77.175095 419.84375 79.03125 C 419.13665 80.887405 422.48299 82.56786 421.6875 82.65625 C 420.892 82.74464 420.46783 85.647524 419.9375 89.625 C 419.40717 93.602476 420.55209 92.364277 426.5625 92.1875 C 426.5625 92.1875 425.68581 92.452665 427.71875 92.1875 C 429.75167 91.922335 427.625 88.148129 427.625 86.46875 C 427.625 84.789372 428.32138 82.397208 427.4375 80.1875 C 426.55362 77.977791 427.96967 77.709709 428.5 75.5 C 429.03033 73.290293 428.69026 73.806219 430.28125 73.1875 C 431.05249 72.887573 431.39072 72.722894 431.53125 72.53125 C 432.05498 72.58389 432.75922 72.60944 433.8125 72.65625 C 437.78997 72.833027 446.01348 85.378679 447.78125 87.5 C 449.54901 89.62132 449.82062 91.15089 451.5 91.0625 C 453.17937 90.97411 456.16437 90.348192 457.84375 89.90625 C 459.52313 89.464308 461.03569 87.68382 460.59375 85.5625 C 460.1518 83.44118 461.83486 79.919576 462.71875 78.59375 C 463.60263 77.267925 458.10615 73.27589 456.25 73.1875 C 454.39384 73.09911 454.67586 69.293656 453.96875 67.4375 C 453.26164 65.581345 446.1829 63.99464 443.53125 63.90625 C 440.8796 63.81786 438.75444 65.605394 438.3125 66.3125 C 437.87056 67.019607 438.57827 63.547335 432.65625 63.8125 z "
+           inkscape:radius="0.26630011"
+           sodipodi:type="inkscape:offset" />
+        <path
+           sodipodi:nodetypes="ssssssscss"
+           inkscape:connector-curvature="0"
+           id="path7650"
+           d="m 94.617733,141.14113 31.513087,0.125 c 5.80047,0.023 -2.23593,-24.33812 -1.85539,-28.5297 l 2.01465,-22.191127 c 0.14135,-1.556911 -2.67573,-5.32842 -4.19404,-5.32842 l -22.820869,0 c -1.518301,0 3.945929,12.785784 -1.285169,16.328417 -2.86131,1.93776 -13.588545,7.37792 -1.45545,17.81688 l -4.657438,18.95052 c -0.376804,1.53317 1.222334,2.82241 2.740619,2.82843 z"
+           style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           sodipodi:nodetypes="csssssc"
+           inkscape:connector-curvature="0"
+           id="path7652"
+           d="m 111.83104,102.1978 c 13.17982,-1.44001 16.6767,-2.800122 18.39708,-4.143976 1.72037,-1.343853 1.40322,-8.085788 -0.83373,-8.444687 -4.61553,-0.740516 -28.71946,1.626298 -31.864888,2.948021 -1.82209,0.765652 -5.979244,3.053969 -5.864044,4.108355 0.115201,1.054385 0.186144,4.958857 2.068237,5.909117 1.882113,0.95025 18.097355,-0.37683 18.097365,-0.37683 z"
+           style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path7654"
+           d="m 95.81217,92.19956 c -6.01041,0.176777 -7.15946,1.414214 -6.62913,-2.563262 0.53033,-3.977476 0.97227,-6.894291 1.76777,-6.98268 0.79549,-0.08839 -2.56326,-1.767767 -1.85616,-3.623922 0.70711,-1.856155 1.23744,-4.242641 2.38649,-4.596194 1.14905,-0.353553 -0.7955,-1.944544 2.03293,-3.800699 2.82843,-1.856155 3.62392,-4.772971 5.12652,-3.447145 1.50261,1.325825 2.20971,3.71231 2.20971,4.507805 0,0.795495 0.26517,0.883884 -1.32582,1.502602 -1.59099,0.618719 -1.23744,0.08839 -1.76777,2.298097 -0.53033,2.209709 -1.94454,2.474874 -1.06066,4.684583 0.88388,2.209708 0.17678,4.596194 0.17678,6.275572 0,1.679379 2.12132,5.480078 0.0884,5.745243 -2.03294,0.265165 -1.14905,0 -1.14905,0 z"
+           style="fill:#6c5d53;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path7656"
+           d="m 96.462709,73.896159 c 3.984351,-2.207011 7.570321,-1.255156 8.737981,-0.228812 1.16767,1.026344 16.16469,14.347555 14.88647,20.075003 -1.27822,5.727448 -19.10285,4.541834 -22.937832,4.095189 -3.834982,-0.446646 -0.686619,-23.94138 -0.686619,-23.94138 z"
+           style="fill:#ffffff;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="cc"
+           inkscape:connector-curvature="0"
+           id="path7658"
+           d="m 118,107.61218 c -3,10.5 -11,20 -11,20"
+           style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="csssssssssssc"
+           inkscape:connector-curvature="0"
+           id="path7660"
+           d="m 99.524475,72.223793 c -0.53033,-4.596194 -3.53553,-8.131728 2.386485,-8.396893 5.92202,-0.265165 5.21491,3.181981 5.65685,2.474874 0.44194,-0.707106 2.56326,-2.474873 5.21491,-2.386485 2.65165,0.08839 9.72272,1.679378 10.42983,3.535533 0.70711,1.856156 0.44194,5.656855 2.2981,5.745243 1.85615,0.08839 7.33623,4.065864 6.45235,5.391689 -0.88389,1.325826 -2.56327,4.86136 -2.12132,6.98268 0.44194,2.12132 -1.06066,3.889087 -2.74004,4.331029 -1.67938,0.441942 -4.68459,1.06066 -6.36396,1.149048 -1.67938,0.08839 -1.94455,-1.414213 -3.71231,-3.535533 -1.76777,-2.121321 -9.98789,-14.672466 -13.96536,-14.849243 -3.977475,-0.176777 -3.535535,-0.441942 -3.535535,-0.441942 z"
+           style="fill:#6c5d53;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <g
+           transform="matrix(1.1604329,-0.31047471,0.31365238,1.1486763,-43.340524,18.33623)"
+           id="g7662">
+          <path
+             sodipodi:type="arc"
+             style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:70;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             id="path7664"
+             sodipodi:cx="97.403961"
+             sodipodi:cy="83.625893"
+             sodipodi:rx="1.2374369"
+             sodipodi:ry="1.2374369"
+             d="m 98.641398,83.625893 c 0,0.683417 -0.554019,1.237437 -1.237437,1.237437 -0.683417,0 -1.237437,-0.55402 -1.237437,-1.237437 0,-0.683418 0.55402,-1.237437 1.237437,-1.237437 0.683418,0 1.237437,0.554019 1.237437,1.237437 z"
+             transform="matrix(1.6148755,0,0,1.6148755,-57.009115,-52.180379)" />
+          <path
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="m 101.75563,81.898415 0.0625,-3.522209"
+             id="path7666"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+          <path
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="m 99.457533,82.075191 -0.70266,-2.674937"
+             id="path7668"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+          <path
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="M 98.57365,81.898415 98.13171,81.014532"
+             id="path7670"
+             inkscape:connector-curvature="0" />
+          <path
+             sodipodi:nodetypes="cc"
+             inkscape:connector-curvature="0"
+             id="path7672"
+             d="M 100.34142,81.810026 99.638756,78.869924"
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             style="fill:none;stroke:#000000;stroke-width:0.41807088;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="M 101.13692,81.633249 100.7878,78.781535"
+             id="path7674"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="cc" />
+        </g>
+        <use
+           height="1052.3622"
+           width="744.09448"
+           transform="matrix(-1,0,0,1,205.97207,0)"
+           id="use7676"
+           xlink:href="#g4056"
+           y="0"
+           x="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path7678"
+           d="m 101.35463,91.560404 c 2.125,0 3.25,1.875 3.25,1.875"
+           style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+      <path
+         style="fill:#aa8800;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 564.69859,66.935103 c -0.28822,-2.44848 -0.33589,-6.648284 -1.01046,-8.882176 -0.67456,-2.233891 -2.47018,-6.049255 -1.24088,-5.255879 1.2293,0.793377 0.68131,3.483874 4.70598,3.41215 4.02468,-0.07172 4.95416,-6.18933 5.95495,-3.732195 1.00077,2.457133 5.00095,7.110612 11.18588,4.302189 6.18493,-2.808423 4.45766,-3.224106 5.59603,-3.067748 1.13835,0.156357 -3.51175,4.781524 -3.68205,7.969989 -0.17029,3.188466 0.28632,4.411019 0.28632,4.411019 0,0 -5.47913,1.567095 -8.3053,1.357347 -2.82617,-0.20975 -13.49047,-0.514696 -13.49047,-0.514696 z"
+         id="path7680"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cssssssscsc" />
     </g>
   </g>
 </svg>
