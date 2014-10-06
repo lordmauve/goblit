@@ -41,6 +41,10 @@ class Cursor:
         cls._set(cls.POINTER)
 
 
+class ScriptError(Exception):
+    """A state problem means a script step can't play."""
+
+
 class ScriptPlayer:
     def __init__(self, script, clock, on_finish=None):
         self.clock = clock
@@ -59,35 +63,42 @@ class ScriptPlayer:
         self.step += 1
         op = type(instruction).__name__.lower()
         handler = getattr(self, 'do_' + op, None)
-        if not handler:
-            print("No handler for op %s" % op)
-            self.schedule_next(0)
-        else:
+        try:
+            if not handler:
+                raise ScriptError("No handler for op %s" % op)
             handler(instruction)
+        except ScriptError as e:
+            print(e.args[0])
+            self.do_next()
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            self.do_next()
 
     def skip(self):
         if self.skippable:
             self.clock.unschedule(self.cancel_line)
             self.clock.unschedule(self.next)
+            close_bubble()
             self.next()
+
+    def do_next(self):
+        self.schedule_next(0)
 
     def schedule_next(self, delay=2):
         self.clock.schedule(self.next, delay)
 
     def cancel_line(self):
-        global bubble
-        bubble = None
+        close_bubble()
         self.next()
 
     def do_line(self, line):
         actor = ACTORS.get(line.character)
-        if actor:
-            say(actor, line.line)
-            self.clock.schedule(self.cancel_line, 3)
-            self.skippable = True
-        else:
-            print("Actor %s is not on set" % line.character)
-            self.schedule_next(0)
+        if not actor:
+            raise ScriptError("Actor %s is not on set" % line.character)
+        say(actor, line.line)
+        self.clock.schedule(self.cancel_line, 3)
+        self.skippable = True
 
     def do_pause(self, pause):
         self.schedule_next()
@@ -96,18 +107,34 @@ class ScriptPlayer:
     def do_action(self, action):
         self.waiting = action
 
+    def do_stagedirection(self, d):
+        actor = ACTORS.get(d.character)
+        if not actor:
+            raise ScriptError("Actor %s is not on set" % d.character)
+        handler = actor.stage_directions.get(d.verb)
+        if not handler:
+            raise ScriptError(
+                "Unsupported stage direction %r for %s" % (d.verb, d.character)
+            )
+        if d.object:
+            object = ACTORS.get(d.object)
+            if not object:
+                raise ScriptError("%s is not on set" % d.object)
+            handler(actor, object)
+        else:
+            handler(actor)
+        self.do_next()
+
     def do_directive(self, directive):
         name = directive.name
         handler = getattr(self, 'directive_' + name, None)
         if not handler:
-            print("No handler for directive %s" % name)
-            self.schedule_next(0)
-        else:
-            handler(directive)
+            raise ScriptError("No handler for directive %s" % name)
+        handler(directive)
 
     def directive_onclick(self, directive):
         object_scripts[directive.data.strip()] = directive
-        self.schedule_next(0)
+        self.do_next()
 
 
 bubble = None
@@ -117,6 +144,11 @@ def say(actor, text):
     global bubble
     from .actors import SpeechBubble
     bubble = SpeechBubble(text, actor)
+
+
+def close_bubble():
+    global bubble
+    bubble = None
 
 
 # Script player

@@ -14,7 +14,7 @@ LINE_RE = re.compile(r'([A-Z ]+): (.*)')
 PAUSE_RE = re.compile(r'\[pause\]')
 ACTION_RE = re.compile(r'{(.*)}')
 STAGE_DIRECTION_RE = re.compile(
-    r'\[([A-Z ]+)? +(enters|leaves|appears|disappears|removes glasses)\]'
+    r'\[([A-Z ]+)? +([a-z ]+?)(?: +([A-Z ]+))?\]'
 )
 INDENT_RE = re.compile(r'^([ \t]+)(.*)')
 UNDERLINE_RE = re.compile(r'^(-+|=+)')
@@ -41,7 +41,7 @@ class Underline:
 
 Action = namedtuple('Action', 'verb')
 Line = namedtuple('Line', 'character line')
-StageDirection = namedtuple('StageDirection', 'character verb')
+StageDirection = namedtuple('StageDirection', 'character verb object')
 Title = namedtuple('SceneTitle', 'name level')
 Gift = namedtuple('Gift', 'character object')
 

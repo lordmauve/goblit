@@ -23,7 +23,7 @@ class Clock:
 
     def tick(self, dt):
         self.t += dt
-        while self.events and self.events[0][0] < self.t:
+        while self.events and self.events[0][0] <= self.t:
             t, cb, repeat = heapq.heappop(self.events)
             try:
                 cb()

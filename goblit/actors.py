@@ -58,10 +58,33 @@ class SpeechBubble(FontBubble):
         super().__init__(text, (x, y - 120), actor.COLOR)
 
 
-class Goblit(object):
-    COLOR = (255, 255, 255)
-    SPRITE = GOBLIT
+class ActorMeta(type):
+    def __new__(cls, name, bases, dict):
+        stage_directions = {}
+        for b in reversed(bases):
+            try:
+                stage_directions.update(b.stage_directions)
+            except AttributeError:
+                pass
+        for k, v in list(dict.items()):
+            if callable(v):
+                verb = getattr(v, 'stage_direction', None)
+                if verb:
+                    stage_directions[verb] = v
 
+        dict['stage_directions'] = stage_directions
+        return type.__new__(cls, name, bases, dict)
+
+
+def stage_direction(name):
+    """Decorator to mark a method as a stage direction."""
+    def decorator(func):
+        func.stage_direction = name
+        return func
+    return decorator
+
+
+class Actor(metaclass=ActorMeta):
     def __init__(self, pos, dir='right', initial='default'):
         self.sprite = self.SPRITE.create_instance(pos)
         self.sprite.dir = 'right'
@@ -71,7 +94,30 @@ class Goblit(object):
     def draw(self, screen):
         self.sprite.draw(screen)
 
+    @stage_direction('enters')
+    def enter(self):
+        raise NotImplementedError("Enter is not implemented")
 
-class Tox(Goblit):
+    @stage_direction('leaves')
+    def leave(self):
+        raise NotImplementedError("Leave is not implemented")
+
+
+class Goblit(Actor):
+    COLOR = (255, 255, 255)
+    SPRITE = GOBLIT
+
+
+class Tox(Actor):
     COLOR = (180, 50, 255)
     SPRITE = TOX
+
+    @stage_direction('turns around')
+    def turn_around(self):
+        self.sprite.play('sitting')
+        self.sprite.dir = 'left'
+
+    @stage_direction('turns back to desk')
+    def turn_back_to_desk(self):
+        self.sprite.play('sitting-at-desk')
+        self.sprite.dir = 'right'
