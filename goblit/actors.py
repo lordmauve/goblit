@@ -1,13 +1,22 @@
 import pygame
 from pygame.font import Font
 from .animations import Sequence, Frame, Animation, loop
-from .loaders import load_image
+from .loaders import load_image, load_frames
+
+
+def load_sequence(base, num, offset):
+    fs = []
+    for f in load_frames(base, num):
+        fs.append(Frame(f, offset))
+    return fs
 
 
 GOBLIT = Animation({
     'default': Sequence([
         Frame(load_image('goblit-standing'), (-18, -81))
-    ], loop)
+    ], loop),
+    'walking': Sequence(
+        load_sequence('goblit-walking', 4, (-46, -105)), loop)
 })
 
 TOX = Animation({
@@ -109,7 +118,7 @@ class Goblit(Actor):
 
 
 class Tox(Actor):
-    COLOR = (180, 50, 255)
+    COLOR = (150, 50, 255)
     SPRITE = TOX
 
     @stage_direction('turns around')

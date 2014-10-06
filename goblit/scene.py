@@ -3,7 +3,7 @@ from pygame.cursors import load_xbm
 
 from .loaders import load_image
 from .hitmap import HitMap
-from .clock import Clock
+from . import clock
 from . import scripts
 
 
@@ -13,9 +13,6 @@ objects = []
 ACTORS = {}
 object_scripts = {}
 hitmap = None
-
-
-clock = Clock()
 
 
 class Cursor:
@@ -159,7 +156,7 @@ def load():
     global room_bg, hitmap, player
     room_bg = load_image('room')
     from .actors import Goblit, Tox
-    ACTORS['GOBLIT'] = Goblit((100, 400))
+    ACTORS['GOBLIT'] = Goblit((100, 400), initial='walking')
     ACTORS['WIZARD TOX'] = Tox((719, 339), initial='sitting-at-desk')
 
     # goblit.say("Blimey, it's cold in here")

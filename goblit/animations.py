@@ -1,8 +1,9 @@
 from collections import namedtuple
 from pygame.transform import flip
 
+from . import clock
 
-DEFAULT_FRAME_RATE = 2
+DEFAULT_FRAME_RATE = 15
 
 
 # A sprite and the (x, y) position at which it should be drawn, relative
@@ -35,6 +36,7 @@ class AnimationInstance:
         self.pos = pos
         self.dir = dir
         self.play('default')  # Start default sequence
+        clock.schedule_interval(self.next_frame, 1 / self.animation.frame_rate)
 
     def play(self, sequence_name):
         """Start playing the given sequence at the beginning."""
