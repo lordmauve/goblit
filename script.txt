@@ -6,6 +6,11 @@
 
     GOBLIT: Are those electic lightbulbs?
 
+.. onclick:: painting
+
+    GOBLIT: That looks like...
+    WIZARD TOX: It's me, sitting on a dragon.
+
 Act 1
 =====
 
@@ -31,7 +36,7 @@ WIZARD TOX: Including yourself.
 WIZARD TOX: Because I had to fill out a lot of forms when the last assistant did that.
 [WIZARD TOX turns back to desk]
 
-{SPEAK to WIZARD TOX}
+{Speak to WIZARD TOX}
 [WIZARD TOX turns around]
 WIZARD TOX: Look, I'm very busy - there's a war on, you know?
 GOBLIT: There is?
@@ -39,7 +44,7 @@ WIZARD TOX: As Grand Master Wizard, I'm basically our only hope.
 WIZARD TOX: Spells to prepare, armies to enchant...
 [WIZARD TOX turns back to desk]
 
-{SPEAK to WIZARD TOX}
+{Speak to WIZARD TOX}
 WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
 {Take SOCK}

@@ -100,6 +100,14 @@ class Actor(metaclass=ActorMeta):
         self.words = None
         self.sprite.play(initial)
 
+        frame = self.sprite.sequence.frames[0]
+        r = frame.sprite.get_rect()
+        self._bounds = r.move(*frame.offset)
+
+    @property
+    def bounds(self):
+        return self._bounds.move(*self.sprite.pos)
+
     def draw(self, screen):
         self.sprite.draw(screen)
 

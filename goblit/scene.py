@@ -45,15 +45,46 @@ class ScriptError(Exception):
 class ScriptPlayer:
     def __init__(self, script, clock, on_finish=None):
         self.clock = clock
-        self.script = script
-        self.step = 0
+        self.stack = []
         self.skippable = False  # If we can safely skip the delay
-        self.waiting = None  # If we're waiting for player action
         self.on_finish = on_finish
+        self.play_subscript(script)
+
+    @property
+    def script(self):
+        return self.stack[-1][0]
+
+    @property
+    def step(self):
+        return self.stack[-1][1]
+
+    @step.setter
+    def step(self, v):
+        self.stack[-1][1] = v
+
+    @property
+    def waiting(self):
+        return self.stack[-1][2]
+
+    @waiting.setter
+    def waiting(self, v):
+        self.stack[-1][2] = v
+
+    def play_subscript(self, script):
+        self.stack.append([script, 0, None])
+        self.next()
+
+    def end_subscript(self):
+        self.stack.pop()
 
     def next(self):
         if self.step >= len(self.script.contents):
-            self.on_finish()
+            if len(self.stack) > 1:
+                self.end_subscript()
+                if not self.waiting:
+                    self.do_next()
+            else:
+                self.on_finish()
             return
         self.skippable = False
         instruction = self.script.contents[self.step]
@@ -78,6 +109,10 @@ class ScriptPlayer:
             self.clock.unschedule(self.next)
             close_bubble()
             self.next()
+
+    def speak_to(self, target):
+        if self.waiting and self.waiting.verb == 'Speak to %s' % target:
+            self.do_next()
 
     def do_next(self):
         self.schedule_next(0)
@@ -156,7 +191,7 @@ def load():
     global room_bg, hitmap, player
     room_bg = load_image('room')
     from .actors import Goblit, Tox
-    ACTORS['GOBLIT'] = Goblit((100, 400), initial='walking')
+    ACTORS['GOBLIT'] = Goblit((100, 400))
     ACTORS['WIZARD TOX'] = Tox((719, 339), initial='sitting-at-desk')
 
     # goblit.say("Blimey, it's cold in here")
@@ -165,7 +200,6 @@ def load():
 
     s = scripts.parse_file('script.txt')
     player = ScriptPlayer(s, clock)
-    player.next()
 
 
 def on_mouse_down(pos, button):
@@ -174,22 +208,31 @@ def on_mouse_down(pos, button):
         return
 
     if button == 1 and player.waiting:
+        for name, a in ACTORS.items():
+            if a.bounds.collidepoint(pos):
+                player.speak_to(name)
+                break
         r = hitmap.region_for_point(pos)
         if r:
-            #TODO: handle event for object
-            pass
-
+            if r in object_scripts:
+                player.play_subscript(object_scripts[r])
+                return
 
 
 def on_mouse_move(pos, rel, buttons):
-    if not player.waiting:
-        pass
+    global bubble
 
+    if not player.waiting:
+        return
+
+    from .actors import FontBubble
     r = hitmap.region_for_point(pos)
     if r:
         Cursor.set_pointer()
+        bubble = FontBubble('Look at %s' % r, pos=(480, 440))
     else:
         Cursor.set_default()
+        bubble = None
 
 
 def update(dt):
@@ -198,6 +241,9 @@ def update(dt):
 
 def draw(screen):
     screen.blit(room_bg, (0, 0))
+    rh = room_bg.get_height()
+    sw, sh = screen.get_size()
+    screen.fill((0, 0, 0), pygame.Rect(0, rh, sw, sh - rh))
 
     drawables = list(ACTORS.values()) + objects
     for o in drawables:
