@@ -1,3 +1,11 @@
+.. onclick:: fireplace
+
+    GOBLIT: It's blazing.
+
+.. onclick:: chandelier
+
+    GOBLIT: Are those electic lightbulbs?
+
 Act 1
 =====
 
@@ -288,12 +296,12 @@ Scene 3
 
 GOBLIT: According to the spell, I'm going to need EGGS, FLOUR and MILK.
 
-{Take X MARKS THE SPOT}
+{Take EX PARROT}
 {Take FLOWER}
 {Take CUP}
 {Use CUP with CAT}
 {Use CAT MILK with POTION}
-{Use X MARKS THE SPOT with POTION}
+{Use EX PARROT with POTION}
 {Use FLOWER with POTION}
 
 GOBLIT: That looks excellent.
@@ -319,6 +327,39 @@ QUEEN: It took me ages to press-gang all those men!
 GOBLIT: It was meant to be an invincibility potion.
 QUEEN: GOBLIT, I want results. Don't fail me again!
 [QUEEN leaves]
+
+[RALPH enters]
+RALPH: You got mail!
+GOBLIT: I didn't know I had a mailbox.
+{RAPLH gives LETTERS}
+{Use LETTERS}
+GOBLIT: "Dear Goblit, I know you're trying hard to finish the war."
+GOBLIT: "I remembered reading something in the spellbook I gave you,..."
+GOBLIT: "something about summoning a demon spirit to fight on our side."
+GOBLIT: "Love A."
+RALPH: Who's 'A'?
+
+.. choice:: It's Princess Amelia.
+
+    GOBLIT: It's Princess Amelia.
+    RALPH: Yeah, right. Princess Amelia writes to you.
+    RALPH: And I'm Voltak the Evil.
+
+.. choice:: Some other wizard.
+
+    GOBLIT: A... Distinguished Collegue.
+    RALPH: Why does he love you?
+    GOBLIT: Accident with a love potion.
+    RALPH: Yeah, that makes sense.
+
+GOBLIT: I'd better dig out that spellbook.
+RALPH: You don't want to come play Magician Tennis?
+GOBLIT: What's Magician Tennis?
+RALPH: Like normal tennis, but with magicians.
+[pause]
+GOBLIT: No, I'm good, thanks. I don't have time to play tennis; there's a war on.
+RALPH: Meh. Your loss. Smell ya later.
+[RALPH leaves]
 
 Scene 2
 -------
@@ -406,6 +447,7 @@ QUEEN: You! How dare you show your face round here!
 MEPHISTOPHELES: Princess Joan?
 QUEEN: QUEEN Joan!
 QUEEN: You... You ran out on us! How could you! Amelia was just 2 years old!
+MEPHISTOPHELES: Shiiiiiiiiiiiiiit. This is my daughter?
 PRINCESS: You... you're my... dad?
 MEPHISTOPHELES: Search your feelings. You know it to be true.
 PRINCESS: Nooooooooo!

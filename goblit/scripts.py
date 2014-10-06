@@ -177,7 +177,7 @@ def parse_file(file):
 
         last_indent = indent
 
-    return directives[0].contents
+    return directives[0]
 
 
 if __name__ == '__main__':

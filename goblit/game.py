@@ -30,6 +30,6 @@ def run():
             elif event.type == pygame.MOUSEMOTION:
                 dispatch('on_mouse_move', event)
 
-        scene.update(dt)
+        scene.update(dt / 1000.0)
         scene.draw(screen)
         pygame.display.flip()

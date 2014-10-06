@@ -40,6 +40,12 @@ class FontBubble:
         screen.blit(self.surf, (x, y))
 
 
+class SpeechBubble(FontBubble):
+    def __init__(self, text, actor):
+        x, y = actor.sprite.pos
+        super().__init__(text, (x, y - 120), actor.COLOR)
+
+
 class Goblit(object):
     COLOR = (255, 255, 255)
 
@@ -50,9 +56,6 @@ class Goblit(object):
 
     def say(self, line):
         x, y = self.sprite.pos
-        self.words = FontBubble(line, (x, y - 120), self.COLOR)
 
     def draw(self, screen):
         self.sprite.draw(screen)
-        if self.words:
-            self.words.draw(screen)
