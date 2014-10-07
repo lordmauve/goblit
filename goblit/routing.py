@@ -1,31 +1,70 @@
 import os.path
 import pygame.image
 from math import sqrt
+from itertools import product
 
 
 PLAN_DIR = 'data/'
 
+YSCALE = 0.3
+
 
 class Grid:
     GRID_COLOR = (255, 0, 255)
-    YSCALE = 0.2
+    YSCALE = 0.9
+
+    def _n(x, y):
+        ys = y / YSCALE
+        return sqrt(x * x + ys * ys), (x, y)
 
     NEIGHBOURS = [
-        (-1, 0),
-        (1, 0),
-        (0, 1),
-        (0, -1)
+        _n(-1, 0),
+        _n(1, 0),
+        _n(0, 1),
+        _n(0, -1),
+        _n(1, 1),
+        _n(1, -1),
+        _n(-1, 1),
+        _n(-1, -1),
+
+        # Additional neighbours offer additional (smoother) directions
+        _n(-2, -1),
+        _n(-2, 1),
+        _n(2, -1),
+        _n(2, 1),
+
+        _n(-1, 2),
+        _n(1, 2),
+        _n(-1, -2),
+        _n(1, -2),
     ]
 
-    def __init__(self, surf):
+    def __init__(self, surf, subdivide):
         self.surf = surf
         self.w, self.h = self.surf.get_size()
+        self.subdivide = subdivide
 
     @classmethod
-    def load(cls, name):
+    def load(cls, name, subdivide=(15, 5)):
         path = os.path.join(PLAN_DIR, name + '.png')
         surf = pygame.image.load(path)
-        return cls(surf)
+        w, h = surf.get_size()
+        subx, suby = subdivide
+        subw, subh = w // subx, h // suby
+        subsampled = pygame.Surface((subw, subh))
+        threshold = subx * suby // 2
+        for x, y in product(range(subw), range(subh)):
+            ox = x * subx
+            oy = y * suby
+            orig_pixels = product(
+                range(ox, min(ox + subx, w)),
+                range(oy, min(oy + suby, h))
+            )
+            ingrid = sum(
+                surf.get_at(pos) == cls.GRID_COLOR for pos in orig_pixels)
+            if ingrid > threshold:
+                subsampled.set_at((x, y), cls.GRID_COLOR)
+        return cls(subsampled, subdivide)
 
     def cost(self, p1, p2):
         x1, y1 = p1
@@ -38,33 +77,30 @@ class Grid:
         x, y = pos
         w = self.w
         h = self.h
-        for ox, oy in self.NEIGHBOURS:
+        for cost, (ox, oy) in self.NEIGHBOURS:
             px = x + ox
             py = y + oy
             if 0 <= px < w and 0 <= py < h:
                 p = px, py
                 in_grid = self.surf.get_at(p) == self.GRID_COLOR
                 if in_grid:
-                    yield abs(oy / self.YSCALE) + abs(ox), p
+                    yield cost, p
 
     def __contains__(self, pos):
+        pos = self.screen_to_subsampled(pos)
         px, py = pos
         if 0 <= px < self.w and 0 <= py < self.h:
             p = px, py
             return self.surf.get_at(p) == self.GRID_COLOR
         return False
 
-    def route(self, pos, goal):
+    def _route(self, pos, goal):
         """Find a route from pos to goal.
 
         Basically a transliteration of the A* algorithm psuedocode at
         http://en.wikipedia.org/wiki/A*_search_algorithm
 
         """
-        if pos not in self:
-            raise ValueError("Source is not in grid")
-        if goal not in self:
-            raise ValueError("Goal is not in grid")
         closedset = set()
         openset = set([pos])
         came_from = {}
@@ -98,6 +134,26 @@ class Grid:
 
         raise ValueError("No path exists from %r to %r" % (pos, goal))
 
+    def screen_to_subsampled(self, pos):
+        x, y = pos
+        sx, sy = self.subdivide
+        return x // sx, y // sy
+
+    def route(self, pos, goal):
+        if pos not in self:
+            raise ValueError("Source is not in grid")
+        if goal not in self:
+            raise ValueError("Goal is not in grid")
+
+        r = self._route(
+            self.screen_to_subsampled(pos),
+            self.screen_to_subsampled(goal),
+        )
+        sx, sy = self.subdivide
+        r = [(sx * x, sy * y) for x, y in r]
+        r[-1] = goal
+        return r
+
     def _reconstruct_path(self, came_from, goal):
         current_node = goal
         hist = [current_node]
@@ -125,17 +181,14 @@ if __name__ == '__main__':
             print(e.args[0])
             route = []
         screen.blit(room, (0, 0))
-        screen.lock()
-        for pos in route:
-            screen.set_at(pos, grid.GRID_COLOR)
-        screen.unlock()
+        if len(route) > 1:
+            pygame.draw.lines(screen, Grid.GRID_COLOR, False, route)
+        screen.blit(grid.surf, (0, 0))
         pygame.display.flip()
 
     room = pygame.image.load('graphics/room.png')
     pygame.init()
     screen = pygame.display.set_mode(room.get_size())
-
-    which = True
 
     draw_route()
     while True:
@@ -143,6 +196,8 @@ if __name__ == '__main__':
             if ev.type == pygame.QUIT:
                 sys.exit()
             if ev.type == pygame.MOUSEBUTTONDOWN:
-                pts[which] = ev.pos
-                which = not which
+                if ev.pos in grid:
+                    pts = [pts[1], ev.pos]
+                else:
+                    print("Not in grid")
                 draw_route()
