@@ -15,8 +15,8 @@
    id="svg6219"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="navigable-floor.svg"
-   inkscape:export-filename="/home/mauve/dev/goblit/data/navigable-floor.png"
+   sodipodi:docname="navigation-points.svg"
+   inkscape:export-filename="/home/mauve/dev/goblit/data/floor.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -32,7 +32,7 @@
      inkscape:cx="485.40149"
      inkscape:cy="208.21618"
      inkscape:document-units="px"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer1"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -70,21 +70,22 @@
        style="opacity:0.75" />
     <path
        style="fill:#ff00ff;stroke:none"
-       d="m 135,354 46,-37 88,1 6,1 7,-10 418,0 69,57 32.02259,0.0934 L 875,340 c 0,0 -5,20 -2,33 3,13 19,32 29,36 10,4 63,20 63,20 l -882,0 -16,-46 -102,0 0,-19 124,0 13,-10 z"
+       d="m 135,354 46,-37 88,1 6,1 7,-10 127.41483,0 2.82842,10.6066 113.35891,0 L 529.62298,309 700,309 l 69,57 32.02259,0.0934 L 875,340 c 0,0 -5,20 -2,33 3,13 19,32 29,36 10,4 63,20 63,20 l -882,0 -16,-46 -102,0 0,-19 124,0 13,-10 z"
        id="path7760"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccsscccccccc" />
+       sodipodi:nodetypes="cccccccccccccsscccccccc" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer6"
-     inkscape:label="Nav markers">
+     inkscape:label="Nav markers"
+     style="display:none">
     <g
        id="g8066" />
     <g
        id="g8071">
       <path
-         d="m 12.020815,0.43783391 c 0,2.63603889 -4.9070287,4.77297069 -10.9601549,4.77297069 -6.0531262,0 -10.9601545,-2.1369318 -10.9601545,-4.77297069 0,-2.63603891 4.9070283,-4.77297071 10.9601545,-4.77297071 6.0531262,0 10.9601549,2.1369318 10.9601549,4.77297071 z"
+         d="m 12.020815,0.43783391 a 10.960155,4.7729707 0 1 1 -21.9203094,0 10.960155,4.7729707 0 1 1 21.9203094,0 z"
          sodipodi:ry="4.7729707"
          sodipodi:rx="10.960155"
          sodipodi:cy="0.43783391"
@@ -207,6 +208,15 @@
        width="960"
        transform="translate(692.81432,399.03867)"
        id="down_stage_right"
+       xlink:href="#g8071"
+       y="0"
+       x="0" />
+    <use
+       inkscape:label="#use8078"
+       height="427"
+       width="960"
+       transform="translate(634.51638,317.1356)"
+       id="up_stage_right"
        xlink:href="#g8071"
        y="0"
        x="0" />

@@ -22,7 +22,7 @@ class Move:
         self.route = deque(route)  # Waypoints remaining
         self.last = self.pos  # Last waypoint we passed
         self.last_dt = 0  # Amount of time along last segment
-        self.on_move_end = None
+        self.on_move_end = on_move_end
         self._next_point()
         self.actor.sprite.play('walking')
         self.total_duration = sum(
@@ -104,7 +104,11 @@ class Scene:
 
     def get(self, name):
         """Get the named thing."""
-        return self.actors.get(name) or self.navpoints.get(name)
+        return (
+            self.actors.get(name) or
+            self.navpoints.get(name) or
+            self.hitmap.get_point(name)
+        )
 
     def __getitem__(self, name):
         """Get the named thing."""
@@ -139,9 +143,9 @@ class Scene:
     def close_bubble(self):
         self.bubble = None
 
-    def move(self, actor, goal):
+    def move(self, actor, goal, on_move_end=None):
         route = self.grid.route(actor.sprite.pos, goal)
-        self.animations.append(Move(route, actor))
+        self.animations.append(Move(route, actor, on_move_end=on_move_end))
 
     def update(self, dt):
         for a in self.animations:
@@ -174,7 +178,8 @@ class Scene:
         sw, sh = screen.get_size()
         screen.fill((0, 0, 0), pygame.Rect(0, rh, sw, sh - rh))
 
-        for o in self.actors.values():
+        actors = sorted(self.actors.values(), key=lambda a: a.pos[1])
+        for o in actors:
             o.draw(screen)
         screen.blit(self.room_fg, (0, 0))
 
@@ -371,6 +376,8 @@ def on_mouse_down(pos, button):
         r = scene.hitmap.region_for_point(pos)
         if r:
             if r in scene.object_scripts:
+                a = scene.get_actor('GOBLIT')
+                a.face(pos)
                 player.play_subscript(scene.object_scripts[r])
                 return
 

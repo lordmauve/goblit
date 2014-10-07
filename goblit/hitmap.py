@@ -2,6 +2,8 @@ from pygame import Rect
 import os.path
 import xml.etree.ElementTree as ET
 
+from .navpoints import make_id
+
 HITMAP_PATH = 'data/'
 
 
@@ -16,7 +18,7 @@ class HitMap:
             h = int(e.get('height'))
             x = round(float(e.get('x')))
             y = round(float(e.get('y')))
-            id = e.get('id')
+            id = make_id(e.get('id'))
             regions[id] = Rect(x, y, w, h)
         assert regions, "No regions loaded from %s" % filename
         return cls(regions)
@@ -29,4 +31,8 @@ class HitMap:
             if rect.collidepoint(pos):
                 return id
 
-
+    def get_point(self, name):
+        r = self.regions.get(name)
+        if r:
+            return r.center
+        return None

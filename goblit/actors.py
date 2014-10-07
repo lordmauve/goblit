@@ -16,7 +16,10 @@ GOBLIT = Animation({
         Frame(load_image('goblit-standing'), (-18, -81))
     ], loop),
     'walking': Sequence(
-        load_sequence('goblit-walking', 4, (-46, -105)), loop)
+        load_sequence('goblit-walking', 4, (-46, -105)), loop),
+    'look-back': Sequence([
+        Frame(load_image('goblit-back'), (-18, -81))
+    ], loop)
 })
 
 TOX = Animation({
@@ -106,15 +109,36 @@ class Actor(metaclass=ActorMeta):
         self._bounds = r.move(*frame.offset)
 
     @property
+    def pos(self):
+        return self.sprite.pos
+
+    @pos.setter
+    def pos(self, v):
+        self.sprite.pos = pos
+
+    @property
     def bounds(self):
         return self._bounds.move(*self.sprite.pos)
 
     def draw(self, screen):
         self.sprite.draw(screen)
 
+    @stage_direction('turns to face')
+    def face(self, obj):
+        if isinstance(obj, tuple):
+            pos = obj
+        else:
+            pos = obj.pos
+        px = self.sprite.pos[0]
+        if px < pos[0]:
+            self.sprite.dir = 'right'
+        elif px > pos[0]:
+            self.sprite.dir = 'left'
+        self.sprite.play('default')
+
     @stage_direction('moves to')
-    def move_to(self, pos):
-        self.scene.move(self, pos)
+    def move_to(self, pos, on_move_end=None):
+        self.scene.move(self, pos, on_move_end=on_move_end)
 
     @stage_direction('enters')
     def enter(self):
@@ -123,6 +147,13 @@ class Actor(metaclass=ActorMeta):
     @stage_direction('leaves')
     def leave(self):
         raise NotImplementedError("Leave is not implemented")
+
+    @stage_direction('looks out of window')
+    def look_out_of_window(self):
+        self.move_to(
+            self.scene.get('WINDOW'),
+            on_move_end=lambda: self.sprite.play('look-back')
+        )
 
 
 class Goblit(Actor):

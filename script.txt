@@ -1,15 +1,28 @@
-.. onclick:: fireplace
+.. onclick:: FIREPLACE
 
+    [GOBLIT moves to FIREPLACE]
     GOBLIT: It's blazing.
 
-.. onclick:: chandelier
+.. onclick:: CHANDELIER
 
-    GOBLIT: Are those electic lightbulbs?
+    GOBLIT: Are those electric lightbulbs?
 
-.. onclick:: painting
+.. onclick:: PAINTING
 
+    [GOBLIT moves to UP STAGE RIGHT]
+    [GOBLIT turns to face PAINTING]
     GOBLIT: That looks like...
     WIZARD TOX: It's me, sitting on a dragon.
+
+    .. onclick:: PAINTING
+
+        GOBLIT: It's Wizard Tox, sitting on a dragon. Obvs.
+
+.. onclick:: WINDOW
+
+    [GOBLIT looks out of window]
+    GOBLIT: There's a castle out there!
+
 
 Act 1
 =====
