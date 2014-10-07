@@ -21,14 +21,18 @@ def weak_method(method):
     return weakref
 
 
+def mkref(o):
+    if isinstance(o, MethodType):
+        return weak_method(o)
+    else:
+        return ref(o)
+
+
 class Event:
     def __init__(self, time, cb, repeat=None):
         self.time = time
         self.repeat = repeat
-        if isinstance(cb, MethodType):
-            self.cb = weak_method(cb)
-        else:
-            self.cb = ref(cb)
+        self.cb = mkref(cb)
         self.name = str(cb)
         self.repeat = repeat
 
@@ -59,6 +63,7 @@ class Clock:
     def __init__(self):
         self.t = 0
         self.events = []
+        self._each_tick = []
 
     def schedule(self, callback, delay):
         heapq.heappush(self.events, Event(self.t + delay, callback, None))
@@ -70,8 +75,21 @@ class Clock:
         self.events = [e for e in self.events if e.callback is callback]
         heapq.heapify(self.events)
 
+    def each_tick(self, callback):
+        self._each_tick.append(mkref(callback))
+
+    def _fire_each_tick(self, dt):
+        seen = []
+        for r in self._each_tick:
+            cb = r()
+            if cb is not None:
+                cb(dt)
+                seen.append(r)
+        self._each_tick = seen
+
     def tick(self, dt):
         self.t += dt
+        self._fire_each_tick(dt)
         while self.events and self.events[0].time <= self.t:
             ev = heapq.heappop(self.events)
             cb = ev.callback
@@ -92,3 +110,4 @@ tick = clock.tick
 schedule = clock.schedule
 schedule_interval = clock.schedule_interval
 unschedule = clock.unschedule
+each_tick = clock.each_tick

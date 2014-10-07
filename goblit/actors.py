@@ -94,7 +94,8 @@ def stage_direction(name):
 
 
 class Actor(metaclass=ActorMeta):
-    def __init__(self, pos, dir='right', initial='default'):
+    def __init__(self, scene, pos, dir='right', initial='default'):
+        self.scene = scene
         self.sprite = self.SPRITE.create_instance(pos)
         self.sprite.dir = 'right'
         self.words = None
@@ -110,6 +111,10 @@ class Actor(metaclass=ActorMeta):
 
     def draw(self, screen):
         self.sprite.draw(screen)
+
+    @stage_direction('moves to')
+    def move_to(self, pos):
+        self.scene.move(self, pos)
 
     @stage_direction('enters')
     def enter(self):

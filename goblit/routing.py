@@ -10,8 +10,9 @@ YSCALE = 0.3
 
 
 class Grid:
+    """A* Pathfinding on a grid layout of the floor."""
     GRID_COLOR = (255, 0, 255)
-    YSCALE = 0.9
+    YSCALE = 0.99
 
     def _n(x, y):
         ys = y / YSCALE
@@ -28,6 +29,11 @@ class Grid:
         _n(-1, -1),
 
         # Additional neighbours offer additional (smoother) directions
+        _n(2, 0),
+        _n(0, 2),
+        _n(-2, 0),
+        _n(0, -2),
+
         _n(-2, -1),
         _n(-2, 1),
         _n(2, -1),

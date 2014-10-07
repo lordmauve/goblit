@@ -1,18 +1,152 @@
+from math import sqrt
+from collections import deque
+
 import pygame.mouse
 from pygame.cursors import load_xbm
 
 from .loaders import load_image
 from .hitmap import HitMap
+from .navpoints import points_from_svg
+from .routing import Grid
 from . import clock
 from . import scripts
 
 
-room_bg = None
-objects = []
+class Move:
+    V = 150  # Speed at which we move (pixels/s)
+    YSCALE = 0.3
 
-ACTORS = {}
-object_scripts = {}
-hitmap = None
+    def __init__(self, route, actor, on_move_end=None):
+        self.actor = actor
+        self.goal = route[-1]  # Final waypoint
+        self.route = deque(route)  # Waypoints remaining
+        self.last = self.pos  # Last waypoint we passed
+        self.last_dt = 0  # Amount of time along last segment
+        self.on_move_end = None
+        self._next_point()
+
+    @property
+    def pos(self):
+        return self.actor.sprite.pos
+
+    def dist(self, p1, p2):
+        """Get the floor distance between two points"""
+        x, y = p1
+        tx, ty = p2
+        dx = tx - x
+        dy = (ty - y) / self.YSCALE
+        return sqrt(dx * dx + dy * dy)
+
+    def to_target(self):
+        return self.dist(self.last, self.target)
+
+    def _next_point(self):
+        self.target = self.route.popleft()
+        self.t = self.to_target() / self.V
+
+    def skip(self):
+        """Skip to the end of the move."""
+        self.actor.sprite.pos = self.goal
+        self.actor.scene.animations.remove(self)
+        if self.on_move_end:
+            self.on_move_end()
+
+    def update(self, dt):
+        dt += self.last_dt
+        # Skip any segements we've moved past
+        while dt > self.t:
+            dt -= self.t
+            if self.route:
+                self.last = self.target
+                self._next_point()
+            else:
+                self.skip()
+                return
+
+        # Interpolate the last segment
+        frac = dt / self.t
+        x, y = self.last
+        tx, ty = self.target
+        x = round(frac * tx + (1 - frac) * x)
+        y = round(frac * ty + (1 - frac) * y)
+        self.actor.sprite.pos = x, y
+        self.last_dt = dt
+
+
+class Scene:
+    def __init__(self):
+        self.room_bg = None
+        self.room_fg = None
+        self.objects = []
+        self.actors = {}
+        self.navpoints = {}
+        self.object_scripts = {}
+        self.hitmap = None
+        self.bubble = None
+        self.animations = []
+        self.grid = None
+
+    def get_actor(self, name):
+        """Get the named actor."""
+        return self.actors.get(name)
+
+    def get(self, name):
+        """Get the named thing."""
+        return self.actors.get(name) or self.navpoints.get(name)
+
+    def __getitem__(self, name):
+        """Get the named thing."""
+        o = self.get(name)
+        if not o:
+            raise KeyError(name)
+
+    def load(self):
+        self.room_bg = load_image('room')
+        self.room_fg = load_image('foreground')
+        self.hitmap = HitMap.from_svg('hit-areas')
+        self.navpoints = points_from_svg('navigation-points')
+        self.grid = Grid.load('floor')
+
+    def init_scene(self):
+        from .actors import Goblit, Tox
+        self.actors['GOBLIT'] = Goblit(self, (100, 400))
+        self.actors['WIZARD TOX'] = Tox(self, (719, 339), initial='sitting-at-desk')
+        clock.each_tick(self.update)
+
+    def say(self, actor, text):
+        from .actors import SpeechBubble
+        actor = self.get_actor(actor)
+        if not actor:
+            raise ScriptError("Actor %s is not on set" % text)
+        self.bubble = SpeechBubble(text, actor)
+
+    def action_text(self, msg):
+        from .actors import FontBubble
+        self.bubble = FontBubble(msg, pos=(480, 440))
+
+    def close_bubble(self):
+        self.bubble = None
+
+    def move(self, actor, goal):
+        route = self.grid.route(actor.sprite.pos, goal)
+        self.animations.append(Move(route, actor))
+
+    def update(self, dt):
+        for a in self.animations:
+            a.update(dt)
+
+    def draw(self, screen):
+        screen.blit(self.room_bg, (0, 0))
+        rh = self.room_bg.get_height()
+        sw, sh = screen.get_size()
+        screen.fill((0, 0, 0), pygame.Rect(0, rh, sw, sh - rh))
+
+        for o in self.actors.values():
+            o.draw(screen)
+        screen.blit(self.room_fg, (0, 0))
+
+        if self.bubble:
+            self.bubble.draw(screen)
 
 
 class Cursor:
@@ -107,7 +241,7 @@ class ScriptPlayer:
         if self.skippable:
             self.clock.unschedule(self.cancel_line)
             self.clock.unschedule(self.next)
-            close_bubble()
+            scene.close_bubble()
             self.next()
 
     def speak_to(self, target):
@@ -121,14 +255,11 @@ class ScriptPlayer:
         self.clock.schedule(self.next, delay)
 
     def cancel_line(self):
-        close_bubble()
+        scene.close_bubble()
         self.next()
 
     def do_line(self, line):
-        actor = ACTORS.get(line.character)
-        if not actor:
-            raise ScriptError("Actor %s is not on set" % line.character)
-        say(actor, line.line)
+        scene.say(line.character, line.line)
         self.clock.schedule(self.cancel_line, 3)
         self.skippable = True
 
@@ -140,7 +271,7 @@ class ScriptPlayer:
         self.waiting = action
 
     def do_stagedirection(self, d):
-        actor = ACTORS.get(d.character)
+        actor = scene.get_actor(d.character)
         if not actor:
             raise ScriptError("Actor %s is not on set" % d.character)
         handler = actor.stage_directions.get(d.verb)
@@ -149,7 +280,7 @@ class ScriptPlayer:
                 "Unsupported stage direction %r for %s" % (d.verb, d.character)
             )
         if d.object:
-            object = ACTORS.get(d.object)
+            object = scene.get(d.object)
             if not object:
                 raise ScriptError("%s is not on set" % d.object)
             handler(actor, object)
@@ -165,41 +296,25 @@ class ScriptPlayer:
         handler(directive)
 
     def directive_onclick(self, directive):
-        object_scripts[directive.data.strip()] = directive
+        scene.object_scripts[directive.data.strip()] = directive
         self.do_next()
-
-
-bubble = None
-
-
-def say(actor, text):
-    global bubble
-    from .actors import SpeechBubble
-    bubble = SpeechBubble(text, actor)
-
-
-def close_bubble():
-    global bubble
-    bubble = None
 
 
 # Script player
 player = None
+scene = None
 
 
 def load():
-    global room_bg, hitmap, player
-    room_bg = load_image('room')
-    from .actors import Goblit, Tox
-    ACTORS['GOBLIT'] = Goblit((100, 400))
-    ACTORS['WIZARD TOX'] = Tox((719, 339), initial='sitting-at-desk')
-
-    # goblit.say("Blimey, it's cold in here")
-    hitmap = HitMap.from_svg('hit-areas')
+    global player, scene
+    scene = Scene()
+    scene.load()
     Cursor.load()
 
     s = scripts.parse_file('script.txt')
     player = ScriptPlayer(s, clock)
+
+    scene.init_scene()
 
 
 def on_mouse_down(pos, button):
@@ -208,14 +323,14 @@ def on_mouse_down(pos, button):
         return
 
     if button == 1 and player.waiting:
-        for name, a in ACTORS.items():
+        for name, a in scene.actors.items():
             if a.bounds.collidepoint(pos):
                 player.speak_to(name)
                 break
-        r = hitmap.region_for_point(pos)
+        r = scene.hitmap.region_for_point(pos)
         if r:
-            if r in object_scripts:
-                player.play_subscript(object_scripts[r])
+            if r in scene.object_scripts:
+                player.play_subscript(scene.object_scripts[r])
                 return
 
 
@@ -225,14 +340,12 @@ def on_mouse_move(pos, rel, buttons):
     if not player.waiting:
         return
 
-    from .actors import FontBubble
-    r = hitmap.region_for_point(pos)
+    r = scene.hitmap.region_for_point(pos)
     if r:
         Cursor.set_pointer()
-        bubble = FontBubble('Look at %s' % r, pos=(480, 440))
+        scene.action_text('Look at %s' % r)
     else:
         Cursor.set_default()
-        bubble = None
 
 
 def update(dt):
@@ -240,13 +353,4 @@ def update(dt):
 
 
 def draw(screen):
-    screen.blit(room_bg, (0, 0))
-    rh = room_bg.get_height()
-    sw, sh = screen.get_size()
-    screen.fill((0, 0, 0), pygame.Rect(0, rh, sw, sh - rh))
-
-    drawables = list(ACTORS.values()) + objects
-    for o in drawables:
-        o.draw(screen)
-    if bubble:
-        bubble.draw(screen)
+    scene.draw(screen)
