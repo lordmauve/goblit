@@ -2,6 +2,7 @@ import pygame
 from pygame.font import Font
 from .animations import Sequence, Frame, Animation, loop
 from .loaders import load_image, load_frames
+from .geom import dist
 
 
 def load_sequence(base, num, offset):
@@ -138,7 +139,8 @@ class Actor(metaclass=ActorMeta):
 
     @stage_direction('moves to')
     def move_to(self, pos, on_move_end=None):
-        self.scene.move(self, pos, on_move_end=on_move_end)
+        if dist(pos, self.pos) > 5:
+            self.scene.move(self, pos, on_move_end=on_move_end)
 
     @stage_direction('enters')
     def enter(self):

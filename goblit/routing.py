@@ -12,7 +12,6 @@ YSCALE = 0.3
 class Grid:
     """A* Pathfinding on a grid layout of the floor."""
     GRID_COLOR = (255, 0, 255)
-    YSCALE = 0.99
 
     def _n(x, y):
         ys = y / YSCALE
@@ -76,7 +75,7 @@ class Grid:
         x1, y1 = p1
         x2, y2 = p2
         dx = x2 - x1
-        dy = (y2 - y1) / self.YSCALE
+        dy = (y2 - y1) / YSCALE
         return sqrt(dx * dx + dy * dy)
 
     def neighbour_nodes(self, pos):

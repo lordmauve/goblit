@@ -10,11 +10,11 @@ from .navpoints import points_from_svg
 from .routing import Grid
 from . import clock
 from . import scripts
+from .geom import dist
 
 
 class Move:
     V = 150  # Speed at which we move (pixels/s)
-    YSCALE = 0.3
 
     def __init__(self, route, actor, on_move_end=None):
         self.actor = actor
@@ -26,7 +26,7 @@ class Move:
         self._next_point()
         self.actor.sprite.play('walking')
         self.total_duration = sum(
-            self.dist(route[i], route[i + 1])
+            dist(route[i], route[i + 1])
             for i in range(len(route) - 1)
         )
 
@@ -34,16 +34,8 @@ class Move:
     def pos(self):
         return self.actor.sprite.pos
 
-    def dist(self, p1, p2):
-        """Get the floor distance between two points"""
-        x, y = p1
-        tx, ty = p2
-        dx = tx - x
-        dy = (ty - y) / self.YSCALE
-        return sqrt(dx * dx + dy * dy)
-
     def to_target(self):
-        return self.dist(self.last, self.target)
+        return dist(self.last, self.target)
 
     def _next_point(self):
         self.target = self.route.popleft()
@@ -129,12 +121,16 @@ class Scene:
         self.actors['WIZARD TOX'] = Tox(self, (719, 339), initial='sitting-at-desk')
         clock.each_tick(self.update)
 
-    def say(self, actor, text):
+    def say(self, actor_name, text):
         from .actors import SpeechBubble
-        actor = self.get_actor(actor)
+        actor = self.get_actor(actor_name)
         if not actor:
             raise ScriptError("Actor %s is not on set" % text)
         self.bubble = SpeechBubble(text, actor)
+        if actor_name != 'GOBLIT':
+            goblit = self.get_actor('GOBLIT')
+            if goblit:
+                goblit.face(actor)
 
     def action_text(self, msg):
         from .actors import FontBubble
@@ -185,6 +181,22 @@ class Scene:
 
         if self.bubble:
             self.bubble.draw(screen)
+
+    def action_for_point(self, pos):
+        for name, a in self.actors.items():
+            if a.bounds.collidepoint(pos) and name != 'GOBLIT':
+                return 'Speak to %s' % name, lambda: player.speak_to(name)
+
+        r = self.hitmap.region_for_point(pos)
+        if r:
+            if r in scene.object_scripts:
+                script = scene.object_scripts[r]
+                return 'Look at %s' % r, lambda: self.play_subscript(pos, script)
+
+    def play_subscript(self, pos, script):
+        a = scene.get_actor('GOBLIT')
+        a.face(pos)
+        player.play_subscript(script)
 
 
 class Cursor:
@@ -287,6 +299,7 @@ class ScriptPlayer:
 
     def speak_to(self, target):
         if self.waiting and self.waiting.verb == 'Speak to %s' % target:
+            self.waiting = None
             self.do_next()
 
     def do_next(self):
@@ -369,17 +382,17 @@ def on_mouse_down(pos, button):
         return
 
     if button == 1 and player.waiting:
-        for name, a in scene.actors.items():
-            if a.bounds.collidepoint(pos):
-                player.speak_to(name)
-                break
-        r = scene.hitmap.region_for_point(pos)
+        r = scene.action_for_point(pos)
         if r:
-            if r in scene.object_scripts:
-                a = scene.get_actor('GOBLIT')
-                a.face(pos)
-                player.play_subscript(scene.object_scripts[r])
-                return
+            r[1]()
+            Cursor.set_default()
+        else:
+            goblit = scene.get_actor('GOBLIT')
+            if goblit:
+                try:
+                    goblit.move_to(pos)
+                except ValueError:
+                    pass
 
 
 def on_mouse_move(pos, rel, buttons):
@@ -388,12 +401,13 @@ def on_mouse_move(pos, rel, buttons):
     if not player.waiting:
         return
 
-    r = scene.hitmap.region_for_point(pos)
+    r = scene.action_for_point(pos)
     if r:
         Cursor.set_pointer()
-        scene.action_text('Look at %s' % r)
+        scene.action_text(r[0])
     else:
         Cursor.set_default()
+        scene.close_bubble()
 
 
 def update(dt):
