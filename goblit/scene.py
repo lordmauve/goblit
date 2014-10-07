@@ -24,6 +24,11 @@ class Move:
         self.last_dt = 0  # Amount of time along last segment
         self.on_move_end = None
         self._next_point()
+        self.actor.sprite.play('walking')
+        self.total_duration = sum(
+            self.dist(route[i], route[i + 1])
+            for i in range(len(route) - 1)
+        )
 
     @property
     def pos(self):
@@ -47,7 +52,8 @@ class Move:
     def skip(self):
         """Skip to the end of the move."""
         self.actor.sprite.pos = self.goal
-        self.actor.scene.animations.remove(self)
+        self.actor.scene.end_animation(self)
+        self.actor.sprite.play('default')
         if self.on_move_end:
             self.on_move_end()
 
@@ -67,10 +73,15 @@ class Move:
         frac = dt / self.t
         x, y = self.last
         tx, ty = self.target
+
         x = round(frac * tx + (1 - frac) * x)
         y = round(frac * ty + (1 - frac) * y)
         self.actor.sprite.pos = x, y
         self.last_dt = dt
+        if tx > x:
+            self.actor.sprite.dir = 'right'
+        elif tx < x:
+            self.actor.sprite.dir = 'left'
 
 
 class Scene:
@@ -85,6 +96,7 @@ class Scene:
         self.bubble = None
         self.animations = []
         self.grid = None
+        self._on_animation_finish = []
 
     def get_actor(self, name):
         """Get the named actor."""
@@ -134,6 +146,27 @@ class Scene:
     def update(self, dt):
         for a in self.animations:
             a.update(dt)
+
+    def skip_animation(self):
+        for a in self.animations:
+            a.skip()
+
+    def end_animation(self, a):
+        self.animations.remove(a)
+        if not self.animations:
+            self._fire_on_animation_finish()
+
+    def on_animation_finish(self, callback):
+        self._on_animation_finish.append(callback)
+
+    def _fire_on_animation_finish(self):
+        for c in self._on_animation_finish:
+            try:
+                c()
+            except Exception:
+                import traceback
+                traceback.print_exc()
+        del self._on_animation_finish[:]
 
     def draw(self, screen):
         screen.blit(self.room_bg, (0, 0))
@@ -242,16 +275,24 @@ class ScriptPlayer:
             self.clock.unschedule(self.cancel_line)
             self.clock.unschedule(self.next)
             scene.close_bubble()
-            self.next()
+            if scene.animations:
+                scene.skip_animation()
+            else:
+                self.next()
 
     def speak_to(self, target):
         if self.waiting and self.waiting.verb == 'Speak to %s' % target:
             self.do_next()
 
     def do_next(self):
-        self.schedule_next(0)
+        if scene.animations:
+            self.skippable = True
+            scene.on_animation_finish(self.do_next)
+        else:
+            self.schedule_next(0)
 
     def schedule_next(self, delay=2):
+        self.clock.unschedule(self.next)  # In case we're already scheduled
         self.clock.schedule(self.next, delay)
 
     def cancel_line(self):

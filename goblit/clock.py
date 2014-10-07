@@ -72,7 +72,7 @@ class Clock:
         heapq.heappush(self.events, Event(self.t + delay, callback, delay))
 
     def unschedule(self, callback):
-        self.events = [e for e in self.events if e.callback is callback]
+        self.events = [e for e in self.events if e.callback != callback and e.callback is not None]
         heapq.heapify(self.events)
 
     def each_tick(self, callback):
@@ -83,8 +83,13 @@ class Clock:
         for r in self._each_tick:
             cb = r()
             if cb is not None:
-                cb(dt)
-                seen.append(r)
+                try:
+                    cb(dt)
+                except Exception:
+                    import traceback
+                    traceback.print_exc()
+                else:
+                    seen.append(r)
         self._each_tick = seen
 
     def tick(self, dt):
