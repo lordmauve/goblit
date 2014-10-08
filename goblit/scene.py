@@ -7,7 +7,7 @@ from .navpoints import points_from_svg
 from .routing import Grid
 from . import clock
 from . import scripts
-from .inventory import FloorItem, sock
+from .inventory import FloorItem, sock, kettle
 from .transitions import Move
 from .geom import dist
 from .inventory import inventory
@@ -60,6 +60,7 @@ class Scene:
     def init_scene(self):
         self.spawn_actor('WIZARD TOX', (719, 339), initial='sitting-at-desk')
         self.spawn_object_on_floor(sock, (291, 379))
+        self.spawn_object_on_floor(kettle, (892, 427 - 79))
         clock.each_tick(self.update)
 
     def spawn_actor(self, name, pos=None, dir='right', initial='default'):
@@ -149,6 +150,7 @@ class Scene:
             self.bubble.draw(screen)
 
     def get_action_handler(self, action):
+        """Get an additional scripted action for the given action name."""
         script = scene.object_scripts.get(action)
         if script:
             return lambda: player.play_subscript(script)
@@ -160,10 +162,6 @@ class Scene:
         handler = self.get_action_handler(action)
         if handler:
             return Action(action, handler)
-
-    def is_action(self, action):
-        """Return true if the given action is valid right now."""
-        return action in scene.object_scripts or player.waiting == action
 
     HIT_ACTIONS = [
         'Look at %s',
@@ -184,20 +182,13 @@ class Scene:
         """Iterate over all possible actions for the given point."""
         for o in self.objects:
             if o.bounds.collidepoint(pos):
-                a = o.click_action()
-                if a:
-                    yield a, o.click
+                for a in o.click_actions():
+                    yield a
 
         r = self.hitmap.region_for_point(pos)
         if r:
             for a in self.HIT_ACTIONS:
-                yield a % r, lambda: scene.get_actor('GOBLIT').face(pos)
-
-    def action_name(self, pos):
-        """Get the name of the action that can be performed for the given point."""
-        for action, default_handler in self.iter_actions(pos):
-            if self.is_action(action):
-                return action
+                yield Action(a % r, lambda: scene.get_actor('GOBLIT').face(pos))
 
     def action_item_use(self, item, pos):
         for objname in self.collidepoint(pos):
@@ -205,7 +196,7 @@ class Scene:
             if item_action:
                 handler = self.get_action_handler(item_action.name)
                 if handler:
-                    return Action(item_action.name, do_all(item_action.callback, handler))
+                    item_action.chain(handler)
                 return item_action
             else:
                 default_name = 'Use %s with %s' % (item.name, objname)
@@ -217,24 +208,13 @@ class Scene:
                     action.name = default_name
                     return action
 
-    def action_handler(self, pos):
-        """Get a callback to perform the action for the given point."""
-        for action, default_handler in self.iter_actions(pos):
-            handler = self.get_action_handler(action)
+    def action_click(self, pos):
+        """Get an action for the given point."""
+        for action in self.iter_actions(pos):
+            handler = self.get_action_handler(action.name)
             if handler:
-                return do_all(default_handler, handler)
-
-
-def do_all(*callbacks):
-    """Return a function that will call all the given functions."""
-    def go():
-        for c in callbacks:
-            try:
-                c()
-            except Exception:
-                import traceback
-                traceback.print_exc()
-    return go
+                action.chain(handler)
+                return action
 
 
 class Cursor:
@@ -450,7 +430,7 @@ def on_mouse_down(pos, button):
                 Cursor.set_pointer()
                 action()
         else:
-            r = scene.action_handler(pos)
+            r = scene.action_click(pos)
             if r:
                 r()
                 Cursor.set_default()
@@ -483,10 +463,10 @@ def on_mouse_move(pos, rel, buttons):
         else:
             scene.action_text('Use %s' % inventory.selected.name)
     else:
-        text = scene.action_name(pos)
-        if text:
+        action = scene.action_click(pos)
+        if action:
             Cursor.set_pointer()
-            scene.action_text(text)
+            scene.action_text(action.name)
         else:
             if player.show_inventory():
                 item = inventory.item_for_pos(pos)

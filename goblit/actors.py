@@ -3,6 +3,7 @@ from pygame.font import Font
 from .animations import Sequence, Frame, Animation, loop
 from .loaders import load_image, load_frames
 from .geom import dist
+from .actions import Action
 
 
 def load_sequence(base, num, offset):
@@ -144,8 +145,8 @@ class Actor(metaclass=ActorMeta):
     def draw(self, screen):
         self.sprite.draw(screen)
 
-    def click_action(self):
-        return 'Speak to %s' % self.NAME
+    def click_actions(self):
+        return [Action('Speak to %s' % self.NAME, self.click)]
 
     def click(self):
         actor = self.scene.get_actor('GOBLIT')

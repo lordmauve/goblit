@@ -10,12 +10,19 @@ class FloorItem(object):
         self.pos = pos
 
     @property
+    def name(self):
+        return self.item.name
+
+    @property
     def z(self):
         """Z-coordinate is always behind other items"""
         return 0
 
-    def click_action(self):
-        return 'Pick up %s' % self.item.name
+    def click_actions(self):
+        return [
+            Action('Pick up %s' % self.name, self.click),
+            Action('Look at %s' % self.name)
+        ]
 
     def click(self):
         actor = self.scene.get_actor('GOBLIT')
@@ -81,6 +88,7 @@ class Item:
 
 
 sock = Item('sock')
+kettle = Item('kettle')
 
 
 class Inventory:

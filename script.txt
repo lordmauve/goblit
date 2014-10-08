@@ -1,7 +1,7 @@
 .. on:: Look at FIREPLACE
 
     [GOBLIT moves to FIREPLACE]
-    GOBLIT: It's blazing.
+    GOBLIT: Ooh, toasty.
 
 .. on:: Look at CHANDELIER
 
@@ -17,6 +17,11 @@
     .. on:: Look at PAINTING
 
         GOBLIT: It's Wizard Tox, sitting on a dragon. Obvs.
+
+.. on:: Look at KETTLE
+
+    [GOBLIT moves to FIREPLACE]
+    GOBLIT: Looks hot. Someone must have wanted a cup of tea.
 
 .. on:: Look out of WINDOW
 
