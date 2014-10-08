@@ -183,6 +183,11 @@ class Scene:
         if self.bubble:
             self.bubble.draw(screen)
 
+    HIT_ACTIONS = [
+        'Look at %s',
+        'Look out of %s',
+    ]
+
     def action_for_point(self, pos):
         for name, a in self.actors.items():
             if a.bounds.collidepoint(pos) and name != 'GOBLIT':
@@ -190,9 +195,11 @@ class Scene:
 
         r = self.hitmap.region_for_point(pos)
         if r:
-            if r in scene.object_scripts:
-                script = scene.object_scripts[r]
-                return 'Look at %s' % r, lambda: self.play_subscript(pos, script)
+            for a in self.ACTIONS:
+                action = a % r
+                if action in scene.object_scripts:
+                    script = scene.object_scripts[action]
+                    return action, lambda: self.play_subscript(pos, script)
 
     def play_subscript(self, pos, script):
         a = scene.get_actor('GOBLIT')
@@ -355,7 +362,7 @@ class ScriptPlayer:
             raise ScriptError("No handler for directive %s" % name)
         handler(directive)
 
-    def directive_onclick(self, directive):
+    def directive_on(self, directive):
         scene.object_scripts[directive.data.strip()] = directive
         self.do_next()
 
