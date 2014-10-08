@@ -299,7 +299,7 @@ class ScriptPlayer:
             self.do_next()
 
     def skip(self):
-        if self.skippable:
+        if self.skippable and not self.waiting:
             self.clock.unschedule(self.cancel_line)
             self.clock.unschedule(self.next)
             scene.close_bubble()
@@ -307,6 +307,10 @@ class ScriptPlayer:
                 scene.skip_animation()
             else:
                 self.next()
+
+    def skip_all(self):
+        while self.skippable and not self.waiting:
+            self.skip()
 
     def stop_waiting(self):
         if self.waiting:
@@ -422,6 +426,11 @@ def on_mouse_move(pos, rel, buttons):
     else:
         Cursor.set_default()
         scene.close_bubble()
+
+
+def on_key_down(unicode, key, mod, scancode):
+    if key == pygame.K_ESCAPE:
+        player.skip_all()
 
 
 def update(dt):

@@ -28,7 +28,7 @@ class FloorItem(object):
     def take(self, actor):
         """Actually pick up the thing."""
         actor.face(self)
-        print("Picking up %s" % self.item.name)
+        #print("Picking up %s" % self.item.name)
         inventory.add(self.item)
         self.scene.unspawn_object(self)
 

@@ -29,6 +29,8 @@ def run():
                 dispatch('on_mouse_down', event)
             elif event.type == pygame.MOUSEMOTION:
                 dispatch('on_mouse_move', event)
+            elif event.type == pygame.KEYDOWN:
+                dispatch('on_key_down', event)
 
         scene.update(dt / 1000.0)
         scene.draw(screen)
