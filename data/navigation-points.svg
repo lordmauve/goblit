@@ -29,10 +29,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="485.40149"
+     inkscape:cx="343.98013"
      inkscape:cy="208.21618"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer6"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -79,7 +79,7 @@
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="Nav markers"
-     style="display:none">
+     style="display:inline">
     <g
        id="g8066" />
     <g
@@ -161,7 +161,7 @@
        inkscape:label="#use8078"
        height="427"
        width="960"
-       transform="translate(2.1259399,372.80465)"
+       transform="translate(0.71172632,372.80465)"
        id="door"
        xlink:href="#g8071"
        y="0"

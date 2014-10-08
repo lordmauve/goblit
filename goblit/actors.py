@@ -163,13 +163,25 @@ class Actor(metaclass=ActorMeta):
         if dist(pos, self.pos) > 5:
             self.scene.move(self, pos, on_move_end=on_move_end)
 
+    def move_to_point(self, navpoint, on_move_end=None):
+        """Move to the named navpoint."""
+        pos = self.scene.navpoints[navpoint]
+        self.move_to(pos, on_move_end=on_move_end)
+
     @stage_direction('enters')
-    def enter(self):
-        raise NotImplementedError("Enter is not implemented")
+    def enter(self, navpoint='ENTRANCE'):
+        """Enter via the door and walk to navpoint."""
+        pos = self.scene.navpoints['DOOR']
+        self.scene.spawn_actor(self.NAME, pos)
+        self.move_to_point(navpoint)
 
     @stage_direction('leaves')
     def leave(self):
-        raise NotImplementedError("Leave is not implemented")
+        """Walk out of the room."""
+        self.move_to(
+            'DOOR',
+            on_move_end=lambda: self.scene.unspawn_actor(self)
+        )
 
     @stage_direction('looks out of window')
     def look_out_of_window(self):

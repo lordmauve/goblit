@@ -202,11 +202,6 @@ class Scene:
         if self.bubble:
             self.bubble.draw(screen)
 
-    HIT_ACTIONS = [
-        'Look at %s',
-        'Look out of %s',
-    ]
-
     def get_action_handler(self, action, pos):
         script = scene.object_scripts.get(action)
         if script:
@@ -219,6 +214,11 @@ class Scene:
         """Return true if the given action is valid right now."""
         return action in scene.object_scripts or player.waiting == action
 
+    HIT_ACTIONS = [
+        'Look at %s',
+        'Look out of %s',
+    ]
+
     def iter_actions(self, pos):
         """Iterate over all possible actions for the given point."""
         for o in self.objects:
@@ -227,7 +227,7 @@ class Scene:
 
         r = self.hitmap.region_for_point(pos)
         if r:
-            for a in self.ACTIONS:
+            for a in self.HIT_ACTIONS:
                 yield a % r
 
     def action_name(self, pos):
@@ -386,7 +386,10 @@ class ScriptPlayer:
     def do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
         if not actor:
-            raise ScriptError("Actor %s is not on set" % d.character)
+            if d.verb == 'enters':
+                actor = scene.actors[d.character]
+            else:
+                raise ScriptError("Actor %s is not on set" % d.character)
         handler = actor.stage_directions.get(d.verb)
         if not handler:
             raise ScriptError(
@@ -455,10 +458,10 @@ def on_mouse_move(pos, rel, buttons):
     if not player.waiting:
         return
 
-    r = scene.action_name(pos)
-    if r:
+    text = scene.action_name(pos)
+    if text:
         Cursor.set_pointer()
-        scene.action_text(r[0])
+        scene.action_text(text)
     else:
         Cursor.set_default()
         scene.close_bubble()
