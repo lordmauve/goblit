@@ -140,7 +140,8 @@ class Scene:
         self.bubble = None
 
     def move(self, actor, goal, on_move_end=None):
-        route = self.grid.route(actor.sprite.pos, goal)
+        npcs = [a.pos for a in self.actors.values() if a != actor]
+        route = self.grid.route(actor.pos, goal, npcs=npcs)
         self.animations.append(Move(route, actor, on_move_end=on_move_end))
 
     def update(self, dt):
@@ -416,3 +417,7 @@ def update(dt):
 
 def draw(screen):
     scene.draw(screen)
+
+#   Uncomment to enable debugging of routing
+#    g = scene.grid.build_npcs_grid([a.pos for a in scene.actors.values()])
+#    screen.blit(g.surf, (0, 0))

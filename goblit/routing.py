@@ -8,6 +8,8 @@ PLAN_DIR = 'data/'
 
 YSCALE = 0.3
 
+BLACK = (0, 0, 0)
+
 
 class Grid:
     """A* Pathfinding on a grid layout of the floor."""
@@ -144,11 +146,31 @@ class Grid:
         sx, sy = self.subdivide
         return x // sx, y // sy
 
-    def route(self, pos, goal):
+    def build_npcs_grid(self, npcs):
+        """Build a map that excludes areas where NPCs are standing"""
+        surf = pygame.Surface(self.surf.get_size())
+        surf.blit(self.surf, (0, 0))
+        r = pygame.Rect(0, 0, 60 // self.subdivide[0], 20 // self.subdivide[1])
+        for pos in npcs:
+            spos = self.screen_to_subsampled(pos)
+            r.center = spos
+            pygame.draw.ellipse(surf, BLACK, r)
+        return Grid(surf, self.subdivide)
+
+    def route(self, pos, goal, npcs=None):
+
         if pos not in self:
             raise ValueError("Source is not in grid")
         if goal not in self:
             raise ValueError("Goal is not in grid")
+
+        if npcs:
+            g = self.build_npcs_grid(npcs)
+            try:
+                return g.route(pos, goal)
+            except ValueError:
+                # We failed to route around people, now try going through them
+                pass
 
         r = self._route(
             self.screen_to_subsampled(pos),
