@@ -117,7 +117,7 @@ class Grid:
         came_from = {}
         g_score = {pos: 0}
         closest = pos
-        closest_dist = self.cost(pos, goal)
+        closest_dist = (self.cost(pos, goal), 0)
         f_score = {pos: closest_dist}
 
         cost = self.cost
@@ -143,9 +143,10 @@ class Grid:
                     came_from[neighbour] = current
                     g_score[neighbour] = tentative_g_score
                     d = cost(neighbour, goal)
-                    if d < closest_dist:
+                    closeness = (d, tentative_g_score)
+                    if closeness < closest_dist:
                         closest = neighbour
-                        closest_dist = d
+                        closest_dist = closeness
                     f_score[neighbour] = tentative_g_score + d
                     openset.add(neighbour)
 
