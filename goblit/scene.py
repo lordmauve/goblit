@@ -11,6 +11,7 @@ from .inventory import FloorItem, sock
 from .transitions import Move
 from .geom import dist
 from .inventory import inventory
+from .actions import Action
 
 
 class Scene:
@@ -155,6 +156,11 @@ class Scene:
             return player.stop_waiting
         return None
 
+    def get_action(self, action):
+        handler = self.get_action_handler(action)
+        if handler:
+            return Action(action, handler)
+
     def is_action(self, action):
         """Return true if the given action is valid right now."""
         return action in scene.object_scripts or player.waiting == action
@@ -163,6 +169,16 @@ class Scene:
         'Look at %s',
         'Look out of %s',
     ]
+
+    def collidepoint(self, pos):
+        """Iterate over all object under the given point."""
+        for o in self.objects:
+            if o.bounds.collidepoint(pos):
+                yield o.name
+
+        r = self.hitmap.region_for_point(pos)
+        if r:
+            yield r
 
     def iter_actions(self, pos):
         """Iterate over all possible actions for the given point."""
@@ -182,6 +198,24 @@ class Scene:
         for action, default_handler in self.iter_actions(pos):
             if self.is_action(action):
                 return action
+
+    def action_item_use(self, item, pos):
+        for objname in self.collidepoint(pos):
+            item_action = item.get_use_action(objname)
+            if item_action:
+                handler = self.get_action_handler(item_action.name)
+                if handler:
+                    return Action(item_action.name, do_all(item_action.callback, handler))
+                return item_action
+            else:
+                default_name = 'Use %s with %s' % (item.name, objname)
+                action = self.get_action(default_name)
+                if action:
+                    return action
+                action = self.get_action('Use * with *')
+                if action:
+                    action.name = default_name
+                    return action
 
     def action_handler(self, pos):
         """Get a callback to perform the action for the given point."""
@@ -259,8 +293,17 @@ class ScriptPlayer:
         self.stack[-1][2] = v
 
     def is_interactive(self):
-        """Return True if we're in interactive mode."""
+        """Return True if we're in interactive mode.
+        """
         return bool(self.waiting)
+
+    def show_inventory(self):
+        """Should the inventory panel be drawn.
+
+        We want to draw it unless there are dialog choices.
+
+        """
+        return True
 
     def play_subscript(self, script):
         self.stack.append([script, 0, None])
@@ -400,17 +443,30 @@ def on_mouse_down(pos, button):
         return
 
     if button == 1 and player.is_interactive():
-        r = scene.action_handler(pos)
-        if r:
-            r()
-            Cursor.set_default()
+        if inventory.selected:
+            action = scene.action_item_use(inventory.selected, pos)
+            if action:
+                inventory.deselect()
+                Cursor.set_pointer()
+                action()
         else:
-            goblit = scene.get_actor('GOBLIT')
-            if goblit:
-                try:
-                    goblit.move_to(pos)
-                except ValueError:
-                    pass
+            r = scene.action_handler(pos)
+            if r:
+                r()
+                Cursor.set_default()
+            else:
+                if player.show_inventory():
+                    item = inventory.item_for_pos(pos)
+                    if item:
+                        inventory.select(item)
+                        return
+                goblit = scene.get_actor('GOBLIT')
+                if goblit:
+                    try:
+                        goblit.move_to(pos)
+                    except ValueError:
+                        pass
+            inventory.deselect()
 
 
 def on_mouse_move(pos, rel, buttons):
@@ -419,13 +475,27 @@ def on_mouse_move(pos, rel, buttons):
     if not player.waiting:
         return
 
-    text = scene.action_name(pos)
-    if text:
-        Cursor.set_pointer()
-        scene.action_text(text)
+    if inventory.selected:
+        action = scene.action_item_use(inventory.selected, pos)
+        if action:
+            Cursor.set_pointer()
+            scene.action_text(action.name)
+        else:
+            scene.action_text('Use %s' % inventory.selected.name)
     else:
-        Cursor.set_default()
-        scene.close_bubble()
+        text = scene.action_name(pos)
+        if text:
+            Cursor.set_pointer()
+            scene.action_text(text)
+        else:
+            if player.show_inventory():
+                item = inventory.item_for_pos(pos)
+                if item:
+                    Cursor.set_pointer()
+                    scene.action_text(item.name)
+                    return
+            Cursor.set_default()
+            scene.close_bubble()
 
 
 def on_key_down(unicode, key, mod, scancode):
@@ -439,7 +509,8 @@ def update(dt):
 
 def draw(screen):
     scene.draw(screen)
-    inventory.draw(screen)
+    if player.show_inventory():
+        inventory.draw(screen)
 
 #   Uncomment to enable debugging of routing
 #    g = scene.grid.build_npcs_grid([a.pos for a in scene.actors.values()])

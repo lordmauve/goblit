@@ -29,6 +29,14 @@
     GOBLIT: It's a woolen sock.
     GOBLIT: I don't know where that came from; we don't even have feet.
 
+.. on:: Use SOCK with GOBLIT
+
+    GOBLIT: I don't have feet.
+    GOBLIT: This is basically useless to me.
+
+.. on:: Use * with *
+    # This is a wildcard, when we don't know how to react.
+    GOBLIT: I don't know what you want me to do.
 
 Act 1
 =====

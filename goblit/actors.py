@@ -108,6 +108,7 @@ class Actor(metaclass=ActorMeta):
         self.scene = scene
         self.sprite = None
         self.visible = False
+        self.name = self.NAME
 
         frame = self.SPRITE.sequences['default'].frames[0]
         r = frame.sprite.get_rect()

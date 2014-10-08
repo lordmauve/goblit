@@ -1,4 +1,6 @@
+from pygame import Rect
 from .loaders import load_image
+from .actions import Action
 
 
 class FloorItem(object):
@@ -28,7 +30,6 @@ class FloorItem(object):
     def take(self, actor):
         """Actually pick up the thing."""
         actor.face(self)
-        #print("Picking up %s" % self.item.name)
         inventory.add(self.item)
         self.scene.unspawn_object(self)
 
@@ -58,6 +59,11 @@ class Item:
         self.image_name = image_name or name.lower().replace(' ', '-')
         self.items[self.name] = self
         self._im = self._icon = None
+
+    def get_use_action(self, obj):
+        """Return an action if this item is usable with obj."""
+        # Action('Use %s with %s' % (self.name, obj), lambda: print("Using %s with %s" % (self.name, obj)))
+        return None
 
     @property
     def image(self):
@@ -91,10 +97,16 @@ class Inventory:
 
     def __init__(self, items=[]):
         self.items = items
+        self.selected = None
 
     def add(self, item):
         """Add an item to the inventory."""
         self.items.append(item)
+
+    def remove(self, item):
+        if item is self.selected:
+            self.selected = None
+        self.items.remove(item)
 
     def layout(self):
         """Iterate items in a grid layout as (x, y, item) tuples"""
@@ -121,10 +133,30 @@ class Inventory:
     def full_grid(self):
         return ((x, y, None) for y in range(2) for x in range(12))
 
+    def grid_bounds(self):
+        """Iterate over the inventory as (rect, item) pairs."""
+        for x, y, item in self.screen_layout(self.layout()):
+            yield Rect(x, y, 60, 60), item
+
+    def item_for_pos(self, pos):
+        for r, item in self.grid_bounds():
+            if r.collidepoint(pos):
+                return item
+
+    def select(self, item):
+        if self.selected is item:
+            self.selected = None
+        else:
+            self.selected = item
+
+    def deselect(self):
+        self.selected = None
+
     def draw(self, screen):
         self.load()
         for x, y, item in self.screen_layout(self.layout()):
-            screen.blit(self.item_bg, (x, y))
+            bg = self.item_bg_on if item is self.selected else self.item_bg
+            screen.blit(bg, (x, y))
 
         for x, y, item in self.screen_layout(self.layout()):
             im = item.icon
