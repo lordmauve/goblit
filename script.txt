@@ -57,7 +57,6 @@ WIZARD TOX: Because I had to fill out a lot of forms when the last assistant did
 [WIZARD TOX turns back to desk]
 
 {Speak to WIZARD TOX}
-[GOBLIT moves to CENTRE STAGE RIGHT]
 [WIZARD TOX turns around]
 WIZARD TOX: Look, I'm very busy - there's a war on, you know?
 GOBLIT: There is?
@@ -66,7 +65,6 @@ WIZARD TOX: Spells to prepare, armies to enchant...
 [WIZARD TOX turns back to desk]
 
 {Speak to WIZARD TOX}
-[GOBLIT moves to CENTRE STAGE RIGHT]
 WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
 {Take SOCK}

@@ -1,6 +1,3 @@
-from math import sqrt
-from collections import deque
-
 import pygame.mouse
 from pygame.cursors import load_xbm
 
@@ -10,71 +7,9 @@ from .navpoints import points_from_svg
 from .routing import Grid
 from . import clock
 from . import scripts
-from .geom import dist
 from .inventory import FloorItem, sock
-
-
-class Move:
-    V = 150  # Speed at which we move (pixels/s)
-
-    def __init__(self, route, actor, on_move_end=None):
-        self.actor = actor
-        self.goal = route[-1]  # Final waypoint
-        self.route = deque(route)  # Waypoints remaining
-        self.last = self.pos  # Last waypoint we passed
-        self.last_dt = 0  # Amount of time along last segment
-        self.on_move_end = on_move_end
-        self._next_point()
-        self.actor.sprite.play('walking')
-        self.total_duration = sum(
-            dist(route[i], route[i + 1])
-            for i in range(len(route) - 1)
-        )
-
-    @property
-    def pos(self):
-        return self.actor.sprite.pos
-
-    def to_target(self):
-        return dist(self.last, self.target)
-
-    def _next_point(self):
-        self.target = self.route.popleft()
-        self.t = self.to_target() / self.V
-
-    def skip(self):
-        """Skip to the end of the move."""
-        self.actor.sprite.pos = self.goal
-        self.actor.scene.end_animation(self)
-        self.actor.sprite.play('default')
-        if self.on_move_end:
-            self.on_move_end()
-
-    def update(self, dt):
-        dt += self.last_dt
-        # Skip any segements we've moved past
-        while dt > self.t:
-            dt -= self.t
-            if self.route:
-                self.last = self.target
-                self._next_point()
-            else:
-                self.skip()
-                return
-
-        # Interpolate the last segment
-        frac = dt / self.t
-        x, y = self.last
-        tx, ty = self.target
-
-        x = round(frac * tx + (1 - frac) * x)
-        y = round(frac * ty + (1 - frac) * y)
-        self.actor.sprite.pos = x, y
-        self.last_dt = dt
-        if tx > x:
-            self.actor.sprite.dir = 'right'
-        elif tx < x:
-            self.actor.sprite.dir = 'left'
+from .transitions import Move
+from .geom import dist
 
 
 class Scene:
@@ -138,6 +73,10 @@ class Scene:
     def spawn_object_on_floor(self, item, pos):
         self.objects.append(FloorItem(item, pos))
 
+    def nearest_navpoint(self, pos):
+        """Get the position of the nearest navpoint to pos."""
+        return min(self.navpoints.values(), key=lambda p: dist(p, pos))
+
     def say(self, actor_name, text):
         from .actors import SpeechBubble
         actor = self.get_actor(actor_name)
@@ -158,9 +97,9 @@ class Scene:
     def close_bubble(self):
         self.bubble = None
 
-    def move(self, actor, goal, on_move_end=None):
+    def move(self, actor, goal, on_move_end=None, strict=True):
         npcs = [a.pos for a in self.actors.values() if a != actor]
-        route = self.grid.route(actor.pos, goal, npcs=npcs)
+        route = self.grid.route(actor.pos, goal, npcs=npcs, strict=strict)
         self.animations.append(Move(route, actor, on_move_end=on_move_end))
 
     def update(self, dt):
@@ -202,10 +141,10 @@ class Scene:
         if self.bubble:
             self.bubble.draw(screen)
 
-    def get_action_handler(self, action, pos):
+    def get_action_handler(self, action):
         script = scene.object_scripts.get(action)
         if script:
-            return lambda: self.play_subscript(pos, script)
+            return lambda: player.play_subscript(script)
         if player.waiting == action:
             return player.stop_waiting
         return None
@@ -223,30 +162,39 @@ class Scene:
         """Iterate over all possible actions for the given point."""
         for o in self.objects:
             if o.bounds.collidepoint(pos):
-                yield o.click_action()
+                a = o.click_action()
+                if a:
+                    yield a, o.click
 
         r = self.hitmap.region_for_point(pos)
         if r:
             for a in self.HIT_ACTIONS:
-                yield a % r
+                yield a % r, lambda: scene.get_actor('GOBLIT').face(pos)
 
     def action_name(self, pos):
         """Get the name of the action that can be performed for the given point."""
-        for action in self.iter_actions(pos):
+        for action, default_handler in self.iter_actions(pos):
             if self.is_action(action):
                 return action
 
     def action_handler(self, pos):
         """Get a callback to perform the action for the given point."""
-        for action in self.iter_actions(pos):
-            handler = self.get_action_handler(action, pos)
+        for action, default_handler in self.iter_actions(pos):
+            handler = self.get_action_handler(action)
             if handler:
-                return handler
+                return do_all(default_handler, handler)
 
-    def play_subscript(self, pos, script):
-        a = scene.get_actor('GOBLIT')
-        a.face(pos)
-        player.play_subscript(script)
+
+def do_all(*callbacks):
+    """Return a function that will call all the given functions."""
+    def go():
+        for c in callbacks:
+            try:
+                c()
+            except Exception:
+                import traceback
+                traceback.print_exc()
+    return go
 
 
 class Cursor:
@@ -381,7 +329,7 @@ class ScriptPlayer:
         self.skippable = True
 
     def do_action(self, action):
-        self.waiting = action
+        self.waiting = action.verb
 
     def do_stagedirection(self, d):
         actor = scene.get_actor(d.character)

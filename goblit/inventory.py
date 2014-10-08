@@ -14,6 +14,9 @@ class FloorItem(object):
     def click_action(self):
         return 'Pick up %s' % self.item.name
 
+    def click(self):
+        print("Picking up %s" % self.item.name)
+
     @property
     def bounds(self):
         r = self.item.image.get_rect()

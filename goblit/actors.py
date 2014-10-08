@@ -145,6 +145,12 @@ class Actor(metaclass=ActorMeta):
     def click_action(self):
         return 'Speak to %s' % self.NAME
 
+    def click(self):
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            point = self.scene.nearest_navpoint(self.pos)
+            actor.move_to(point, on_move_end=lambda: actor.face(self), strict=False)
+
     @stage_direction('turns to face')
     def face(self, obj):
         if isinstance(obj, tuple):
@@ -159,9 +165,9 @@ class Actor(metaclass=ActorMeta):
         self.sprite.play('default')
 
     @stage_direction('moves to')
-    def move_to(self, pos, on_move_end=None):
+    def move_to(self, pos, on_move_end=None, strict=True):
         if dist(pos, self.pos) > 5:
-            self.scene.move(self, pos, on_move_end=on_move_end)
+            self.scene.move(self, pos, on_move_end=on_move_end, strict=strict)
 
     def move_to_point(self, navpoint, on_move_end=None):
         """Move to the named navpoint."""

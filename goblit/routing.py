@@ -2,6 +2,7 @@ import os.path
 import pygame.image
 from math import sqrt
 from itertools import product
+from operator import itemgetter
 
 
 PLAN_DIR = 'data/'
@@ -101,18 +102,23 @@ class Grid:
             return self.surf.get_at(p) == self.GRID_COLOR
         return False
 
-    def _route(self, pos, goal):
+    def _route(self, pos, goal, strict=True):
         """Find a route from pos to goal.
 
         Basically a transliteration of the A* algorithm psuedocode at
         http://en.wikipedia.org/wiki/A*_search_algorithm
+
+        If strict is False, return the path to the closest reachable point
+        if there is no path to the given point.
 
         """
         closedset = set()
         openset = set([pos])
         came_from = {}
         g_score = {pos: 0}
-        f_score = {pos: self.cost(pos, goal)}
+        closest = pos
+        closest_dist = self.cost(pos, goal)
+        f_score = {pos: closest_dist}
 
         cost = self.cost
         neighbour_nodes = self.neighbour_nodes
@@ -136,10 +142,17 @@ class Grid:
                 if tentative_g_score < g_score.get(neighbour, inf):
                     came_from[neighbour] = current
                     g_score[neighbour] = tentative_g_score
-                    f_score[neighbour] = tentative_g_score + cost(neighbour, goal)
+                    d = cost(neighbour, goal)
+                    if d < closest_dist:
+                        closest = neighbour
+                        closest_dist = d
+                    f_score[neighbour] = tentative_g_score + d
                     openset.add(neighbour)
 
-        raise ValueError("No path exists from %r to %r" % (pos, goal))
+        if strict:
+            raise ValueError("No path exists from %r to %r" % (pos, goal))
+
+        return self._reconstruct_path(came_from, closest)
 
     def screen_to_subsampled(self, pos):
         x, y = pos
@@ -150,35 +163,36 @@ class Grid:
         """Build a map that excludes areas where NPCs are standing"""
         surf = pygame.Surface(self.surf.get_size())
         surf.blit(self.surf, (0, 0))
-        r = pygame.Rect(0, 0, 60 // self.subdivide[0], 20 // self.subdivide[1])
+        r = pygame.Rect(0, 0, 100 // self.subdivide[0], 30 // self.subdivide[1])
         for pos in npcs:
             spos = self.screen_to_subsampled(pos)
             r.center = spos
             pygame.draw.ellipse(surf, BLACK, r)
         return Grid(surf, self.subdivide)
 
-    def route(self, pos, goal, npcs=None):
-
+    def route(self, pos, goal, strict=True, npcs=None):
         if pos not in self:
             raise ValueError("Source is not in grid")
-        if goal not in self:
+        if goal not in self and strict:
             raise ValueError("Goal is not in grid")
 
         if npcs:
             g = self.build_npcs_grid(npcs)
             try:
-                return g.route(pos, goal)
+                return g.route(pos, goal, strict=strict)
             except ValueError:
-                # We failed to route around people, now try going through them
+                print("Failed to find route, now disregarding npcs.")
                 pass
 
         r = self._route(
             self.screen_to_subsampled(pos),
             self.screen_to_subsampled(goal),
+            strict=strict
         )
         sx, sy = self.subdivide
         r = [(sx * x, sy * y) for x, y in r]
-        r[-1] = goal
+        if strict:
+            r[-1] = goal
         return r
 
     def _reconstruct_path(self, came_from, goal):
