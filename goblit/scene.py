@@ -11,6 +11,7 @@ from .routing import Grid
 from . import clock
 from . import scripts
 from .geom import dist
+from .inventory import FloorItem, sock
 
 
 class Move:
@@ -92,7 +93,9 @@ class Scene:
 
     def get_actor(self, name):
         """Get the named actor."""
-        return self.actors.get(name)
+        a = self.actors.get(name)
+        if a in self.objects:
+            return a
 
     def get(self, name):
         """Get the named thing."""
@@ -114,18 +117,34 @@ class Scene:
         self.hitmap = HitMap.from_svg('hit-areas')
         self.navpoints = points_from_svg('navigation-points')
         self.grid = Grid.load('floor')
+        from .actors import ACTORS
+        self.actors = {cls.NAME: cls(self) for cls in ACTORS}
 
     def init_scene(self):
-        from .actors import Goblit, Tox
-        self.actors['GOBLIT'] = Goblit(self, (100, 400))
-        self.actors['WIZARD TOX'] = Tox(self, (719, 339), initial='sitting-at-desk')
+        self.spawn_actor('WIZARD TOX', (719, 339), initial='sitting-at-desk')
+        self.spawn_object_on_floor(sock, (291, 379))
         clock.each_tick(self.update)
+
+    def spawn_actor(self, name, pos=None, dir='right', initial='default'):
+        actor = self.actors[name]
+        actor.show(pos, dir, initial)
+        self.objects.append(actor)
+
+    def hide_actor(self, name):
+        actor = self.actors[name]
+        actor.hide()
+        self.objects.remove(actor)
+
+    def spawn_object_on_floor(self, item, pos):
+        self.objects.append(FloorItem(item, pos))
 
     def say(self, actor_name, text):
         from .actors import SpeechBubble
         actor = self.get_actor(actor_name)
         if not actor:
-            raise ScriptError("Actor %s is not on set" % text)
+            raise ScriptError("No such actor %s" % actor_name)
+        if not actor.visible:
+            raise ScriptError("Actor %s is not on set" % actor_name)
         self.bubble = SpeechBubble(text, actor)
         if actor_name != 'GOBLIT':
             goblit = self.get_actor('GOBLIT')
@@ -175,8 +194,8 @@ class Scene:
         sw, sh = screen.get_size()
         screen.fill((0, 0, 0), pygame.Rect(0, rh, sw, sh - rh))
 
-        actors = sorted(self.actors.values(), key=lambda a: a.pos[1])
-        for o in actors:
+        self.objects.sort(key=lambda o: o.z)
+        for o in self.objects:
             o.draw(screen)
         screen.blit(self.room_fg, (0, 0))
 
@@ -188,18 +207,41 @@ class Scene:
         'Look out of %s',
     ]
 
-    def action_for_point(self, pos):
-        for name, a in self.actors.items():
-            if a.bounds.collidepoint(pos) and name != 'GOBLIT':
-                return 'Speak to %s' % name, lambda: player.speak_to(name)
+    def get_action_handler(self, action, pos):
+        script = scene.object_scripts.get(action)
+        if script:
+            return lambda: self.play_subscript(pos, script)
+        if player.waiting == action:
+            return player.stop_waiting
+        return None
+
+    def is_action(self, action):
+        """Return true if the given action is valid right now."""
+        return action in scene.object_scripts or player.waiting == action
+
+    def iter_actions(self, pos):
+        """Iterate over all possible actions for the given point."""
+        for o in self.objects:
+            if o.bounds.collidepoint(pos):
+                yield o.click_action()
 
         r = self.hitmap.region_for_point(pos)
         if r:
             for a in self.ACTIONS:
-                action = a % r
-                if action in scene.object_scripts:
-                    script = scene.object_scripts[action]
-                    return action, lambda: self.play_subscript(pos, script)
+                yield a % r
+
+    def action_name(self, pos):
+        """Get the name of the action that can be performed for the given point."""
+        for action in self.iter_actions(pos):
+            if self.is_action(action):
+                return action
+
+    def action_handler(self, pos):
+        """Get a callback to perform the action for the given point."""
+        for action in self.iter_actions(pos):
+            handler = self.get_action_handler(action, pos)
+            if handler:
+                return handler
 
     def play_subscript(self, pos, script):
         a = scene.get_actor('GOBLIT')
@@ -262,6 +304,10 @@ class ScriptPlayer:
     def waiting(self, v):
         self.stack[-1][2] = v
 
+    def is_interactive(self):
+        """Return True if we're in interactive mode."""
+        return bool(self.waiting)
+
     def play_subscript(self, script):
         self.stack.append([script, 0, None])
         self.next()
@@ -305,8 +351,8 @@ class ScriptPlayer:
             else:
                 self.next()
 
-    def speak_to(self, target):
-        if self.waiting and self.waiting.verb == 'Speak to %s' % target:
+    def stop_waiting(self):
+        if self.waiting:
             self.waiting = None
             self.do_next()
 
@@ -389,10 +435,10 @@ def on_mouse_down(pos, button):
         player.skip()
         return
 
-    if button == 1 and player.waiting:
-        r = scene.action_for_point(pos)
+    if button == 1 and player.is_interactive():
+        r = scene.action_handler(pos)
         if r:
-            r[1]()
+            r()
             Cursor.set_default()
         else:
             goblit = scene.get_actor('GOBLIT')
@@ -409,7 +455,7 @@ def on_mouse_move(pos, rel, buttons):
     if not player.waiting:
         return
 
-    r = scene.action_for_point(pos)
+    r = scene.action_name(pos)
     if r:
         Cursor.set_pointer()
         scene.action_text(r[0])

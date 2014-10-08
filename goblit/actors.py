@@ -71,6 +71,9 @@ class SpeechBubble(FontBubble):
         super().__init__(text, (x, y - 120), actor.COLOR)
 
 
+ACTORS = []
+
+
 class ActorMeta(type):
     def __new__(cls, name, bases, dict):
         stage_directions = {}
@@ -86,7 +89,10 @@ class ActorMeta(type):
                     stage_directions[verb] = v
 
         dict['stage_directions'] = stage_directions
-        return type.__new__(cls, name, bases, dict)
+        t = type.__new__(cls, name, bases, dict)
+        if 'NAME' in dict:
+            ACTORS.append(t)
+        return t
 
 
 def stage_direction(name):
@@ -98,24 +104,36 @@ def stage_direction(name):
 
 
 class Actor(metaclass=ActorMeta):
-    def __init__(self, scene, pos, dir='right', initial='default'):
+    def __init__(self, scene):
         self.scene = scene
-        self.sprite = self.SPRITE.create_instance(pos)
-        self.sprite.dir = 'right'
-        self.words = None
-        self.sprite.play(initial)
+        self.sprite = None
+        self.visible = False
 
-        frame = self.sprite.sequence.frames[0]
+        frame = self.SPRITE.sequences['default'].frames[0]
         r = frame.sprite.get_rect()
         self._bounds = r.move(*frame.offset)
+
+    def show(self, pos=None, dir='right', initial='default'):
+        self.visible = True
+        self.sprite = self.SPRITE.create_instance(pos or self._last_pos)
+        self.sprite.dir = 'right'
+
+    def hide(self):
+        self._last_pos = self.sprite.pos
+        self.sprite = None
 
     @property
     def pos(self):
         return self.sprite.pos
 
     @pos.setter
-    def pos(self, v):
+    def pos(self, pos):
         self.sprite.pos = pos
+
+    @property
+    def z(self):
+        """Z-index of actor in scene is related to y-coordinate."""
+        return self.sprite.pos[1]
 
     @property
     def bounds(self):
@@ -123,6 +141,9 @@ class Actor(metaclass=ActorMeta):
 
     def draw(self, screen):
         self.sprite.draw(screen)
+
+    def click_action(self):
+        return 'Speak to %s' % self.NAME
 
     @stage_direction('turns to face')
     def face(self, obj):
@@ -159,11 +180,17 @@ class Actor(metaclass=ActorMeta):
 
 
 class Goblit(Actor):
+    NAME = 'GOBLIT'
     COLOR = (255, 255, 255)
     SPRITE = GOBLIT
 
+    def click_action(self):
+        """Clicking on Goblit does nothing."""
+        return None
+
 
 class Tox(Actor):
+    NAME = 'WIZARD TOX'
     COLOR = (150, 50, 255)
     SPRITE = TOX
 
