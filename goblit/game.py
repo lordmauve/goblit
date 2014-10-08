@@ -8,7 +8,7 @@ screen = None
 def init():
     global screen
     pygame.init()
-    screen = pygame.display.set_mode((960, 600))
+    screen = pygame.display.set_mode((960, 620))
     scene.load()
 
 

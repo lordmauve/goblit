@@ -10,6 +10,7 @@ from . import scripts
 from .inventory import FloorItem, sock
 from .transitions import Move
 from .geom import dist
+from .inventory import inventory
 
 
 class Scene:
@@ -73,6 +74,9 @@ class Scene:
     def spawn_object_on_floor(self, item, pos):
         self.objects.append(FloorItem(self, item, pos))
 
+    def unspawn_object(self, obj):
+        self.objects.remove(obj)
+
     def nearest_navpoint(self, pos):
         """Get the position of the nearest navpoint to pos."""
         return min(self.navpoints.values(), key=lambda p: dist(p, pos))
@@ -92,7 +96,7 @@ class Scene:
 
     def action_text(self, msg):
         from .actors import FontBubble
-        self.bubble = FontBubble(msg, pos=(480, 440))
+        self.bubble = FontBubble(msg, pos=(480, 435))
 
     def close_bubble(self):
         self.bubble = None
@@ -260,7 +264,10 @@ class ScriptPlayer:
 
     def play_subscript(self, script):
         self.stack.append([script, 0, None])
-        self.next()
+        if scene.animations:
+            scene.on_animation_finish(self.next)
+        else:
+            self.next()
 
     def end_subscript(self):
         self.stack.pop()
@@ -423,6 +430,7 @@ def update(dt):
 
 def draw(screen):
     scene.draw(screen)
+    inventory.draw(screen)
 
 #   Uncomment to enable debugging of routing
 #    g = scene.grid.build_npcs_grid([a.pos for a in scene.actors.values()])
