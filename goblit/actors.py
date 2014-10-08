@@ -128,7 +128,8 @@ class Actor(metaclass=ActorMeta):
 
     @pos.setter
     def pos(self, pos):
-        self.sprite.pos = pos
+        if self.sprite:
+            self.sprite.pos = pos
 
     @property
     def z(self):
@@ -166,7 +167,7 @@ class Actor(metaclass=ActorMeta):
 
     @stage_direction('moves to')
     def move_to(self, pos, on_move_end=None, strict=True, exclusive=False):
-        if dist(pos, self.pos) > 5:
+        if self.visible and dist(pos, self.pos) > 5:
             self.scene.move(
                 self, pos,
                 on_move_end=on_move_end,
@@ -189,10 +190,11 @@ class Actor(metaclass=ActorMeta):
     @stage_direction('leaves')
     def leave(self):
         """Walk out of the room."""
-        self.move_to(
-            'DOOR',
-            on_move_end=lambda: self.scene.unspawn_actor(self)
-        )
+        if self.visible:
+            self.move_to(
+                'DOOR',
+                on_move_end=lambda: self.scene.unspawn_actor(self)
+            )
 
     @stage_direction('looks out of window')
     def look_out_of_window(self):
