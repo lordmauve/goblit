@@ -71,7 +71,7 @@ class Scene:
         self.objects.remove(actor)
 
     def spawn_object_on_floor(self, item, pos):
-        self.objects.append(FloorItem(item, pos))
+        self.objects.append(FloorItem(self, item, pos))
 
     def nearest_navpoint(self, pos):
         """Get the position of the nearest navpoint to pos."""
@@ -97,8 +97,10 @@ class Scene:
     def close_bubble(self):
         self.bubble = None
 
-    def move(self, actor, goal, on_move_end=None, strict=True):
+    def move(self, actor, goal, on_move_end=None, strict=True, exclusive=False):
         npcs = [a.pos for a in self.actors.values() if a != actor]
+        if exclusive:
+            npcs.append(goal)
         route = self.grid.route(actor.pos, goal, npcs=npcs, strict=strict)
         self.animations.append(Move(route, actor, on_move_end=on_move_end))
 

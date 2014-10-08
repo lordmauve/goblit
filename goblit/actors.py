@@ -165,9 +165,14 @@ class Actor(metaclass=ActorMeta):
         self.sprite.play('default')
 
     @stage_direction('moves to')
-    def move_to(self, pos, on_move_end=None, strict=True):
+    def move_to(self, pos, on_move_end=None, strict=True, exclusive=False):
         if dist(pos, self.pos) > 5:
-            self.scene.move(self, pos, on_move_end=on_move_end, strict=strict)
+            self.scene.move(
+                self, pos,
+                on_move_end=on_move_end,
+                strict=strict,
+                exclusive=exclusive
+            )
 
     def move_to_point(self, navpoint, on_move_end=None):
         """Move to the named navpoint."""

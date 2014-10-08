@@ -2,7 +2,8 @@ from .loaders import load_image
 
 
 class FloorItem(object):
-    def __init__(self, item, pos):
+    def __init__(self, scene, item, pos):
+        self.scene = scene
         self.item = item
         self.pos = pos
 
@@ -15,6 +16,18 @@ class FloorItem(object):
         return 'Pick up %s' % self.item.name
 
     def click(self):
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            actor.move_to(
+                self.pos,
+                on_move_end=lambda: self.take(actor),
+                strict=False,
+                exclusive=True
+            )
+
+    def take(self, actor):
+        """Actually pick up the thing."""
+        actor.face(self)
         print("Picking up %s" % self.item.name)
 
     @property
