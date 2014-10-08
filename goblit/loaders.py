@@ -3,7 +3,7 @@ import os.path
 
 
 # This is the directory in which graphics will be stored
-IMAGE_DIR = 'graphics/'
+IMAGE_DIR = 'graphics'
 
 
 def load_image(name):

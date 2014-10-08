@@ -245,6 +245,11 @@ class ScriptError(Exception):
 
 
 class ScriptPlayer:
+    @classmethod
+    def from_file(cls, name, clock=clock, on_finish=None):
+        s = scripts.parse_file('script')
+        return cls(s, clock, on_finish)
+
     def __init__(self, script, clock, on_finish=None):
         self.clock = clock
         self.stack = []
@@ -399,6 +404,13 @@ class ScriptPlayer:
         scene.object_scripts[directive.data.strip()] = directive
         self.do_next()
 
+    def directive_include(self, directive):
+        if directive.contents:
+            raise ScriptError("Include directive may not have contents.")
+        filename = directive.data.strip()
+        s = scripts.parse_file(filename)
+        self.play_subscript(s)
+
 
 # Script player
 player = None
@@ -411,8 +423,7 @@ def load():
     scene.load()
     Cursor.load()
 
-    s = scripts.parse_file('script.txt')
-    player = ScriptPlayer(s, clock)
+    player = ScriptPlayer.from_file('script')
 
     scene.init_scene()
 

@@ -1,47 +1,4 @@
-.. on:: Look at FIREPLACE
-
-    [GOBLIT moves to FIREPLACE]
-    GOBLIT: Ooh, toasty.
-
-.. on:: Look at CHANDELIER
-
-    GOBLIT: Are those electric lightbulbs?
-
-.. on:: Look at PAINTING
-
-    [GOBLIT moves to UP STAGE RIGHT]
-    [GOBLIT turns to face PAINTING]
-    GOBLIT: That looks like...
-    WIZARD TOX: It's me, sitting on a dragon.
-
-    .. on:: Look at PAINTING
-
-        GOBLIT: It's Wizard Tox, sitting on a dragon. Obvs.
-
-.. on:: Look at KETTLE
-
-    [GOBLIT moves to FIREPLACE]
-    GOBLIT: Looks hot. Someone must have wanted a cup of tea.
-
-.. on:: Look out of WINDOW
-
-    [GOBLIT looks out of window]
-    GOBLIT: I can see bits of a castle.
-    GOBLIT: That comes as no surprise, because we are in a castle.
-
-.. on:: Pick up SOCK
-
-    GOBLIT: It's a woolen sock.
-    GOBLIT: I don't know where that came from; we don't even have feet.
-
-.. on:: Use SOCK with GOBLIT
-
-    GOBLIT: I don't have feet.
-    GOBLIT: This is basically useless to me.
-
-.. on:: Use * with *
-    # This is a wildcard, when we don't know how to react.
-    GOBLIT: I don't know what you want me to do.
+.. include:: act1defs
 
 Act 1
 =====

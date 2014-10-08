@@ -2,7 +2,7 @@ import re
 import os.path
 import xml.etree.ElementTree as ET
 
-NAVPOINT_PATH = 'data/'
+NAVPOINT_PATH = 'data'
 
 
 def make_id(id):

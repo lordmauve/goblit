@@ -6,6 +6,7 @@ The entire script for the game is loaded from an RST-like file.
 """
 import re
 from collections import namedtuple
+import os.path
 
 COMMENT_RE = re.compile(r'\s*#.*')
 DIRECTIVE_RE = re.compile(r'.. ([\w-]+)::\s*(.+)?')
@@ -69,8 +70,12 @@ TOKEN_TYPES = [
 ]
 
 
+SCRIPT_DIR = 'scripts'
+
+
 def read_lines(file):
-    with open(file, 'rU', encoding='utf8') as f:
+    path = os.path.join(SCRIPT_DIR, file + '.txt')
+    with open(path, 'rU', encoding='utf8') as f:
         yield from f
 
 

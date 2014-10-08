@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 
 from .navpoints import make_id
 
-HITMAP_PATH = 'data/'
+HITMAP_PATH = 'data'
 
 
 class HitMap:

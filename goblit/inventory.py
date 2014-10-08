@@ -19,6 +19,12 @@ class FloorItem(object):
         return 0
 
     def click_actions(self):
+        """Get actions for the given object.
+
+        Only one will actually be used; therefore ensure that operations that
+        do things go above purely aesthetic ones.
+
+        """
         return [
             Action('Pick up %s' % self.name, self.click),
             Action('Look at %s' % self.name)
