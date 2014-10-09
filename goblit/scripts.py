@@ -50,10 +50,10 @@ Gift = namedtuple('Gift', 'character object')
 class Directive:
     indent = None
 
-    def __init__(self, name, data):
-        self.name = name
+    def __init__(self, name, data='', contents=None):
+        self.name = name.strip()
         self.data = data
-        self.contents = []
+        self.contents = contents or []
 
     def __repr__(self):
         return '<%s %r>' % (self.name, self.data)
@@ -115,8 +115,8 @@ class Script:
     """A whole script."""
     indent = 0
 
-    def __init__(self):
-        self.contents = []
+    def __init__(self, contents=None):
+        self.contents = contents or []
 
     def __repr__(self):
         return repr(self.contents)

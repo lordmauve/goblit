@@ -23,6 +23,13 @@
     [GOBLIT moves to FIREPLACE]
     GOBLIT: Looks hot. Someone must have wanted a cup of tea.
 
+.. allow:: Look at YORICK
+
+    [GOBLIT turns to face YORICK]
+    GOBLIT: Hello up there!
+    [pause]
+    GOBLIT: He's not talkative.
+
 .. allow:: Look at PARROT
 
     [GOBLIT moves to NEAR PARROT]
@@ -33,12 +40,12 @@
 
     .. rename:: PARROT -> EX PARROT
 
-    .. deny:: Pick up EX PARROT
+    .. deny:: Take EX PARROT
 
         [GOBLIT moves to NEAR PARROT]
         WIZARD TOX: Leave my parrot alone!
 
-        .. unbind:: Pick up EX PARROT
+        .. unbind:: Take EX PARROT
 
         .. allow:: Look at EX PARROT
 
@@ -62,8 +69,24 @@
 
 .. allow:: Use * with *
     # This is a wildcard, when we don't know how to react.
-    GOBLIT: I don't know what you want me to do.
+
+    .. random::
+
+        GOBLIT: I don't know what you want me to do.
+        GOBLIT: Seriously?
+
+.. deny:: Use * with HEAP
+
+    GOBLIT: What even is that heap?
 
 .. allow:: Use * with CHANDELIER
 
     GOBLIT: I don't know how I'd get it up there.
+
+.. allow:: Take MUG
+
+    GOBLIT: A bit chipped, but basically clean.
+
+.. deny:: Use MUG with SOCK
+
+    GOBLIT: You picked up a mug and a sock and thought I'd magically combine them?

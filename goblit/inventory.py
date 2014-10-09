@@ -3,7 +3,15 @@ from .loaders import load_image
 from .actions import Action
 
 
-class FloorItem(object):
+class SceneItem:
+    """Base class for an item that is visible in the scene.
+
+    This wraps an underlying item.
+
+    """
+    # Z-coordinate is always behind other items
+    z = 0
+
     def __init__(self, scene, item, pos):
         self.scene = scene
         self.item = item
@@ -17,11 +25,6 @@ class FloorItem(object):
     def name(self, v):
         self.item.name = v
 
-    @property
-    def z(self):
-        """Z-coordinate is always behind other items"""
-        return 0
-
     def click_actions(self):
         """Get actions for the given object.
 
@@ -29,22 +32,9 @@ class FloorItem(object):
         do things go above purely aesthetic ones.
 
         """
-        return [
-            Action('Pick up %s' % self.name, self.click),
-            Action('Look at %s' % self.name)
-        ]
+        return [Action('Look at %s' % self.name)]
 
-    def click(self):
-        actor = self.scene.get_actor('GOBLIT')
-        if actor:
-            actor.move_to(
-                self.pos,
-                on_move_end=lambda: self.take(actor),
-                strict=False,
-                exclusive=True
-            )
-
-    def take(self, actor):
+    def give_item(self, actor):
         """Actually pick up the thing."""
         actor.face(self)
         inventory.add(self.item)
@@ -59,6 +49,50 @@ class FloorItem(object):
     def draw(self, screen):
         im = self.item.image
         screen.blit(im, self.pos)
+
+
+class FloorItem(SceneItem):
+    """An item that is lying on the floor."""
+    # Z-coordinate is always behind other items
+    z = 0
+
+    def click_actions(self):
+        """Floor items can be picked up."""
+        return (
+            [Action('Pick up %s' % self.name, self.pick_up)] +
+            super().click_actions()
+        )
+
+    def pick_up(self):
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            actor.move_to(
+                self.pos,
+                on_move_end=lambda: self.give_item(actor),
+                strict=False,
+                exclusive=True
+            )
+
+
+class PointItem(SceneItem):
+    def __init__(self, scene, item, pos, navpoint):
+        super().__init__(scene, item, pos)
+        self.navpoint = navpoint
+
+    def click_actions(self):
+        """Floor items can be picked up."""
+        return (
+            [Action('Take %s' % self.name, self.take)] +
+            super().click_actions()
+        )
+
+    def take(self):
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            actor.move_to_navpoint(
+                self.navpoint,
+                on_move_end=lambda: self.give_item(actor)
+            )
 
 
 class Item:
@@ -118,9 +152,26 @@ class Inventory:
         self.items.append(item)
 
     def remove(self, item):
+        """Remove item from inventory."""
         if item is self.selected:
             self.selected = None
         self.items.remove(item)
+
+    def gain(self, item_name):
+        """Add the item wih the given name to the inventory."""
+        i = Item.items[item_name]
+        self.add(i)
+
+    def lose(self, item_name):
+        """Take the item wih the given name from the inventory.
+
+        Raises ValueError if the player is not holding that item.
+
+        """
+        i = Item.items[item_name]
+        if i not in self.items:
+            raise ValueError("Player does not have %s" % item_name)
+        self.remove(i)
 
     def layout(self):
         """Iterate items in a grid layout as (x, y, item) tuples"""

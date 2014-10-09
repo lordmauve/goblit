@@ -37,10 +37,50 @@ WIZARD TOX: Spells to prepare, armies to enchant...
 {Speak to WIZARD TOX}
 WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
-# {Pick up SOCK}
-# {Use SOCK with LOOSE TEA}
-# {Use TEA SOCK with CUP}
-{Use CUP with KETTLE}
+.. allow:: Look at HEAP
+
+    [GOBLIT moves to TEA PILE]
+    GOBLIT: It's loose tea.
+    GOBLIT: Very loose tea.
+
+    .. rename:: HEAP -> LOOSE TEA
+
+    .. allow:: Look at LOOSE TEA
+
+        GOBLIT: I need something to put it in.
+
+.. allow:: Use SOCK with LOOSE TEA
+
+    [GOBLIT moves to TEA PILE]
+    .. lose:: SOCK
+    GOBLIT: Ok, I've filled the sock with tea.
+    .. gain:: TEA SOCK
+
+.. deny:: Use TEA SOCK with LOOSE TEA
+
+    GOBLIT: It's already full of tea.
+
+.. deny:: Use MUG with LOOSE TEA
+
+    GOBLIT: That's not really the kind of cup of tea anyone wants.
+
+.. deny:: Use MUG with KETTLE
+
+    GOBLIT: I need some tea in it first.
+
+.. allow:: Use TEA SOCK with MUG
+
+    .. lose:: TEA SOCK
+    .. lose:: MUG
+    .. gain:: MUG WITH TEA SOCK
+
+    GOBLIT: Just need some water now.
+
+{Use MUG WITH TEA SOCK with KETTLE}
+[GOBLIT moves to FIREPLACE]
+.. lose:: MUG WITH TEA SOCK
+.. gain:: CUP OF TEA
+GOBLIT: I'm not sure this was a good idea.
 
 [PRINCESS enters]
 PRINCESS: Hello, Wizard Tox!
@@ -277,8 +317,8 @@ RALPH: It's been in my pocket.
 
 {Use TEA}
 GOBLIT: Urgh, that's really awful. Why did I make that?
-{Use KETTLE with CUP}
-{Use FLOWER with CUP}
+{Use KETTLE with MUG}
+{Use FLOWER with MUG}
 GOBLIT: That'll be just fine.
 
 RALPH: I was thinking about your war problem.
@@ -297,8 +337,8 @@ GOBLIT: According to the spell, I'm going to need EGGS, FLOUR and MILK.
 
 {Take EX PARROT}
 {Take FLOWER}
-{Take CUP}
-{Use CUP with CAT}
+{Take MUG}
+{Use MUG with CAT}
 {Use CAT MILK with POTION}
 {Use EX PARROT with POTION}
 {Use FLOWER with POTION}

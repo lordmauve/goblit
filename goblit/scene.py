@@ -1,4 +1,6 @@
 import re
+import random
+from functools import wraps
 import pygame.mouse
 from pygame.cursors import load_xbm
 
@@ -8,7 +10,7 @@ from .navpoints import points_from_svg
 from .routing import Grid
 from . import clock
 from . import scripts
-from .inventory import FloorItem
+from .inventory import FloorItem, PointItem, Item
 from .transitions import Move
 from .geom import dist
 from .inventory import inventory
@@ -79,7 +81,26 @@ class Scene:
         self.objects.remove(actor)
 
     def spawn_object_on_floor(self, item, pos):
+        """Spawn an object that is not on the floor.
+
+        pos is both the screen position and the inferred position on the floor.
+
+        """
+        item = Item.items[item]
         self.objects.append(FloorItem(self, item, pos))
+
+    def spawn_object_near_navpoint(self, item, pos, navpoint):
+        """Spawn an object.
+
+        pos is the screen position of the object.
+
+        Actors approach the given navpoint to approach the object.
+
+        """
+        item = Item.items[item]
+        if navpoint not in self.navpoints:
+            raise KeyError("Unknown navpoint %s" % navpoint)
+        self.objects.append(PointItem(self, item, pos, navpoint))
 
     def unspawn_object(self, obj):
         self.objects.remove(obj)
@@ -91,11 +112,14 @@ class Scene:
                 o.name = new_name
                 return
 
-        for k, v in self.hitmap.items():
+        hitmap = self.hitmap.regions
+        for k, v in hitmap.items():
             if k == current_name:
-                del self.hitmap[k]
-                self.hitmap[new_name] = v
+                del hitmap[k]
+                hitmap[new_name] = v
                 return
+
+        raise KeyError(current_name)
 
     def nearest_navpoint(self, pos):
         """Get the position of the nearest navpoint to pos."""
@@ -215,26 +239,36 @@ class Scene:
 
     WILDCARD_ACTIONS = [
         'Use {item} with {target}',
+        'Use {target} with {item}',
         'Use {item} with *',
         'Use * with {target}',
         'Use * with *'
     ]
 
+    def action_item_together(self, name, other_name):
+        """Find an action for using the two named items together."""
+        default_name = 'Use %s with %s' % (name, other_name)
+        for template in self.WILDCARD_ACTIONS:
+            base_action = Action(
+                template.format(item=name, target=other_name)
+            )
+            action = self.make_action_handler(base_action)
+            if action:
+                action.name = default_name
+                return action
+
     def action_item_use(self, item, pos):
+        """Find an action for using the item with the given screen position."""
+        # FIXME: If the other object is an object in the scene, make sure
+        # Goblit has picked up the thing first
         for objname in self.collidepoint(pos):
             item_action = item.get_use_action(objname)
             if item_action:
                 return self.make_action_handler(item_action)
             else:
-                default_name = 'Use %s with %s' % (item.name, objname)
-                for template in self.WILDCARD_ACTIONS:
-                    base_action = Action(
-                        template.format(item=item.name, target=objname)
-                    )
-                    action = self.make_action_handler(base_action)
-                    if action:
-                        action.name = default_name
-                        return action
+                action = self.action_item_together(item.name, objname)
+                if action:
+                    return action
 
     def action_click(self, pos):
         """Get an action for the given point."""
@@ -269,6 +303,24 @@ class Cursor:
 
 class ScriptError(Exception):
     """A state problem means a script step can't play."""
+
+
+def simple_directive(func):
+    """Shortcut for simple directives.
+
+    Define a directive that doesn't take contents and which completes
+    immediately.
+
+    """
+    @wraps(func)
+    def _wrapper(self, directive):
+        if directive.contents:
+            raise ScriptError(
+                "%s directive may not have contents." % directive.name
+            )
+        func(self, directive)
+        self.do_next()
+    return _wrapper
 
 
 class ScriptPlayer:
@@ -433,29 +485,68 @@ class ScriptPlayer:
 
     directive_deny = directive_allow
 
+    @simple_directive
     def directive_unbind(self, directive):
-        if directive.contents:
-            raise ScriptError("Unbind directive may not have contents.")
         del scene.object_scripts[directive.data.strip()]
-        self.do_next()
 
     def directive_include(self, directive):
         if directive.contents:
             raise ScriptError("Include directive may not have contents.")
-        filename = directive.data.strip()
+        filename = directive.data
         s = scripts.parse_file(filename)
         self.skippable = True
         self.play_subscript(s)
 
+    @simple_directive
     def directive_rename(self, directive):
-        if directive.contents:
-            raise ScriptError("rename directive may not have contents.")
-        mo = re.match(r'([A-Z ]+) -> ([A-Z ]+)', directive.data)
+        mo = re.match(r'^([A-Z ]+?)\s*->\s*([A-Z ]+)$', directive.data)
         if not mo:
             raise ScriptError("Couldn't parse rename directive %r" % directive.data)
         scene.rename(*mo.groups())
-        self.do_next()
 
+    @simple_directive
+    def directive_gain(self, directive):
+        """Gain an item."""
+        try:
+            inventory.gain(directive.data)
+        except KeyError:
+            raise ScriptError("No such item %s" % directive.data)
+
+    @simple_directive
+    def directive_lose(self, directive):
+        """Lose an item."""
+        try:
+            inventory.lose(directive.data)
+        except KeyError:
+            raise ScriptError("No such item %s" % directive.data)
+        except ValueError:
+            raise ScriptError("Player does not have %s" % directive.data)
+
+    def directive_choice(self, directive):
+        """On its own, does nothing. Just plays the contents.
+
+        Useful for grouping.
+
+        """
+        self.play_subscript(directive)
+
+    def directive_random(self, directive):
+        """Pick one contents line at random.
+
+        For example,
+
+        .. random::
+
+            GOBLIT: Maybe I'll say this.
+            GOBLIT: Maybe I'll say that.
+            .. choice::
+                GOBLIT: Maybe I'll say this...
+                GOBLIT: ...then that.
+
+        """
+        s = scripts.Script([random.choice(directive.contents)])
+        self.skippable = True
+        self.play_subscript(s)
 
 
 # Script player
@@ -486,6 +577,19 @@ def on_mouse_down(pos, button):
                 inventory.deselect()
                 Cursor.set_pointer()
                 action()
+            elif player.show_inventory():
+                item = inventory.item_for_pos(pos)
+                if item:
+                    if item is inventory.selected:
+                        inventory.select(item)
+                        return
+
+                    Cursor.set_pointer()
+                    action = scene.action_item_together(inventory.selected.name, item.name)
+                    if action:
+                        action()
+                    inventory.deselect()
+                    return
         else:
             r = scene.action_click(pos)
             if r:
@@ -518,6 +622,19 @@ def on_mouse_move(pos, rel, buttons):
             Cursor.set_pointer()
             scene.action_text(action.name)
         else:
+            if player.show_inventory():
+                item = inventory.item_for_pos(pos)
+                if item:
+                    if item is inventory.selected:
+                        scene.action_text(item.name)
+                        return
+
+                    Cursor.set_pointer()
+                    scene.action_text(
+                        'Use %s with %s' % (inventory.selected.name, item.name)
+                    )
+                    return
+
             scene.action_text('Use %s' % inventory.selected.name)
     else:
         action = scene.action_click(pos)

@@ -178,17 +178,17 @@ class Actor(metaclass=ActorMeta):
                 exclusive=exclusive
             )
 
-    def move_to_point(self, navpoint, on_move_end=None):
+    def move_to_navpoint(self, navpoint, *args, **kwargs):
         """Move to the named navpoint."""
         pos = self.scene.navpoints[navpoint]
-        self.move_to(pos, on_move_end=on_move_end)
+        self.move_to(pos, *args, **kwargs)
 
     @stage_direction('enters')
     def enter(self, navpoint='ENTRANCE'):
         """Enter via the door and walk to navpoint."""
         pos = self.scene.navpoints['DOOR']
         self.scene.spawn_actor(self.NAME, pos)
-        self.move_to_point(navpoint)
+        self.move_to_navpoint(navpoint)
 
     @stage_direction('leaves')
     def leave(self):
@@ -219,7 +219,7 @@ class Goblit(Actor):
 
 class Tox(Actor):
     NAME = 'WIZARD TOX'
-    COLOR = (150, 50, 255)
+    COLOR = (170, 100, 255)
     SPRITE = TOX
 
     @stage_direction('turns around')
