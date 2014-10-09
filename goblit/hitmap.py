@@ -14,8 +14,8 @@ class HitMap:
         tree = ET.parse(path)
         regions = {}
         for e in tree.iter('{http://www.w3.org/2000/svg}rect'): #findall('.//{http://www.w3.org/2000/svg}rect'):
-            w = int(e.get('width'))
-            h = int(e.get('height'))
+            w = round(float(e.get('width')))
+            h = round(float(e.get('height')))
             x = round(float(e.get('x')))
             y = round(float(e.get('y')))
             id = make_id(e.get('id'))

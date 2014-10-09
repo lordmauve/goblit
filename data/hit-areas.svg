@@ -95,5 +95,53 @@
        x="696"
        y="78"
        inkscape:label="#rect7739" />
+    <rect
+       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="strange_goo"
+       width="61.518288"
+       height="58.689861"
+       x="448.30569"
+       y="154.7639"
+       inkscape:label="#rect7612" />
+    <rect
+       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="heap"
+       width="48.790367"
+       height="43.133514"
+       x="255.97264"
+       y="273.55783"
+       inkscape:label="#rect7614" />
+    <rect
+       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="yorick"
+       width="25.455843"
+       height="29.698484"
+       x="105.35891"
+       y="83.346115"
+       inkscape:label="#rect7616" />
+    <rect
+       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="crystal_ball"
+       width="24.04163"
+       height="28.284271"
+       x="134.35028"
+       y="188.70502"
+       inkscape:label="#rect7618" />
+    <rect
+       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="spellbook"
+       width="54.447224"
+       height="44.547726"
+       x="778.52454"
+       y="250.22331"
+       inkscape:label="#rect7620" />
+    <rect
+       inkscape:label="#rect7620"
+       y="221.93904"
+       x="118.08682"
+       height="107.48022"
+       width="54.447224"
+       id="bookcase"
+       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
   </g>
 </svg>

@@ -37,9 +37,9 @@ WIZARD TOX: Spells to prepare, armies to enchant...
 {Speak to WIZARD TOX}
 WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
-{Take SOCK}
-{Use SOCK with LOOSE TEA}
-{Use TEA SOCK with CUP}
+# {Pick up SOCK}
+# {Use SOCK with LOOSE TEA}
+# {Use TEA SOCK with CUP}
 {Use CUP with KETTLE}
 
 [PRINCESS enters]
@@ -74,8 +74,8 @@ WIZARD TOX: Stop dawdling, boy, and offer the princess some tea!
 GOBLIT: Um... Would you like a cup of tea?
 PRINCESS: Sure!
 
-{Take Y WAND}
-{Use WAND with TEA}
+# {Take Y WAND}
+# {Use WAND with TEA}
 {Give TEA to PRINCESS}
 
 PRINCESS: *gack*
