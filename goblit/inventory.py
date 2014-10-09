@@ -93,10 +93,6 @@ class Item:
         return self._icon
 
 
-sock = Item('sock')
-kettle = Item('kettle')
-
-
 class Inventory:
 
     item_bg = None

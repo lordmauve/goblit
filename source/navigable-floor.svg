@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="navigable-floor.svg"
-   inkscape:export-filename="/home/mauve/dev/goblit/data/navigable-floor.png"
+   inkscape:export-filename="/home/mauve/dev/goblit/data/floor.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -29,7 +29,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="485.40149"
+     inkscape:cx="401.96289"
      inkscape:cy="208.21618"
      inkscape:document-units="px"
      inkscape:current-layer="layer6"
@@ -51,15 +51,14 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"
-     sodipodi:insensitive="true">
+     id="layer1">
     <image
        y="0"
        x="0"
@@ -70,15 +69,16 @@
        style="opacity:0.75" />
     <path
        style="fill:#ff00ff;stroke:none"
-       d="m 135,354 46,-37 88,1 6,1 7,-10 418,0 69,57 32.02259,0.0934 L 875,340 c 0,0 -5,20 -2,33 3,13 19,32 29,36 10,4 63,20 63,20 l -882,0 -16,-46 -102,0 0,-19 124,0 13,-10 z"
+       d="m 135,354 46,-37 88,1 c 8.73065,2.2322 8.0047,-1.86385 13,-9 l 122.46507,0 10.67608,10.42717 118.06348,0.32838 c 0,0 23.28839,4.8008 42.38027,5.50791 13.92178,-2.16734 26.04037,1.07484 45.25484,-16.97057 L 707.77817,309 769,366 801.02259,366.0934 875,340 c 0,0 -5,20 -2,33 3,13 19,32 29,36 10,4 63,20 63,20 l -882,0 -16,-46 -102,0 0,-19 124,0 13,-10 z"
        id="path7760"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccsscccccccc" />
+       sodipodi:nodetypes="cccccccccccccsscccccccc" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer6"
-     inkscape:label="Nav markers">
+     inkscape:label="Nav markers"
+     style="display:inline">
     <g
        id="g8066" />
     <g
@@ -207,6 +207,15 @@
        width="960"
        transform="translate(692.81432,399.03867)"
        id="down_stage_right"
+       xlink:href="#g8071"
+       y="0"
+       x="0" />
+    <use
+       inkscape:label="#use8078"
+       height="427"
+       width="960"
+       transform="translate(574.4123,327.0351)"
+       id="near_parrot"
        xlink:href="#g8071"
        y="0"
        x="0" />

@@ -7,7 +7,7 @@ from .navpoints import points_from_svg
 from .routing import Grid
 from . import clock
 from . import scripts
-from .inventory import FloorItem, sock, kettle
+from .inventory import FloorItem
 from .transitions import Move
 from .geom import dist
 from .inventory import inventory
@@ -59,8 +59,8 @@ class Scene:
 
     def init_scene(self):
         self.spawn_actor('WIZARD TOX', (719, 339), initial='sitting-at-desk')
-        self.spawn_object_on_floor(sock, (291, 379))
-        self.spawn_object_on_floor(kettle, (892, 427 - 79))
+        from . import items
+        items.spawn_all(self)
         clock.each_tick(self.update)
 
     def spawn_actor(self, name, pos=None, dir='right', initial='default'):

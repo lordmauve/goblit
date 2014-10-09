@@ -29,7 +29,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="343.98013"
+     inkscape:cx="401.96289"
      inkscape:cy="208.21618"
      inkscape:document-units="px"
      inkscape:current-layer="layer6"
@@ -58,8 +58,7 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"
-     sodipodi:insensitive="true">
+     id="layer1">
     <image
        y="0"
        x="0"
@@ -70,7 +69,7 @@
        style="opacity:0.75" />
     <path
        style="fill:#ff00ff;stroke:none"
-       d="m 135,354 46,-37 88,1 6,1 7,-10 127.41483,0 2.82842,10.6066 113.35891,0 L 529.62298,309 700,309 l 69,57 32.02259,0.0934 L 875,340 c 0,0 -5,20 -2,33 3,13 19,32 29,36 10,4 63,20 63,20 l -882,0 -16,-46 -102,0 0,-19 124,0 13,-10 z"
+       d="m 135,354 46,-37 88,1 c 8.73065,2.2322 8.0047,-1.86385 13,-9 l 122.46507,0 10.67608,10.42717 118.06348,0.32838 c 0,0 23.28839,4.8008 42.38027,5.50791 13.92178,-2.16734 26.04037,1.07484 45.25484,-16.97057 L 707.77817,309 769,366 801.02259,366.0934 875,340 c 0,0 -5,20 -2,33 3,13 19,32 29,36 10,4 63,20 63,20 l -882,0 -16,-46 -102,0 0,-19 124,0 13,-10 z"
        id="path7760"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccccccsscccccccc" />
@@ -85,7 +84,7 @@
     <g
        id="g8071">
       <path
-         d="m 12.020815,0.43783391 a 10.960155,4.7729707 0 1 1 -21.9203094,0 10.960155,4.7729707 0 1 1 21.9203094,0 z"
+         d="m 12.020815,0.43783391 c 0,2.63603889 -4.9070287,4.77297069 -10.9601549,4.77297069 -6.0531262,0 -10.9601545,-2.1369318 -10.9601545,-4.77297069 0,-2.63603891 4.9070283,-4.77297071 10.9601545,-4.77297071 6.0531262,0 10.9601549,2.1369318 10.9601549,4.77297071 z"
          sodipodi:ry="4.7729707"
          sodipodi:rx="10.960155"
          sodipodi:cy="0.43783391"
@@ -161,7 +160,7 @@
        inkscape:label="#use8078"
        height="427"
        width="960"
-       transform="translate(0.71172632,372.80465)"
+       transform="translate(2.1259399,372.80465)"
        id="door"
        xlink:href="#g8071"
        y="0"
@@ -215,10 +214,19 @@
        inkscape:label="#use8078"
        height="427"
        width="960"
-       transform="translate(634.51638,317.1356)"
-       id="up_stage_right"
+       transform="translate(574.4123,327.0351)"
+       id="near_parrot"
        xlink:href="#g8071"
        y="0"
        x="0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g8071"
+       id="cabinet"
+       transform="translate(466.93207,321.37825)"
+       width="960"
+       height="427"
+       inkscape:label="#use8078" />
   </g>
 </svg>

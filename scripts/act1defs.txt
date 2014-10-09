@@ -23,6 +23,18 @@
     [GOBLIT moves to FIREPLACE]
     GOBLIT: Looks hot. Someone must have wanted a cup of tea.
 
+.. on:: Look at PARROT
+
+    [GOBLIT moves to NEAR PARROT]
+    GOBLIT: Oooh's a pretty boy then?
+    GOBLIT: Remarkable bird, the Norwegian Blue. Beautiful plumage.
+    GOBLIT: Wait a second... this parrot is dead!
+    WIZARD TOX: You leave Polly alone!
+
+    .. on:: Look at PARROT
+
+        GOBLIT: He's pining for the fjords.
+
 .. on:: Look out of WINDOW
 
     [GOBLIT looks out of window]
