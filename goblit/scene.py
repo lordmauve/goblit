@@ -434,6 +434,8 @@ class ScriptPlayer:
     directive_deny = directive_allow
 
     def directive_unbind(self, directive):
+        if directive.contents:
+            raise ScriptError("Unbind directive may not have contents.")
         del scene.object_scripts[directive.data.strip()]
         self.do_next()
 
