@@ -1,3 +1,4 @@
+import re
 import pygame.mouse
 from pygame.cursors import load_xbm
 
@@ -82,6 +83,19 @@ class Scene:
 
     def unspawn_object(self, obj):
         self.objects.remove(obj)
+
+    def rename(self, current_name, new_name):
+        """Rename an object or hit area."""
+        for o in self.objects:
+            if o.name == current_name:
+                o.name = new_name
+                return
+
+        for k, v in self.hitmap.items():
+            if k == current_name:
+                del self.hitmap[k]
+                self.hitmap[new_name] = v
+                return
 
     def nearest_navpoint(self, pos):
         """Get the position of the nearest navpoint to pos."""
@@ -359,8 +373,8 @@ class ScriptPlayer:
             self.do_next()
 
     def do_next(self):
+        self.skippable = True
         if scene.animations:
-            self.skippable = True
             scene.on_animation_finish(self.do_next)
         else:
             self.schedule_next(0)
@@ -404,7 +418,6 @@ class ScriptPlayer:
             handler(actor, object)
         else:
             handler(actor)
-        self.skippable = True
         self.do_next()
 
     def do_directive(self, directive):
@@ -416,14 +429,12 @@ class ScriptPlayer:
 
     def directive_allow(self, directive):
         scene.object_scripts[directive.data.strip()] = directive
-        self.skippable = True
         self.do_next()
 
     directive_deny = directive_allow
 
     def directive_unbind(self, directive):
         del scene.object_scripts[directive.data.strip()]
-        self.skippable = True
         self.do_next()
 
     def directive_include(self, directive):
@@ -433,6 +444,16 @@ class ScriptPlayer:
         s = scripts.parse_file(filename)
         self.skippable = True
         self.play_subscript(s)
+
+    def directive_rename(self, directive):
+        if directive.contents:
+            raise ScriptError("rename directive may not have contents.")
+        mo = re.match(r'([A-Z ]+) -> ([A-Z ]+)', directive.data)
+        if not mo:
+            raise ScriptError("Couldn't parse rename directive %r" % directive.data)
+        scene.rename(*mo.groups())
+        self.do_next()
+
 
 
 # Script player

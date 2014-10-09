@@ -31,14 +31,16 @@
     GOBLIT: Wait a second... this parrot is dead!
     WIZARD TOX: You leave Polly alone!
 
-    .. deny:: Pick up PARROT
+    .. rename:: PARROT -> EX PARROT
+
+    .. deny:: Pick up EX PARROT
 
         [GOBLIT moves to NEAR PARROT]
         WIZARD TOX: Leave my parrot alone!
 
-        .. unbind:: Pick up PARROT
+        .. unbind:: Pick up EX PARROT
 
-        .. allow:: Look at PARROT
+        .. allow:: Look at EX PARROT
 
             GOBLIT: He's pining for the fjords.
 

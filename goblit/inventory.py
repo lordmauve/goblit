@@ -13,6 +13,10 @@ class FloorItem(object):
     def name(self):
         return self.item.name
 
+    @name.setter
+    def name(self, v):
+        self.item.name = v
+
     @property
     def z(self):
         """Z-coordinate is always behind other items"""
