@@ -37,6 +37,10 @@ WIZARD TOX: Spells to prepare, armies to enchant...
 {Speak to WIZARD TOX}
 WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
+.. deny:: Give MUG to WIZARD TOX
+
+    GOBLIT: He wants a cup of tea, not an empty cup.
+
 .. allow:: Look at HEAP
 
     [GOBLIT moves to TEA PILE]
@@ -64,10 +68,6 @@ WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
     GOBLIT: That's not really the kind of cup of tea anyone wants.
 
-.. deny:: Use MUG with KETTLE
-
-    GOBLIT: I need some tea in it first.
-
 .. allow:: Use TEA SOCK with MUG
 
     .. lose:: TEA SOCK
@@ -77,55 +77,75 @@ WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
     GOBLIT: Just need some water now.
 
 {Use MUG WITH TEA SOCK with KETTLE}
-[GOBLIT moves to FIREPLACE]
 .. lose:: MUG WITH TEA SOCK
 .. gain:: CUP OF TEA
 GOBLIT: I'm not sure this was a good idea.
 
-[PRINCESS enters]
-PRINCESS: Hello, Wizard Tox!
-PRINCESS: ...
-PRINCESS: Hello? Who are you?
+[PRINCESS AMELIA enters]
+PRINCESS AMELIA: Hello, Wizard Tox!
+PRINCESS AMELIA: ...
+PRINCESS AMELIA: Hello? Who are you?
 
-.. choice:: Just Goblit.
+.. choose-one::
 
-    GOBLIT: I'm Goblit... I...
-    PRINCESS: I guess you're the new assistant?
-    GOBLIT: New assistant... yes, yes! I just started.
-    PRINCESS: Oh, cool! What an amazing job!
+    .. choice:: Just Goblit.
 
-.. choice:: I'm Apprentice Wizard Goblit!
+        GOBLIT: I'm Goblit... I...
+        PRINCESS AMELIA: I guess you're the new assistant?
+        GOBLIT: New assistant... yes, yes! I just started.
+        PRINCESS AMELIA: Oh, cool! What an amazing job!
 
-    GOBLIT: I'm Goblit, the new apprentice wizard here!
-    PRINCESS: Oh, wow!
+    .. choice:: I'm Apprentice Wizard Goblit!
 
-.. choice:: So far, I just make tea.
+        GOBLIT: I'm Goblit, the new apprentice wizard here!
+        PRINCESS AMELIA: Oh, wow!
 
-    GOBLIT: My name is Goblit. I make the tea around here.
-    PRINCESS: Oh, wow!
-    PRINCESS: I bet you get to see some wonderful magic spells being cast!
+    .. choice:: So far, I just make tea.
 
-PRINCESS: I'm a big fan of magic actually.
-PRINCESS: Sometimes I come here to read the magic books.
-PRINCESS: But, as a princess, they don't really let me play around with the dark arts!
+        GOBLIT: My name is Goblit. I make the tea around here.
+        PRINCESS AMELIA: Oh, wow!
+        PRINCESS AMELIA: I bet you get to see some wonderful magic spells being cast!
+
+PRINCESS AMELIA: I'm a big fan of magic actually.
+PRINCESS AMELIA: Sometimes I come here to read the magic books.
+PRINCESS AMELIA: But, as a princess, they don't really let me play around with the dark arts!
 GOBLIT: You're... you're Princess Amelia!
-PRINCESS: *blush*
+PRINCESS AMELIA: *blush*
 WIZARD TOX: Stop dawdling, boy, and offer the princess some tea!
 GOBLIT: Um... Would you like a cup of tea?
-PRINCESS: Sure!
+PRINCESS AMELIA: Sure!
 
-# {Take Y WAND}
-# {Use WAND with TEA}
-{Give TEA to PRINCESS}
+.. allow:: Take Y WAND
 
-PRINCESS: *gack*
-PRINCESS: Well, thank you for the thought anyway.
-PRINCESS: I can't stay, anyway. I just came to drop this back.
-[PRINCESS gives SPELLBOOK]
-PRINCESS: I guess I'll see you around, Goblit!
-PRINCESS: Goodbye, Wizard Tox!
+    GOBLIT: It's glowing with magical energies. Ready for use!
+
+.. deny:: Give CUP OF TEA to PRINCESS AMELIA
+
+    GOBLIT: Sure... but then what would I give Wizard Tox?
+
+.. deny:: Give CUP OF TEA to WIZARD TOX
+
+    GOBLIT: Sure... but then what would I give Princess Amelia?
+
+.. allow:: Use Y WAND with CUP OF TEA
+
+    .. gain:: CUP OF TEA
+    GOBLIT: So that's what that does.
+
+    .. deny:: Give CUP OF TEA to WIZARD TOX
+
+        GOBLIT: Surely I should serve royalty first?
+
+{Give TEA to PRINCESS AMELIA}
+
+PRINCESS AMELIA: *gack*
+PRINCESS AMELIA: Well, thank you for the thought anyway.
+PRINCESS AMELIA: I can't stay, anyway. I just came to drop this back.
+[PRINCESS AMELIA gives SPELLBOOK]
+PRINCESS AMELIA: I guess I'll see you around, Goblit!
+PRINCESS AMELIA: Goodbye, Wizard Tox!
 WIZARD TOX: Goodbye, princess.
-[PRINCESS leaves]
+[PRINCESS AMELIA leaves]
 
 WIZARD TOX: Tsk. I do not approve of women learning magic.
 
@@ -147,7 +167,7 @@ WIZARD TOX: Tsk. I do not approve of women learning magic.
     WIZARD TOX: Can you imagine what an earful I'd get from Queen Joan if I didn't?
     WIZARD TOX: Besides, she won't be able to do real magic without a wand.
 
-{Give TEA to WIZARD TOX}
+{Give CUP OF TEA to WIZARD TOX}
 WIZARD TOX: What would I want tea for? I've got lunch with the Chancellor.
 WIZARD TOX: Is that the time?
 WIZARD TOX: You - stay here.
@@ -200,12 +220,12 @@ GOBLIT: Hmm, snazzy.
 Scene 3
 -------
 
-[QUEEN enters]
-QUEEN: Where is the apprentice?
+[QUEEN JOAN enters]
+QUEEN JOAN: Where is the apprentice?
 
 {Use CLOAK on PURPLE GOO}
 
-QUEEN: You! Are you Tox's apprentice?
+QUEEN JOAN: You! Are you Tox's apprentice?
 
 .. choice:: ...sure?
 
@@ -213,40 +233,40 @@ QUEEN: You! Are you Tox's apprentice?
 
 .. choice:: So far, I just make tea.
 
-QUEEN: Whatever. Listen, I'm afraid Wizard Tox has been eaten.
+QUEEN JOAN: Whatever. Listen, I'm afraid Wizard Tox has been eaten.
 GOBLIT: EATEN!?!
-QUEEN: Yes, by a dragon. Surely you know we're at war?
+QUEEN JOAN: Yes, by a dragon. Surely you know we're at war?
 GOBLIT: ...yes? Yes. Of course.
 
 .. choice:: Who with?
 
     GOBLIT: With whom are we warring, your majesty?
-    QUEEN: Oh, just some ancient, evil sorceror with hordes of minions.
-    QUEEN: Voltak the Evil and the seven legions of Hell.
-    QUEEN: Usual kind of war.
+    QUEEN JOAN: Oh, just some ancient, evil sorceror with hordes of minions.
+    QUEEN JOAN: Voltak the Evil and the seven legions of Hell.
+    QUEEN JOAN: Usual kind of war.
 
 .. choice:: Why?
 
     GOBLIT: What are we warring over, your majesty?
-    QUEEN: Oh, just our very existence.
-    QUEEN: We want to exerminate every last one of them.
-    QUEEN: They want to exerminate every last one of us.
-    QUEEN: Usual kind of war.
+    QUEEN JOAN: Oh, just our very existence.
+    QUEEN JOAN: We want to exerminate every last one of them.
+    QUEEN JOAN: They want to exerminate every last one of us.
+    QUEEN JOAN: Usual kind of war.
 
 .. choice:: How's it going?
 
     GOBLIT: Are we winning, your majesty?
-    QUEEN: How do you think it's going? Wizard Tox was just eaten by a dragon.
-    QUEEN: While at lunch with the chancellor.
-    QUEEN: In THIS CASTLE!
+    QUEEN JOAN: How do you think it's going? Wizard Tox was just eaten by a dragon.
+    QUEEN JOAN: While at lunch with the chancellor.
+    QUEEN JOAN: In THIS CASTLE!
 
-QUEEN: So... you're now Grand Wizard.
+QUEEN JOAN: So... you're now Grand Wizard.
 GOBLIT: I...
-QUEEN: Get to it.
-QUEEN: I want this war over. Cast a spell or something.
-QUEEN: Turn them all into frogs, perhaps.
-QUEEN: Don't you dare leave here until you've got a spell ready.
-[QUEEN leaves]
+QUEEN JOAN: Get to it.
+QUEEN JOAN: I want this war over. Cast a spell or something.
+QUEEN JOAN: Turn them all into frogs, perhaps.
+QUEEN JOAN: Don't you dare leave here until you've got a spell ready.
+[QUEEN JOAN leaves]
 
 GOBLIT: Um. Maybe I should read some spells, then.
 
@@ -261,19 +281,19 @@ Scene 1
 
 GOBLIT: Nothing. Nothing of any use.
 
-[PRINCESS enters]
-PRINCESS: Your glasses look ridiculous.
+[PRINCESS AMELIA enters]
+PRINCESS AMELIA: Your glasses look ridiculous.
 
 .. choice:: Er... they are for a spell.
 
     GOBLIT: Oh, these? They are... for... scrying.
-    PRINCESS: Scrying?
+    PRINCESS AMELIA: Scrying?
     GOBLIT: Scrying... on purple things.
 
 .. choice:: Not snazzy?
 
     GOBLIT: You don't think they are kind of snazzy?
-    PRINCESS: ...no.
+    PRINCESS AMELIA: ...no.
 
 [GOBLIT removes glasses]
 
@@ -306,7 +326,7 @@ RALPH: You only just passed the basic certification!
 
 RALPH: Anyway, I remembered you were talking about a girl.
 GOBLIT: Ah... Princess Amelia...
-RALPH: PRINCESS AMELIA?!
+RALPH: PRINCESS AMELIA AMELIA?!
 GOBLIT: *blush* What? No.
 RALPH: Anyway, whoever she is, I bet she likes flowers.
 RALPH: And I'm your mate, so I'm sorting you out.
@@ -353,19 +373,19 @@ Act 3
 Scene 1
 -------
 
-[QUEEN enters]
-QUEEN: GOBLIT!
+[QUEEN JOAN enters]
+QUEEN JOAN: GOBLIT!
 GOBLIT: M-maam?
-QUEEN: Why did you give my men an invisibility potion?
+QUEEN JOAN: Why did you give my men an invisibility potion?
 GOBLIT: An invisibility potion?
-QUEEN: It was a disaster! Our men couldn't see EACH OTHER!
-QUEEN: Swords and spears all over the place! It's a miracle nobody lost an eye!
-QUEEN: Meanwhile, the clever ones took the opportunity and left!
-QUEEN: It took me ages to press-gang all those men!
+QUEEN JOAN: It was a disaster! Our men couldn't see EACH OTHER!
+QUEEN JOAN: Swords and spears all over the place! It's a miracle nobody lost an eye!
+QUEEN JOAN: Meanwhile, the clever ones took the opportunity and left!
+QUEEN JOAN: It took me ages to press-gang all those men!
 [pause]
 GOBLIT: It was meant to be an invincibility potion.
-QUEEN: GOBLIT, I want results. Don't fail me again!
-[QUEEN leaves]
+QUEEN JOAN: GOBLIT, I want results. Don't fail me again!
+[QUEEN JOAN leaves]
 
 [RALPH enters]
 RALPH: You got mail!
@@ -419,12 +439,12 @@ GOBLIT: Er...
 [DOUBLE MEPHISTOPHELES disappears]
 GOBLIT: That didn't work.
 
-[PRINCESS enters]
+[PRINCESS AMELIA enters]
 
 # TODO:
 
 
-{Use Y WAND with PRINCESS}
+{Use Y WAND with PRINCESS AMELIA}
 
 [MEPHISTOPHELES appears]
 MEPHISTOPHELES: Oh, yeah, that's better.
@@ -451,27 +471,27 @@ MEPHISTOPHELES: Can't stand wars, me.
 MEPHISTOPHELES: Consider it done.
 [pause]
 MEPHISTOPHELES: There's just the simple matter of payment.
-PRINCESS: Payment? What price do you command?
+PRINCESS AMELIA: Payment? What price do you command?
 MEPHISTOPHELES: Oh, hey. Wow, you're a pretty one.
 MEPHISTOPHELES: How'd you like to grab a coffee with me, back in Hades?
 MEPHISTOPHELES: I know a great little place.
 MEPHISTOPHELES: Like, a date.
-PRINCESS: No!
+PRINCESS AMELIA: No!
 MEPHISTOPHELES: Tell you what, I'll stop the war, you come on a date with me...
 MEPHISTOPHELES: And we'll it quits! How about it?
 [pause]
-PRINCESS: Should I, Goblit?
+PRINCESS AMELIA: Should I, Goblit?
 
 .. choice:: Yes, that's a great deal!
 
     GOBLIT: We have no choice!
-    PRINCESS: I guess...
+    PRINCESS AMELIA: I guess...
 
 .. choice:: No, I couldn't bear it.
 
     GOBLIT: No! I can't bear it.
     GOBLIT: Princess... I love you.
-    PRINCESS: Aw, that's sweet.
+    PRINCESS AMELIA: Aw, that's sweet.
     MEPHISTOPHELES: Beat it, loser! You want this war stopped or not?
     GOBLIT: I guess we have no choice.
 
@@ -480,17 +500,17 @@ MEPHISTOPHELES: Ok, I guess we have a deal.
 MEPHISTOPHELES: *click* War is over. Grudges forgotten.
 GOBLIT: That was a bit of an anticlimax.
 
-[QUEEN enters]
-QUEEN: What's all this racket?
-QUEEN: You! How dare you show your face round here!
+[QUEEN JOAN enters]
+QUEEN JOAN: What's all this racket?
+QUEEN JOAN: You! How dare you show your face round here!
 MEPHISTOPHELES: Princess Joan?
-QUEEN: QUEEN Joan!
-QUEEN: You... You ran out on us! How could you! Amelia was just 2 years old!
+QUEEN JOAN: QUEEN JOAN Joan!
+QUEEN JOAN: You... You ran out on us! How could you! Amelia was just 2 years old!
 MEPHISTOPHELES: Shiiiiiiiiiiiiiit. This is my daughter?
-PRINCESS: You... you're my... dad?
+PRINCESS AMELIA: You... you're my... dad?
 MEPHISTOPHELES: Search your feelings. You know it to be true.
-PRINCESS: Nooooooooo!
-QUEEN: Oh, honey. I'm sorry. I never told you... it was just too hard.
+PRINCESS AMELIA: Nooooooooo!
+QUEEN JOAN: Oh, honey. I'm sorry. I never told you... it was just too hard.
 [pause]
 GOBLIT: Um. This is awkward.
 

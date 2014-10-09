@@ -234,9 +234,18 @@
        y="0"
        xlink:href="#g8071"
        id="tea_pile"
-       transform="translate(312.18764,319.08194)"
+       transform="translate(304.18764,319.08194)"
        width="960"
        height="427"
        inkscape:label="#use8078" />
+    <use
+       inkscape:label="#use8078"
+       height="427"
+       width="960"
+       transform="translate(663.50775,310.77164)"
+       id="up_stage_right"
+       xlink:href="#g8071"
+       y="0"
+       x="0" />
   </g>
 </svg>

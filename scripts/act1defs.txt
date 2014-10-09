@@ -23,6 +23,11 @@
     [GOBLIT moves to FIREPLACE]
     GOBLIT: Looks hot. Someone must have wanted a cup of tea.
 
+    .. allow:: Pick up KETTLE
+
+        GOBLIT: Ouch! That is HOT.
+        GOBLIT: I think I'm scalded for life.
+
 .. allow:: Look at YORICK
 
     [GOBLIT turns to face YORICK]
@@ -59,13 +64,19 @@
 
 .. allow:: Pick up SOCK
 
-    GOBLIT: It's a woolen sock.
     GOBLIT: I don't know where that came from; we don't even have feet.
 
 .. allow:: Use SOCK with GOBLIT
 
     GOBLIT: I don't have feet.
     GOBLIT: This is basically useless to me.
+
+.. deny:: Use Y WAND with *
+
+    .. random::
+        GOBLIT: Doesn't seem to do anything.
+        GOBLIT: It fizzed a bit, then nothing.
+        GOBLIT: Am I holding this right?
 
 .. allow:: Use * with *
     # This is a wildcard, when we don't know how to react.
@@ -90,3 +101,31 @@
 .. deny:: Use MUG with SOCK
 
     GOBLIT: You picked up a mug and a sock and thought I'd magically combine them?
+
+.. deny:: Use MUG with KETTLE
+
+    GOBLIT: I need some tea in it first.
+
+.. deny:: Use KETTLE with SOCK
+
+    GOBLIT: It doesn't need a tea cosy.
+
+.. deny:: Use KETTLE with LOOSE TEA
+
+    GOBLIT: It's more usual to serve tea in a cup than a puddle on the floor.
+
+.. deny:: Give MUG WITH TEA SOCK to WIZARD TOX
+
+    GOBLIT: I should not show him how I'm making his tea.
+
+.. deny:: Give * to WIZARD TOX
+
+    GOBLIT: He wouldn't want that.
+
+.. allow:: Look at Y WAND
+
+    [GOBLIT moves to BOOKCASE BACK]
+    GOBLIT: It's a strangely shaped magic wand.
+
+    .. deny:: Take Y WAND
+        GOBLIT: I was told not to touch anything.

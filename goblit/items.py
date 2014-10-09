@@ -1,14 +1,6 @@
 from .inventory import Item
 
-# Why am I doing this? We should be able to build them dynamically?
-Item('SOCK')
-Item('KETTLE')
-Item('PARROT')
 Item('TEA SOCK', 'sock')
-Item('MUG')
-Item('MUG OF HOT WATER')
-Item('MUG WITH TEA SOCK')
-Item('CUP OF TEA')
 
 
 def spawn_all(scene):
@@ -18,3 +10,4 @@ def spawn_all(scene):
 
     scene.spawn_object_near_navpoint('PARROT', (550, h - 232), 'NEAR PARROT')
     scene.spawn_object_near_navpoint('MUG', (432, h - 180), 'CABINET')
+    scene.spawn_object_near_navpoint('Y WAND', (242, h - 177), 'BOOKCASE BACK')

@@ -36,6 +36,17 @@ TOX = Animation({
     ], loop)
 })
 
+AMELIA = Animation({
+    'default': Sequence([
+        Frame(load_image('amelia-standing'), (-21, -87))
+    ], loop),
+    'blushing': Sequence([
+        Frame(load_image('amelia-blushing'), (-21, -87))
+    ], loop),
+    'walking': Sequence(
+        load_sequence('amelia-walking', 4, (-46, -105)), loop),
+})
+
 FONT_NAME = 'fonts/RosesareFF0000.ttf'
 FONT = Font(FONT_NAME, 16)
 
@@ -231,3 +242,13 @@ class Tox(Actor):
     def turn_back_to_desk(self):
         self.sprite.play('sitting-at-desk')
         self.sprite.dir = 'right'
+
+
+class Amelia(Actor):
+    NAME = 'PRINCESS AMELIA'
+    COLOR = (255, 220, 100)
+    SPRITE = AMELIA
+
+    @stage_direction('blushes')
+    def blush(self):
+        self.sprite.play('blushing')

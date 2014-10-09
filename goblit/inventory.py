@@ -1,6 +1,7 @@
 from pygame import Rect
 from .loaders import load_image
 from .actions import Action
+from collections import defaultdict
 
 
 class SceneItem:
@@ -95,6 +96,11 @@ class PointItem(SceneItem):
             )
 
 
+class ItemDict(defaultdict):
+    def __missing__(self, key):
+        return Item(key)
+
+
 class Item:
     """Inventory item.
 
@@ -103,7 +109,7 @@ class Item:
     """
 
     # Registry of all items
-    items = {}
+    items = ItemDict()
 
     def __init__(self, name, image_name=None):
         self.name = name.upper()

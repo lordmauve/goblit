@@ -146,7 +146,7 @@ class Scene:
         self.bubble = None
 
     def move(self, actor, goal, on_move_end=None, strict=True, exclusive=False):
-        npcs = [a.pos for a in self.actors.values() if a != actor]
+        npcs = [a.pos for a in self.actors.values() if a != actor and a.visible]
         if exclusive:
             npcs.append(goal)
         route = self.grid.route(actor.pos, goal, npcs=npcs, strict=strict)
@@ -199,14 +199,14 @@ class Scene:
         done, but any associated script is played.
 
         """
+        if player.waiting == base_action.name:
+            base_action.chain(player.stop_waiting)
+            return base_action
         script = scene.object_scripts.get(base_action.name)
         if script:
             if script.name == 'deny':
                 del base_action.callbacks[:]
             base_action.chain(lambda: player.play_subscript(script))
-            return base_action
-        if player.waiting == base_action.name:
-            base_action.chain(player.stop_waiting)
             return base_action
         return None
 
@@ -237,30 +237,36 @@ class Scene:
             for a in self.HIT_ACTIONS:
                 yield Action(a % r, lambda: scene.get_actor('GOBLIT').face(pos))
 
+    USE = 'Use {item} with {target}'
+    GIVE = 'Give {item} to {target}'
     WILDCARD_ACTIONS = [
-        'Use {item} with {target}',
-        'Use {target} with {item}',
-        'Use {item} with *',
-        'Use * with {target}',
-        'Use * with *'
+        (USE, USE),
+        ('Use {target} with {item}', USE),
+        ('Give {item} to {target}', GIVE),
+        ('Give * to {target}', GIVE),
+        ('Use {item} with *', USE),
+        ('Use * with {target}', USE),
+        ('Use * with *', USE),
     ]
 
     def action_item_together(self, name, other_name):
         """Find an action for using the two named items together."""
-        default_name = 'Use %s with %s' % (name, other_name)
-        for template in self.WILDCARD_ACTIONS:
+        for template, canonical in self.WILDCARD_ACTIONS:
             base_action = Action(
                 template.format(item=name, target=other_name)
             )
             action = self.make_action_handler(base_action)
             if action:
-                action.name = default_name
+                action.name = canonical.format(
+                    item=name, target=other_name
+                )
                 return action
 
     def action_item_use(self, item, pos):
         """Find an action for using the item with the given screen position."""
         # FIXME: If the other object is an object in the scene, make sure
-        # Goblit has picked up the thing first
+        # Goblit has picked up the thing first. Only the kettle doesn't get
+        # picked up, right?
         for objname in self.collidepoint(pos):
             item_action = item.get_use_action(objname)
             if item_action:
