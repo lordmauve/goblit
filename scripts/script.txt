@@ -13,7 +13,17 @@ WIZARD TOX: hmm?
 GOBLIT: I say, hello? Grand Wizard Tox?
 [WIZARD TOX turns around]
 WIZARD TOX: *sigh* Yes?
-GOBLIT: I was told you need an assistant?
+.. choose-any::
+
+    .. choice:: My name is Goblit.
+
+        GOBLIT: I'm Goblit.
+        WIZARD TOX: Goblet? That's a strange name.
+
+    .. choice:: Assistant role
+        GOBLIT: I was told you need an assistant?
+        WIZARD TOX: A vacancy has become available, yes.
+
 [GOBLIT moves to CENTRE STAGE]
 GOBLIT: I've got a level one certificate in wizarding...
 GOBLIT: I can do the three basic spells:
@@ -127,16 +137,16 @@ PRINCESS AMELIA: Sure!
 
     GOBLIT: Sure... but then what would I give Princess Amelia?
 
-.. allow:: Use Y WAND with CUP OF TEA
+{Use Y WAND with CUP OF TEA}
 
-    .. gain:: CUP OF TEA
-    GOBLIT: So that's what that does.
+.. gain:: CUP OF TEA
+GOBLIT: So that's what that does.
 
-    .. deny:: Give CUP OF TEA to WIZARD TOX
+.. deny:: Give CUP OF TEA to WIZARD TOX
 
-        GOBLIT: Surely I should serve royalty first?
+    GOBLIT: Surely I should serve royalty first?
 
-{Give TEA to PRINCESS AMELIA}
+{Give CUP OF TEA TEA to PRINCESS AMELIA}
 
 PRINCESS AMELIA: *gack*
 PRINCESS AMELIA: Well, thank you for the thought anyway.

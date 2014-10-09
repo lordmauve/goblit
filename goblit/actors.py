@@ -52,10 +52,11 @@ FONT = Font(FONT_NAME, 16)
 
 
 class FontBubble:
-    def __init__(self, text, pos=(0, 0), color=(255, 255, 255)):
+    def __init__(self, text, pos=(0, 0), color=(255, 255, 255), anchor='center'):
         self.text = text
         self.pos = pos
         self.color = color
+        self.anchor = anchor
         self._build_surf()
 
     def _build_surf(self):
@@ -70,11 +71,30 @@ class FontBubble:
 
         self.surf.blit(base, (1, 1))
 
-    def draw(self, screen):
+    def pos_center(self):
         x, y = self.pos
         w = self.surf.get_width()
         x = min(max(10, x - w // 2), 950 - w)
-        screen.blit(self.surf, (x, y))
+        return x, y
+
+    def pos_left(self):
+        x, y = self.pos
+        w = self.surf.get_width()
+        x = min(max(10, x), 950 - w)
+        return x, y
+
+    @property
+    def bounds(self):
+        r = self.surf.get_rect()
+        r.topleft = self.topleft
+        return r
+
+    @property
+    def topleft(self):
+        return getattr(self, 'pos_' + self.anchor)()
+
+    def draw(self, screen):
+        screen.blit(self.surf, self.topleft)
 
 
 class SpeechBubble(FontBubble):

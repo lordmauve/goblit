@@ -1,6 +1,6 @@
 import re
 import random
-from functools import wraps
+from functools import wraps, partial
 import pygame.mouse
 from pygame.cursors import load_xbm
 
@@ -329,6 +329,28 @@ def simple_directive(func):
     return _wrapper
 
 
+class DialogueChoice(object):
+    def __init__(self, choices):
+        self.choices = choices
+        self._build()
+
+    def _build(self):
+        from .actors import FontBubble
+        self.bubbles = []
+        for i, d in enumerate(self.choices):
+            bubble = FontBubble(d.name, (40, 460 + 40 * i), color=(255, 240, 180), anchor='left')
+            self.bubbles.append(bubble)
+
+    def for_point(self, pos):
+        for action, bubble in zip(self.choices, self.bubbles):
+            if bubble.bounds.collidepoint(pos):
+                return action
+
+    def draw(self, screen):
+        for b in self.bubbles:
+            b.draw(screen)
+
+
 class ScriptPlayer:
     @classmethod
     def from_file(cls, name, clock=clock, on_finish=None):
@@ -341,6 +363,7 @@ class ScriptPlayer:
         self.skippable = False  # If we can safely skip the delay
         self.on_finish = on_finish
         self.play_subscript(script)
+        self.dialogue_choice = None
 
     @property
     def script(self):
@@ -365,7 +388,7 @@ class ScriptPlayer:
     def is_interactive(self):
         """Return True if we're in interactive mode.
         """
-        return bool(self.waiting)
+        return bool(self.waiting or self.dialogue_choice)
 
     def show_inventory(self):
         """Should the inventory panel be drawn.
@@ -480,7 +503,7 @@ class ScriptPlayer:
 
     def do_directive(self, directive):
         name = directive.name
-        handler = getattr(self, 'directive_' + name, None)
+        handler = getattr(self, 'directive_' + name.replace('-', '_'), None)
         if not handler:
             raise ScriptError("No handler for directive %s" % name)
         handler(directive)
@@ -554,6 +577,23 @@ class ScriptPlayer:
         self.skippable = True
         self.play_subscript(s)
 
+    def choose_dialogue(self, script):
+        self.dialogue_choice = None
+        self.play_subscript(script)
+
+    def directive_choose_any(self, directive):
+        choices = []
+        for d in directive.contents:
+            if not isinstance(d, scripts.Directive) or not d.name == 'choice':
+                raise ScriptError(
+                    "Children of choose-any directives must be choice "
+                    "directives"
+                )
+            choices.append(
+                Action(d.data, partial(self.choose_dialogue, d))
+            )
+        self.dialogue_choice = DialogueChoice(choices)
+
 
 # Script player
 player = None
@@ -577,7 +617,11 @@ def on_mouse_down(pos, button):
         return
 
     if button == 1 and player.is_interactive():
-        if inventory.selected:
+        if player.dialogue_choice:
+            action = player.dialogue_choice.for_point(pos)
+            if action:
+                action()
+        elif inventory.selected:
             action = scene.action_item_use(inventory.selected, pos)
             if action:
                 inventory.deselect()
@@ -619,10 +663,16 @@ def on_mouse_down(pos, button):
 def on_mouse_move(pos, rel, buttons):
     global bubble
 
-    if not player.waiting:
+    if not player.is_interactive():
         return
 
-    if inventory.selected:
+    if player.dialogue_choice:
+        action = player.dialogue_choice.for_point(pos)
+        if action:
+            Cursor.set_pointer()
+        else:
+            Cursor.set_default()
+    elif inventory.selected:
         action = scene.action_item_use(inventory.selected, pos)
         if action:
             Cursor.set_pointer()
@@ -669,7 +719,9 @@ def update(dt):
 
 def draw(screen):
     scene.draw(screen)
-    if player.show_inventory():
+    if player.dialogue_choice:
+        player.dialogue_choice.draw(screen)
+    elif player.show_inventory():
         inventory.draw(screen)
 
 #   Uncomment to enable debugging of routing
