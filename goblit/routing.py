@@ -117,8 +117,8 @@ class Grid:
         came_from = {}
         g_score = {pos: 0}
         closest = pos
-        closest_dist = (self.cost(pos, goal), 0)
-        f_score = {pos: closest_dist}
+        closest_dist = self.cost(pos, goal)
+        f_score = {pos: self.cost(pos, goal)}
 
         cost = self.cost
         neighbour_nodes = self.neighbour_nodes
@@ -143,7 +143,7 @@ class Grid:
                     came_from[neighbour] = current
                     g_score[neighbour] = tentative_g_score
                     d = cost(neighbour, goal)
-                    closeness = (d, tentative_g_score)
+                    closeness = d + tentative_g_score * 0.5
                     if closeness < closest_dist:
                         closest = neighbour
                         closest_dist = closeness
@@ -164,7 +164,7 @@ class Grid:
         """Build a map that excludes areas where NPCs are standing"""
         surf = pygame.Surface(self.surf.get_size())
         surf.blit(self.surf, (0, 0))
-        r = pygame.Rect(0, 0, 100 // self.subdivide[0], 30 // self.subdivide[1])
+        r = pygame.Rect(0, 0, 120 // self.subdivide[0], 40 // self.subdivide[1])
         for pos in npcs:
             spos = self.screen_to_subsampled(pos)
             r.center = spos
