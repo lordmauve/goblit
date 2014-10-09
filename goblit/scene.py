@@ -14,6 +14,10 @@ from .inventory import inventory
 from .actions import Action
 
 
+TITLE = 'The Legend of Goblit'
+ICON = 'data/icon.png'
+
+
 class Scene:
     def __init__(self):
         self.room_bg = None

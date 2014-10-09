@@ -8,7 +8,10 @@ screen = None
 def init():
     global screen
     pygame.init()
+    pygame.display.set_icon(pygame.image.load(scene.ICON))
     screen = pygame.display.set_mode((960, 620))
+    pygame.display.set_caption(scene.TITLE)
+
     scene.load()
 
 
