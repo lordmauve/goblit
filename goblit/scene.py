@@ -153,19 +153,24 @@ class Scene:
         if self.bubble:
             self.bubble.draw(screen)
 
-    def get_action_handler(self, action):
-        """Get an additional scripted action for the given action name."""
-        script = scene.object_scripts.get(action)
-        if script:
-            return lambda: player.play_subscript(script)
-        if player.waiting == action:
-            return player.stop_waiting
-        return None
+    def make_action_handler(self, base_action):
+        """Convert a base action, supplied by an object to a real action.
 
-    def get_action(self, action):
-        handler = self.get_action_handler(action)
-        if handler:
-            return Action(action, handler)
+        Actions are only real actions if there's an allow or deny directive
+        for that action. If deny, then the base action is not actually
+        done, but any associated script is played.
+
+        """
+        script = scene.object_scripts.get(base_action.name)
+        if script:
+            if script.name == 'deny':
+                del base_action.callbacks[:]
+            base_action.chain(lambda: player.play_subscript(script))
+            return base_action
+        if player.waiting == base_action.name:
+            base_action.chain(player.stop_waiting)
+            return base_action
+        return None
 
     HIT_ACTIONS = [
         'Look at %s',
@@ -194,31 +199,35 @@ class Scene:
             for a in self.HIT_ACTIONS:
                 yield Action(a % r, lambda: scene.get_actor('GOBLIT').face(pos))
 
+    WILDCARD_ACTIONS = [
+        'Use {item} with {target}',
+        'Use {item} with *',
+        'Use * with {target}',
+        'Use * with *'
+    ]
+
     def action_item_use(self, item, pos):
         for objname in self.collidepoint(pos):
             item_action = item.get_use_action(objname)
             if item_action:
-                handler = self.get_action_handler(item_action.name)
-                if handler:
-                    item_action.chain(handler)
-                return item_action
+                return self.make_action_handler(item_action)
             else:
                 default_name = 'Use %s with %s' % (item.name, objname)
-                action = self.get_action(default_name)
-                if action:
-                    return action
-                action = self.get_action('Use * with *')
-                if action:
-                    action.name = default_name
-                    return action
+                for template in self.WILDCARD_ACTIONS:
+                    base_action = Action(
+                        template.format(item=item.name, target=objname)
+                    )
+                    action = self.make_action_handler(base_action)
+                    if action:
+                        action.name = default_name
+                        return action
 
     def action_click(self, pos):
         """Get an action for the given point."""
         for action in self.iter_actions(pos):
-            handler = self.get_action_handler(action.name)
+            handler = self.make_action_handler(action)
             if handler:
-                action.chain(handler)
-                return action
+                return handler
 
 
 class Cursor:
@@ -395,6 +404,7 @@ class ScriptPlayer:
             handler(actor, object)
         else:
             handler(actor)
+        self.skippable = True
         self.do_next()
 
     def do_directive(self, directive):
@@ -404,8 +414,16 @@ class ScriptPlayer:
             raise ScriptError("No handler for directive %s" % name)
         handler(directive)
 
-    def directive_on(self, directive):
+    def directive_allow(self, directive):
         scene.object_scripts[directive.data.strip()] = directive
+        self.skippable = True
+        self.do_next()
+
+    directive_deny = directive_allow
+
+    def directive_unbind(self, directive):
+        del scene.object_scripts[directive.data.strip()]
+        self.skippable = True
         self.do_next()
 
     def directive_include(self, directive):
@@ -413,6 +431,7 @@ class ScriptPlayer:
             raise ScriptError("Include directive may not have contents.")
         filename = directive.data.strip()
         s = scripts.parse_file(filename)
+        self.skippable = True
         self.play_subscript(s)
 
 
