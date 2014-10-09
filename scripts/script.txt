@@ -13,14 +13,14 @@ WIZARD TOX: hmm?
 GOBLIT: I say, hello? Grand Wizard Tox?
 [WIZARD TOX turns around]
 WIZARD TOX: *sigh* Yes?
-.. choose-any::
+.. choose-all::
 
     .. choice:: My name is Goblit.
 
         GOBLIT: I'm Goblit.
         WIZARD TOX: Goblet? That's a strange name.
 
-    .. choice:: Assistant role
+    .. choice:: About the assistant role?
         GOBLIT: I was told you need an assistant?
         WIZARD TOX: A vacancy has become available, yes.
 

@@ -329,8 +329,9 @@ def simple_directive(func):
     return _wrapper
 
 
-class DialogueChoice(object):
-    def __init__(self, choices):
+class DialogueChoice:
+    def __init__(self, player, choices):
+        self.player = player
         self.choices = choices
         self._build()
 
@@ -338,17 +339,31 @@ class DialogueChoice(object):
         from .actors import FontBubble
         self.bubbles = []
         for i, d in enumerate(self.choices):
-            bubble = FontBubble(d.name, (40, 460 + 40 * i), color=(255, 240, 180), anchor='left')
+            bubble = FontBubble(d.data, (40, 460 + 40 * i), color=(255, 240, 180), anchor='left')
             self.bubbles.append(bubble)
 
     def for_point(self, pos):
-        for action, bubble in zip(self.choices, self.bubbles):
+        for directive, bubble in zip(self.choices, self.bubbles):
             if bubble.bounds.collidepoint(pos):
-                return action
+                return Action(directive.data, partial(self.choose, directive))
+
+    def choose(self, script):
+        self.player.dialogue_choice = None
+        self.player.play_subscript(script)
 
     def draw(self, screen):
         for b in self.bubbles:
             b.draw(screen)
+
+
+class AllDialogueChoice(DialogueChoice):
+    def choose(self, script):
+        self.choices.remove(script)
+        if not self.choices:
+            self.player.dialogue_choice = None
+        else:
+            self._build()
+        self.player.play_subscript(script)
 
 
 class ScriptPlayer:
@@ -363,7 +378,6 @@ class ScriptPlayer:
         self.skippable = False  # If we can safely skip the delay
         self.on_finish = on_finish
         self.play_subscript(script)
-        self.dialogue_choice = None
 
     @property
     def script(self):
@@ -385,6 +399,14 @@ class ScriptPlayer:
     def waiting(self, v):
         self.stack[-1][2] = v
 
+    @property
+    def dialogue_choice(self):
+        return self.stack[-1][3]
+
+    @dialogue_choice.setter
+    def dialogue_choice(self, v):
+        self.stack[-1][3] = v
+
     def is_interactive(self):
         """Return True if we're in interactive mode.
         """
@@ -399,7 +421,7 @@ class ScriptPlayer:
         return True
 
     def play_subscript(self, script):
-        self.stack.append([script, 0, None])
+        self.stack.append([script, 0, None, None])
         if scene.animations:
             scene.on_animation_finish(self.next)
         else:
@@ -407,13 +429,13 @@ class ScriptPlayer:
 
     def end_subscript(self):
         self.stack.pop()
+        if not self.waiting and not self.dialogue_choice:
+            self.do_next()
 
     def next(self):
         if self.step >= len(self.script.contents):
             if len(self.stack) > 1:
                 self.end_subscript()
-                if not self.waiting:
-                    self.do_next()
             else:
                 self.on_finish()
             return
@@ -579,7 +601,6 @@ class ScriptPlayer:
 
     def choose_dialogue(self, script):
         self.dialogue_choice = None
-        self.play_subscript(script)
 
     def directive_choose_any(self, directive):
         choices = []
@@ -589,10 +610,19 @@ class ScriptPlayer:
                     "Children of choose-any directives must be choice "
                     "directives"
                 )
-            choices.append(
-                Action(d.data, partial(self.choose_dialogue, d))
-            )
-        self.dialogue_choice = DialogueChoice(choices)
+            choices.append(d)
+        self.dialogue_choice = DialogueChoice(self, choices)
+
+    def directive_choose_all(self, directive):
+        choices = []
+        for d in directive.contents:
+            if not isinstance(d, scripts.Directive) or not d.name == 'choice':
+                raise ScriptError(
+                    "Children of choose-all directives must be choice "
+                    "directives"
+                )
+            choices.append(d)
+        self.dialogue_choice = AllDialogueChoice(self, choices)
 
 
 # Script player
