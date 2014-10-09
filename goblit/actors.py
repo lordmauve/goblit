@@ -119,6 +119,7 @@ class Actor(metaclass=ActorMeta):
         self.visible = True
         self.sprite = self.SPRITE.create_instance(pos or self._last_pos)
         self.sprite.dir = 'right'
+        self.sprite.play(initial)
 
     def hide(self):
         self._last_pos = self.sprite.pos
