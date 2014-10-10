@@ -225,7 +225,7 @@ class Actor(metaclass=ActorMeta):
     def leave(self):
         """Walk out of the room."""
         if self.visible:
-            self.move_to(
+            self.move_to_navpoint(
                 'DOOR',
                 on_move_end=lambda: self.scene.unspawn_actor(self)
             )

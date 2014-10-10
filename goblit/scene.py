@@ -105,6 +105,8 @@ class Scene:
     def unspawn_object(self, obj):
         self.objects.remove(obj)
 
+    unspawn_actor = unspawn_object
+
     def rename(self, current_name, new_name):
         """Rename an object or hit area."""
         for o in self.objects:

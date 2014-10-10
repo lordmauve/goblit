@@ -127,6 +127,7 @@ PRINCESS AMELIA: But, as a princess, they don't really let me play around with t
 GOBLIT: You're... you're Princess Amelia!
 [PRINCESS AMELIA blushes]
 [pause]
+[WIZARD TOX turns around]
 WIZARD TOX: Stop dawdling, boy, and offer the princess some tea!
 [GOBLIT turns to face PRINCESS AMELIA]
 GOBLIT: Um... Would you like a cup of tea?
@@ -166,11 +167,13 @@ WIZARD TOX: Goodbye, princess.
 [PRINCESS AMELIA leaves]
 
 WIZARD TOX: Tsk. I do not approve of women learning magic.
+[WIZARD TOX turns back to desk]
 
 .. choose-any::
     .. choice:: Why not?
 
         GOBLIT: Why shouldn't women learn magic?
+        [WIZARD TOX turns around]
         WIZARD TOX: Their brains are not built for it, you know.
         WIZARD TOX: They'd end up pulling a frog from behind a child's ear.
         WIZARD TOX: Or turning a frog into a person! Can you imagine?
@@ -183,14 +186,18 @@ WIZARD TOX: Tsk. I do not approve of women learning magic.
     .. choice:: Why do you let Princess Amelia read magic books?
 
         GOBLIT: Why do you let Princess Amelia read magic books?
+        [WIZARD TOX turns around]
         WIZARD TOX: Can you imagine what an earful I'd get from Queen Joan if I didn't?
         WIZARD TOX: Besides, she won't be able to do real magic without a wand.
+
+[WIZARD TOX turns back to desk]
 
 {Give CUP OF TEA to WIZARD TOX}
 WIZARD TOX: What would I want tea for? I've got lunch with the Chancellor.
 WIZARD TOX: Is that the time?
 WIZARD TOX: You - stay here.
 [WIZARD TOX leaves]
+[GOBLIT moves to CENTRE STAGE]
 
 [WIZARD TOX enters]
 WIZARD TOX: And don't touch anything, catch fire, etc, etc.
@@ -246,38 +253,41 @@ QUEEN JOAN: Where is the apprentice?
 
 QUEEN JOAN: You! Are you Tox's apprentice?
 
-.. choice:: ...sure?
+.. choose-any::
 
-.. choice:: I'm Apprentice Wizard Goblit!
+    .. choice:: ...sure?
 
-.. choice:: So far, I just make tea.
+    .. choice:: I'm Apprentice Wizard Goblit!
+
+    .. choice:: So far, I just make tea.
 
 QUEEN JOAN: Whatever. Listen, I'm afraid Wizard Tox has been eaten.
 GOBLIT: EATEN!?!
 QUEEN JOAN: Yes, by a dragon. Surely you know we're at war?
 GOBLIT: ...yes? Yes. Of course.
 
-.. choice:: Who with?
+.. choose-all::
+    .. choice:: Who with?
 
-    GOBLIT: With whom are we warring, your majesty?
-    QUEEN JOAN: Oh, just some ancient, evil sorceror with hordes of minions.
-    QUEEN JOAN: Voltak the Evil and the seven legions of Hell.
-    QUEEN JOAN: Usual kind of war.
+        GOBLIT: With whom are we warring, your majesty?
+        QUEEN JOAN: Oh, just some ancient, evil sorceror with hordes of minions.
+        QUEEN JOAN: Voltak the Evil and the seven legions of Hell.
+        QUEEN JOAN: Usual kind of war.
 
-.. choice:: Why?
+    .. choice:: Why?
 
-    GOBLIT: What are we warring over, your majesty?
-    QUEEN JOAN: Oh, just our very existence.
-    QUEEN JOAN: We want to exerminate every last one of them.
-    QUEEN JOAN: They want to exerminate every last one of us.
-    QUEEN JOAN: Usual kind of war.
+        GOBLIT: What are we warring over, your majesty?
+        QUEEN JOAN: Oh, just our very existence.
+        QUEEN JOAN: We want to exerminate every last one of them.
+        QUEEN JOAN: They want to exerminate every last one of us.
+        QUEEN JOAN: Usual kind of war.
 
-.. choice:: How's it going?
+    .. choice:: How's it going?
 
-    GOBLIT: Are we winning, your majesty?
-    QUEEN JOAN: How do you think it's going? Wizard Tox was just eaten by a dragon.
-    QUEEN JOAN: While at lunch with the chancellor.
-    QUEEN JOAN: In THIS CASTLE!
+        GOBLIT: Are we winning, your majesty?
+        QUEEN JOAN: How do you think it's going? Wizard Tox was just eaten by a dragon.
+        QUEEN JOAN: While at lunch with the chancellor.
+        QUEEN JOAN: In THIS CASTLE!
 
 QUEEN JOAN: So... you're now Grand Wizard.
 GOBLIT: I...
@@ -303,16 +313,17 @@ GOBLIT: Nothing. Nothing of any use.
 [PRINCESS AMELIA enters]
 PRINCESS AMELIA: Your glasses look ridiculous.
 
-.. choice:: Er... they are for a spell.
+.. choose-any::
+    .. choice:: Er... they are for a spell.
 
-    GOBLIT: Oh, these? They are... for... scrying.
-    PRINCESS AMELIA: Scrying?
-    GOBLIT: Scrying... on purple things.
+        GOBLIT: Oh, these? They are... for... scrying.
+        PRINCESS AMELIA: Scrying?
+        GOBLIT: Scrying... on purple things.
 
-.. choice:: Not snazzy?
+    .. choice:: Not snazzy?
 
-    GOBLIT: You don't think they are kind of snazzy?
-    PRINCESS AMELIA: ...no.
+        GOBLIT: You don't think they are kind of snazzy?
+        PRINCESS AMELIA: ...no.
 
 [GOBLIT removes glasses]
 
