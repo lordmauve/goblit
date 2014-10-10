@@ -165,6 +165,9 @@ class Actor(metaclass=ActorMeta):
         if self.sprite:
             self.sprite.pos = pos
 
+    def floor_pos(self):
+        return self.pos
+
     @property
     def z(self):
         """Z-index of actor in scene is related to y-coordinate."""
@@ -177,8 +180,30 @@ class Actor(metaclass=ActorMeta):
     def draw(self, screen):
         self.sprite.draw(screen)
 
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        return [
+            Action(
+                'Give %s to %s' % (item.name, self.NAME),
+                lambda: self.on_given(item)
+            )
+        ]
+
     def click_actions(self):
         return [Action('Speak to %s' % self.NAME, self.click)]
+
+    def on_given(self, item):
+        """This actor is given an object."""
+        from .inventory import inventory
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            def do_give():
+                self.face(actor)
+                actor.face(self)
+                inventory.remove(item)
+            actor.move_to(self.floor_pos(), on_move_end=do_give)
+        else:
+            inventory.remove(item)
 
     def click(self):
         actor = self.scene.get_actor('GOBLIT')
@@ -201,6 +226,8 @@ class Actor(metaclass=ActorMeta):
 
     @stage_direction('moves to')
     def move_to(self, pos, on_move_end=None, strict=True, exclusive=False):
+        if isinstance(pos, str):
+            pos = self.scene.get_point_for_name(pos)
         if self.visible and dist(pos, self.pos) > 5:
             self.scene.move(
                 self, pos,
@@ -209,23 +236,18 @@ class Actor(metaclass=ActorMeta):
                 exclusive=exclusive
             )
 
-    def move_to_navpoint(self, navpoint, *args, **kwargs):
-        """Move to the named navpoint."""
-        pos = self.scene.navpoints[navpoint]
-        self.move_to(pos, *args, **kwargs)
-
     @stage_direction('enters')
     def enter(self, navpoint='ENTRANCE'):
         """Enter via the door and walk to navpoint."""
         pos = self.scene.navpoints['DOOR']
         self.scene.spawn_actor(self.NAME, pos)
-        self.move_to_navpoint(navpoint)
+        self.move_to(navpoint)
 
     @stage_direction('leaves')
     def leave(self):
         """Walk out of the room."""
         if self.visible:
-            self.move_to_navpoint(
+            self.move_to(
                 'DOOR',
                 on_move_end=lambda: self.scene.unspawn_actor(self)
             )

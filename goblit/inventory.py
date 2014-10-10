@@ -27,6 +27,15 @@ class SceneItem:
     def name(self, v):
         self.item.name = v
 
+    def use_actions(self, item):
+        """Subclasses can implement this to define custom actions.
+
+        :param Item item: Item that will be used with this object.
+        :returns: list of Action
+
+        """
+        return []
+
     def click_actions(self):
         """Get actions for the given object.
 
@@ -58,6 +67,9 @@ class FloorItem(SceneItem):
     # Z-coordinate is always behind other items
     z = 0
 
+    def floor_pos(self):
+        return self.pos
+
     def click_actions(self):
         """Floor items can be picked up."""
         return (
@@ -81,6 +93,9 @@ class PointItem(SceneItem):
         super().__init__(scene, item, pos)
         self.navpoint = navpoint
 
+    def floor_pos(self):
+        return self.scene.navpoints[self.navpoint]
+
     def click_actions(self):
         """Floor items can be picked up."""
         return (
@@ -91,7 +106,7 @@ class PointItem(SceneItem):
     def take(self):
         actor = self.scene.get_actor('GOBLIT')
         if actor:
-            actor.move_to_navpoint(
+            actor.move_to(
                 self.navpoint,
                 on_move_end=lambda: self.give_item(actor)
             )
@@ -117,11 +132,6 @@ class Item:
         self.image_name = image_name or name.lower().replace(' ', '-')
         self.items[self.name] = self
         self._im = self._icon = None
-
-    def get_use_action(self, obj):
-        """Return an action if this item is usable with obj."""
-        # Action('Use %s with %s' % (self.name, obj), lambda: print("Using %s with %s" % (self.name, obj)))
-        return None
 
     @property
     def image(self):

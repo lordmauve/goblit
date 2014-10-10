@@ -1,6 +1,8 @@
 import re
 import random
+from itertools import chain
 from functools import wraps, partial
+from fnmatch import fnmatchcase as fnmatch
 import pygame.mouse
 from pygame.cursors import load_xbm
 
@@ -123,6 +125,17 @@ class Scene:
 
         raise KeyError(current_name)
 
+    def get_point_for_name(self, name):
+        """Get a floor position for the given name."""
+        if name in self.navpoints:
+            return self.navpoints[name]
+
+        for o in self.objects:
+            if o.name == name:
+                return o.floor_pos()
+
+        raise KeyError("Unknown position %s" % name)
+
     def nearest_navpoint(self, pos):
         """Get the position of the nearest navpoint to pos."""
         return min(self.navpoints.values(), key=lambda p: dist(p, pos))
@@ -194,7 +207,24 @@ class Scene:
         if self.bubble:
             self.bubble.draw(screen)
 
-    def make_action_handler(self, base_action):
+    def find_object_script(self, action_name, wildcards=True):
+        """Get an object script for the given action name.
+
+        This will match wildcarded actions also.
+
+        Returns None if no action script is found.
+
+        """
+        script = self.object_scripts.get(action_name)
+        if script:
+            return script
+        if wildcards:
+            for k, v in self.object_scripts.items():
+                if '*' in k:
+                    if fnmatch(action_name, k):
+                        return v
+
+    def make_action_handler(self, base_action, wildcards=True):
         """Convert a base action, supplied by an object to a real action.
 
         Actions are only real actions if there's an allow or deny directive
@@ -205,7 +235,7 @@ class Scene:
         if player.waiting == base_action.name:
             base_action.chain(player.stop_waiting)
             return base_action
-        script = scene.object_scripts.get(base_action.name)
+        script = self.find_object_script(base_action.name, wildcards)
         if script:
             if script.name == 'deny':
                 del base_action.callbacks[:]
@@ -218,11 +248,15 @@ class Scene:
         'Look out of %s',
     ]
 
-    def collidepoint(self, pos):
-        """Iterate over all object under the given point."""
+    def get_objects(self, pos):
+        """Iterate over all objects under the given point."""
         for o in self.objects:
             if o.bounds.collidepoint(pos):
-                yield o.name
+                yield o
+
+    def collidepoint(self, pos):
+        """Iterate over all object names under the given point."""
+        yield from (o.name for o in self.get_objects(pos))
 
         r = self.hitmap.region_for_point(pos)
         if r:
@@ -253,12 +287,14 @@ class Scene:
     ]
 
     def action_item_together(self, name, other_name):
-        """Find an action for using the two named items together."""
+        """Find an action for using the two named items together.
+
+        """
         for template, canonical in self.WILDCARD_ACTIONS:
             base_action = Action(
                 template.format(item=name, target=other_name)
             )
-            action = self.make_action_handler(base_action)
+            action = self.make_action_handler(base_action, wildcards=False)
             if action:
                 action.name = canonical.format(
                     item=name, target=other_name
@@ -266,18 +302,26 @@ class Scene:
                 return action
 
     def action_item_use(self, item, pos):
-        """Find an action for using the item with the given screen position."""
-        # FIXME: If the other object is an object in the scene, make sure
-        # Goblit has picked up the thing first. Only the kettle doesn't get
-        # picked up, right?
-        for objname in self.collidepoint(pos):
-            item_action = item.get_use_action(objname)
-            if item_action:
-                return self.make_action_handler(item_action)
-            else:
-                action = self.action_item_together(item.name, objname)
+        """Find an action for using the item with the given screen position.
+
+        If the item supports use_actions with the given item, they will be
+        used if there's a handler bound. Otherwise we fall back to the
+        click action.
+
+        """
+        # FIXME: wildcarded actions should always come below specific actions.
+        # Might have to do multiple passes over the objects, first looking for
+        # specific matches, then wildcards.
+        for o in self.get_objects(pos):
+            object_actions = chain(o.use_actions(item), o.click_actions())
+            for base_action in object_actions:
+                action = self.make_action_handler(base_action)
                 if action:
                     return action
+
+        region = self.hitmap.region_for_point(pos)
+        if region:
+            return self.action_item_together(item.name, region)
 
     def action_click(self, pos):
         """Get an action for the given point."""
