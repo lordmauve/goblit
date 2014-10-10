@@ -156,6 +156,15 @@ class Actor(metaclass=ActorMeta):
         self._last_pos = self.sprite.pos
         self.sprite = None
 
+    def _respawn_state(self):
+        """Get the scene call needed to respawn the actor."""
+        return 'spawn_actor', {
+            'name': self.name,
+            'pos': self.pos,
+            'dir': self.sprite.dir,
+            'initial': self.sprite.playing
+        }
+
     @property
     def pos(self):
         return self.sprite.pos

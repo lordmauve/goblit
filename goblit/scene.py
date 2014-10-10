@@ -57,6 +57,36 @@ class Scene:
         if not o:
             raise KeyError(name)
 
+    def _get_state(self):
+        return {
+            'objects': [o._respawn_state() for o in self.objects],
+            'object_scripts': [d.uid for d in self.object_scripts.values()]
+        }
+
+    def _set_state(self, v):
+        self.objects = []
+        for funcname, params in v['objects']:
+            getattr(self, funcname)(**params)
+
+        all_directives = player.binding_directives_seen()
+        directives_by_uid = {d.uid: d for d in all_directives}
+        directives_by_action = {d.data: d for d in all_directives}
+        self.object_scripts = {}
+        errors = 0
+        for uid in v['object_scripts']:
+            try:
+                d = directives_by_uid[uid]
+            except KeyError:
+                errors += 1
+                print("Warning: no directive found like", uid)
+                try:
+                    d = directives_by_action[uid[1]]
+                except KeyError:
+                    continue
+            self.object_scripts[d.data] = d
+        if errors:
+            print("%s errors: game may not be completeable" % errors)
+
     def load(self):
         self.room_bg = load_image('room')
         self.room_fg = load_image('foreground')
@@ -416,15 +446,35 @@ class AllDialogueChoice(DialogueChoice):
 class ScriptPlayer:
     @classmethod
     def from_file(cls, name, clock=clock, on_finish=None):
-        s = scripts.parse_file('script')
+        s = scripts.parse_file(name)
         return cls(s, clock, on_finish)
 
     def __init__(self, script, clock, on_finish=None):
         self.clock = clock
         self.stack = []
         self.skippable = False  # If we can safely skip the delay
+        self.finished = False
         self.on_finish = on_finish
         self.play_subscript(script)
+
+    def _get_state(self):
+        """Get the waiting state."""
+        if not self.waiting or len(self.stack) > 1:
+            raise ValueError("Can't save at this time.")
+        return self.waiting
+
+    def _set_state(self, waiting):
+        """Skip forward to the step we were waiting for."""
+        while not self.finished:
+            if self.waiting == waiting:
+                break
+            self.skip(force=True)
+        else:
+            raise KeyError("Couldn't resume script.")
+
+    @property
+    def root_script(self):
+        return self.stack[0][0]
 
     @property
     def script(self):
@@ -465,7 +515,7 @@ class ScriptPlayer:
         We want to draw it unless there are dialog choices.
 
         """
-        return True
+        return not self.dialogue_choice
 
     def play_subscript(self, script):
         self.stack.append([script, 0, None, None])
@@ -487,6 +537,7 @@ class ScriptPlayer:
             if len(self.stack) > 1:
                 self.end_subscript()
             else:
+                self.finished = True
                 self.on_finish()
             return
         self.skippable = False
@@ -506,8 +557,11 @@ class ScriptPlayer:
             traceback.print_exc()
             self.do_next()
 
-    def skip(self):
-        if self.skippable and not self.waiting:
+    def skip(self, force=False):
+        if force and self.dialogue_choice:
+            self.dialogue_choice = None
+
+        if force or self.skippable and not self.waiting:
             self.clock.unschedule(self.cancel_line)
             self.clock.unschedule(self.next)
             scene.close_bubble()
@@ -517,7 +571,7 @@ class ScriptPlayer:
                 self.next()
 
     def skip_all(self):
-        while self.skippable and not self.waiting:
+        while self.skippable and not self.waiting and not self.finished:
             self.skip()
 
     def stop_waiting(self):
@@ -540,6 +594,29 @@ class ScriptPlayer:
         scene.close_bubble()
         self.next()
 
+    def walk_script(self, script=None):
+        """Iterate over every directive in the script."""
+        if script is None:
+            script = self.root_script.contents
+        for s in script:
+            if isinstance(s, scripts.Directive):
+                yield s
+                if s.name == 'include':
+                    filename = s.data
+                    contents = scripts.parse_file(filename).contents
+                else:
+                    contents = s.contents
+                yield from self.walk_script(contents)
+
+    def script_so_far(self):
+        pos = self.stack[0][1]
+        return self.root_script.contents[:pos]
+
+    def binding_directives_seen(self):
+        """Return a list of event binding directives in the script so far."""
+        prev_directives = self.walk_script(self.script_so_far())
+        return [d for d in prev_directives if d.name in ('allow', 'deny')]
+
     def do_line(self, line):
         scene.say(line.character, line.line)
         self.clock.schedule(self.cancel_line, 3)
@@ -551,6 +628,7 @@ class ScriptPlayer:
 
     def do_action(self, action):
         self.waiting = action.verb
+        save_game()
 
     def do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
@@ -581,14 +659,14 @@ class ScriptPlayer:
         handler(directive)
 
     def directive_allow(self, directive):
-        scene.object_scripts[directive.data.strip()] = directive
+        scene.object_scripts[directive.data] = directive
         self.do_next()
 
     directive_deny = directive_allow
 
     @simple_directive
     def directive_unbind(self, directive):
-        del scene.object_scripts[directive.data.strip()]
+        del scene.object_scripts[directive.data]
 
     def directive_include(self, directive):
         if directive.contents:
@@ -685,10 +763,10 @@ def load():
     scene = Scene()
     scene.load()
     Cursor.load()
-
     player = ScriptPlayer.from_file('script')
 
     scene.init_scene()
+    load_savegame()
 
 
 def on_mouse_down(pos, button):
@@ -795,6 +873,43 @@ def on_key_down(unicode, key, mod, scancode):
 
 def update(dt):
     clock.tick(dt)
+
+
+def save_game():
+    import pickle, json
+    save_data = {
+        'inventory': inventory.__getstate__(),
+        'player': player._get_state(),
+        'scene': scene._get_state()
+    }
+
+    with open('savegame.pck', 'wb') as f:
+        pickle.dump(save_data, f, -1)
+
+
+def load_savegame():
+    global scene, player, inventory
+    import pickle
+    try:
+        f = open('savegame.pck', 'rb')
+    except (IOError, OSError) as e:
+        # No save data
+        return
+
+    with f:
+        save_data = pickle.load(f)
+
+    player_state = save_data['player']
+    try:
+        player._set_state(player_state)
+    except ValueError as e:
+        print("Failed to restore script player state:", e.args[0])
+        return
+
+    from . import inventory as inv
+    scene._set_state(save_data['scene'])
+    inventory.__setstate__(save_data['inventory'])
+    return True
 
 
 def draw(screen):

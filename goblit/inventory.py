@@ -67,6 +67,13 @@ class FloorItem(SceneItem):
     # Z-coordinate is always behind other items
     z = 0
 
+    def _respawn_state(self):
+        """Get the scene call needed to respawn the item."""
+        return 'spawn_object_on_floor', {
+            'item': self.item.name,
+            'pos': self.pos,
+        }
+
     def floor_pos(self):
         return self.pos
 
@@ -92,6 +99,14 @@ class PointItem(SceneItem):
     def __init__(self, scene, item, pos, navpoint):
         super().__init__(scene, item, pos)
         self.navpoint = navpoint
+
+    def _respawn_state(self):
+        """Get the scene call needed to respawn the item."""
+        return 'spawn_object_near_navpoint', {
+            'item': self.item.name,
+            'pos': self.pos,
+            'navpoint': self.navpoint
+        }
 
     def floor_pos(self):
         return self.scene.navpoints[self.navpoint]
@@ -163,6 +178,20 @@ class Inventory:
     def __init__(self, items=[]):
         self.items = items
         self.selected = None
+
+    def __getstate__(self):
+        return [i.name for i in self.items]
+
+    def __setstate__(self, v):
+        self.items = []
+        for i in v:
+            item = Item.items[i]
+            try:
+                item.icon
+            except Exception:
+                print("Item %s appears to no longer be a thing, disregarding.")
+            else:
+                self.items.append(item)
 
     def add(self, item):
         """Add an item to the inventory."""

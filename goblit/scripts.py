@@ -5,7 +5,7 @@ The entire script for the game is loaded from an RST-like file.
 
 """
 import re
-from collections import namedtuple
+from collections import namedtuple, Counter
 import os.path
 
 COMMENT_RE = re.compile(r'\s*#.*')
@@ -40,7 +40,10 @@ class Underline:
             self.level = 2
 
 
-Action = namedtuple('Action', 'verb')
+class Action:
+    def __init__(self, verb):
+        self.verb = verb
+
 Line = namedtuple('Line', 'character line')
 StageDirection = namedtuple('StageDirection', 'character verb object')
 Title = namedtuple('SceneTitle', 'name level')
@@ -128,6 +131,13 @@ class ParseError(Exception):
 
 def parse_file(file):
     """Parse a whole file."""
+    id_counts = Counter()
+
+    def make_uid(*partial_uid):
+        count = id_counts[partial_uid]
+        id_counts[partial_uid] += 1
+        return (file,) + partial_uid + (count,)
+
     directives = [Script()]
     lines = read_lines(file)
     last_indent = 0
@@ -178,13 +188,15 @@ def parse_file(file):
         top.contents.append(tok)
 
         if isinstance(tok, Directive):
+            tok.uid = make_uid(tok.name, tok.data)
             directives.append(tok)
-
+        elif isinstance(tok, Action):
+            tok.uid = make_uid(tok.verb)
         last_indent = indent
 
     return directives[0]
 
 
 if __name__ == '__main__':
-    script = parse_file('script.txt')
+    script = parse_file('script')
     print(script)

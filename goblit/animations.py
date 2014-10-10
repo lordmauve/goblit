@@ -40,6 +40,7 @@ class AnimationInstance:
 
     def play(self, sequence_name):
         """Start playing the given sequence at the beginning."""
+        self.playing = sequence_name
         self.currentframe = 0
         self.sequence = self.animation.sequences[sequence_name]
 
