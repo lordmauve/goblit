@@ -54,8 +54,8 @@ class Event:
     @property
     def callback(self):
         cb = self.cb()
-        if cb is None:
-            print("%s has expired" % self.name)
+#        if cb is None:
+#            print("%s has expired" % self.name)
         return cb
 
 

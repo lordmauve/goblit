@@ -129,14 +129,17 @@ class ParseError(Exception):
     """Failed to parse the script"""
 
 
+id_counts = Counter()
+
+
+def make_uid(*partial_uid):
+    count = id_counts[partial_uid]
+    id_counts[partial_uid] += 1
+    return partial_uid + (count,)
+
+
 def parse_file(file):
     """Parse a whole file."""
-    id_counts = Counter()
-
-    def make_uid(*partial_uid):
-        count = id_counts[partial_uid]
-        id_counts[partial_uid] += 1
-        return (file,) + partial_uid + (count,)
 
     directives = [Script()]
     lines = read_lines(file)
@@ -185,14 +188,19 @@ def parse_file(file):
                     "(at line %d)" % lineno
                 )
 
-        top.contents.append(tok)
+        last_indent = indent
 
         if isinstance(tok, Directive):
+            if tok.name == 'include':
+                included = parse_file(tok.data)
+                top.contents.extend(included.contents)
+                continue
             tok.uid = make_uid(tok.name, tok.data)
             directives.append(tok)
         elif isinstance(tok, Action):
             tok.uid = make_uid(tok.verb)
-        last_indent = indent
+
+        top.contents.append(tok)
 
     return directives[0]
 

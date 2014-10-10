@@ -407,10 +407,20 @@ def simple_directive(func):
 
 
 class DialogueChoice:
-    def __init__(self, player, choices):
+    def __init__(self, player, directive):
         self.player = player
-        self.choices = choices
+        for d in directive.contents:
+            if not isinstance(d, scripts.Directive) or d.name != 'choice':
+                raise ScriptError(
+                    "Children of choose-any directives must be choice "
+                    "directives"
+                )
+        self.directive = directive
         self._build()
+
+    @property
+    def choices(self):
+        return self.directive.contents
 
     def _build(self):
         from .actors import FontBubble
@@ -467,6 +477,8 @@ class ScriptPlayer:
         """Skip forward to the step we were waiting for."""
         while not self.finished:
             if self.waiting == waiting:
+                self.waiting = None
+                self.do_next()
                 break
             self.skip(force=True)
         else:
@@ -576,6 +588,7 @@ class ScriptPlayer:
 
     def stop_waiting(self):
         if self.waiting:
+            save_game()
             self.waiting = None
             self.do_next()
 
@@ -601,12 +614,7 @@ class ScriptPlayer:
         for s in script:
             if isinstance(s, scripts.Directive):
                 yield s
-                if s.name == 'include':
-                    filename = s.data
-                    contents = scripts.parse_file(filename).contents
-                else:
-                    contents = s.contents
-                yield from self.walk_script(contents)
+                yield from self.walk_script(s.contents)
 
     def script_so_far(self):
         pos = self.stack[0][1]
@@ -628,7 +636,6 @@ class ScriptPlayer:
 
     def do_action(self, action):
         self.waiting = action.verb
-        save_game()
 
     def do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
@@ -667,14 +674,6 @@ class ScriptPlayer:
     @simple_directive
     def directive_unbind(self, directive):
         del scene.object_scripts[directive.data]
-
-    def directive_include(self, directive):
-        if directive.contents:
-            raise ScriptError("Include directive may not have contents.")
-        filename = directive.data
-        s = scripts.parse_file(filename)
-        self.skippable = True
-        self.play_subscript(s)
 
     @simple_directive
     def directive_rename(self, directive):
@@ -731,26 +730,10 @@ class ScriptPlayer:
         self.dialogue_choice = None
 
     def directive_choose_any(self, directive):
-        choices = []
-        for d in directive.contents:
-            if not isinstance(d, scripts.Directive) or not d.name == 'choice':
-                raise ScriptError(
-                    "Children of choose-any directives must be choice "
-                    "directives"
-                )
-            choices.append(d)
-        self.dialogue_choice = DialogueChoice(self, choices)
+        self.dialogue_choice = DialogueChoice(self, directive)
 
     def directive_choose_all(self, directive):
-        choices = []
-        for d in directive.contents:
-            if not isinstance(d, scripts.Directive) or not d.name == 'choice':
-                raise ScriptError(
-                    "Children of choose-all directives must be choice "
-                    "directives"
-                )
-            choices.append(d)
-        self.dialogue_choice = AllDialogueChoice(self, choices)
+        self.dialogue_choice = AllDialogueChoice(self, directive)
 
 
 # Script player
