@@ -132,7 +132,9 @@ WIZARD TOX: Stop dawdling, boy, and offer the princess some tea!
 [GOBLIT turns to face PRINCESS AMELIA]
 GOBLIT: Um... Would you like a cup of tea?
 PRINCESS AMELIA: Sure!
-[PRINCESS AMELIA moves to DOWN STAGE CENTER]
+[PRINCESS AMELIA moves to DOWN STAGE LEFT]
+
+# FIXME: Should offer some dialogue choices with the people on set at this point
 
 .. allow:: Take Y WAND
 
@@ -162,6 +164,8 @@ PRINCESS AMELIA: Well, thank you for the thought anyway.
 PRINCESS AMELIA: I can't stay, anyway. I just came to drop this back.
 [PRINCESS AMELIA gives SPELLBOOK]
 PRINCESS AMELIA: I guess I'll see you around, Goblit!
+[PRINCESS AMELIA moves to ENTRANCE]
+[PRINCESS AMELIA turns to face WIZARD TOX]
 PRINCESS AMELIA: Goodbye, Wizard Tox!
 WIZARD TOX: Goodbye, princess.
 [PRINCESS AMELIA leaves]
@@ -215,31 +219,32 @@ GOBLIT: Oh, just doing my best not to catch fire.
 RALPH: Huh?
 GOBLIT: Doesn't matter.
 
-.. choice:: How are you?
+.. choose-all::
+    .. choice:: How are you?
 
-    GOBLIT: How did you interview go?
-    RALPH: Oh, great. Necromancer Vox has put me straight to work.
-    RALPH: I'm researching a spell to summon the Great Lords of Hell.
-    GOBLIT: That sounds... dangerous.
-    RALPH: Oh, sure. But Necromancer Vox likes the big showy spells.
-    RALPH: That's why he's the richest wizard in the kingdom.
-    GOBLIT: Why isn't he helping with the war?
-    RALPH: There's a war?
+        GOBLIT: How did you interview go?
+        RALPH: Oh, great. Necromancer Vox has put me straight to work.
+        RALPH: I'm researching a spell to summon the Great Lords of Hell.
+        GOBLIT: That sounds... dangerous.
+        RALPH: Oh, sure. But Necromancer Vox likes the big showy spells.
+        RALPH: That's why he's the richest wizard in the kingdom.
+        GOBLIT: Why isn't he helping with the war?
+        RALPH: There's a war?
 
-.. choice:: Princess Amelia
+    .. choice:: Princess Amelia
 
-    GOBLIT: Do you know anything about women?
-    RALPH: Oh, sure. Women are easy.
-    RALPH: First, you have to wear some snazzy sunglasses.
-    RALPH: Second, you have to act cool.
-    RALPH: Third, you have to give them a gift, like perfume or something.
-    [pause]
-    GOBLIT: You don't know anything about women, do you?
-    RALPH: ...no.
+        GOBLIT: Do you know anything about women?
+        RALPH: Oh, sure. Women are easy.
+        RALPH: First, you have to wear some snazzy sunglasses.
+        RALPH: Second, you have to act cool.
+        RALPH: Third, you have to give them a gift, like perfume or something.
+        [pause]
+        GOBLIT: You don't know anything about women, do you?
+        RALPH: ...no.
 
 [RALPH leaves]
 
-{Take GLASSES}
+GOBLIT: I wonder where I can get some snazzy glasses?
 {Use GLASSES on PURPLE GOO}
 GOBLIT: Hmm, snazzy.
 

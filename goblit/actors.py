@@ -33,7 +33,9 @@ TOX = Animation({
     ], loop),
     'sitting': Sequence([
         Frame(load_image('tox-sitting'), (-41, -91))
-    ], loop)
+    ], loop),
+    'walking': Sequence(
+        load_sequence('tox-walking', 4, (-46, -105)), loop),
 })
 
 AMELIA = Animation({
@@ -45,6 +47,14 @@ AMELIA = Animation({
     ], loop),
     'walking': Sequence(
         load_sequence('amelia-walking', 4, (-46, -105)), loop),
+})
+
+RALPH = Animation({
+    'default': Sequence([
+        Frame(load_image('ralph-standing'), (-18, -82))
+    ], loop),
+    'walking': Sequence(
+        load_sequence('ralph-walking', 4, (-46, -105)), loop),
 })
 
 FONT_NAME = 'fonts/RosesareFF0000.ttf'
@@ -210,7 +220,7 @@ class Actor(metaclass=ActorMeta):
                 self.face(actor)
                 actor.face(self)
                 inventory.remove(item)
-            actor.move_to(self.floor_pos(), on_move_end=do_give)
+            actor.move_to(self.floor_pos(), on_move_end=do_give, strict=False)
         else:
             inventory.remove(item)
 
@@ -279,7 +289,20 @@ class Goblit(Actor):
         return None
 
 
-class Tox(Actor):
+class NPC(Actor):
+    @stage_direction('gives')
+    def give(self, item):
+        from .inventory import inventory
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            def do_give():
+                self.face(actor)
+                actor.face(self)
+                inventory.add(item)
+            self.move_to(actor.floor_pos(), on_move_end=do_give, strict=False)
+
+
+class Tox(NPC):
     NAME = 'WIZARD TOX'
     COLOR = (170, 100, 255)
     SPRITE = TOX
@@ -295,7 +318,7 @@ class Tox(Actor):
         self.sprite.dir = 'right'
 
 
-class Amelia(Actor):
+class Amelia(NPC):
     NAME = 'PRINCESS AMELIA'
     COLOR = (255, 220, 100)
     SPRITE = AMELIA
@@ -303,3 +326,9 @@ class Amelia(Actor):
     @stage_direction('blushes')
     def blush(self):
         self.sprite.play('blushing')
+
+
+class Ralph(NPC):
+    NAME = 'RALPH'
+    COLOR = (211, 255, 255)
+    SPRITE = RALPH

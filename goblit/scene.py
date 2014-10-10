@@ -464,25 +464,47 @@ class ScriptPlayer:
         self.stack = []
         self.skippable = False  # If we can safely skip the delay
         self.finished = False
+        self.fast_forward = False
+        self.need_save = False
         self.on_finish = on_finish
         self.play_subscript(script)
 
     def _get_state(self):
         """Get the waiting state."""
-        if not self.waiting or len(self.stack) > 1:
-            raise ValueError("Can't save at this time.")
-        return self.waiting
+        if len(self.stack) > 1:
+            raise ValueError("Can't save at this time, have subscripts")
+        if not self.waiting and not self.need_save:
+            raise ValueError("Can't save at this time, no puzzle to solve")
+        return self.need_save or self._waiting, self.solved
 
-    def _set_state(self, waiting):
+    def _set_state(self, v):
         """Skip forward to the step we were waiting for."""
+        if isinstance(v, tuple):
+            waiting, solved = v
+        else:
+            waiting = v
+            solved = True
+
+        self.fast_forward = True
         while not self.finished:
-            if self.waiting == waiting:
-                self.waiting = None
-                self.do_next()
+            if self._waiting == waiting:
+                self.need_save = False
+                if solved:
+                    self.waiting = None
+                    self.do_next()
+                self.fast_forward = False
                 break
             self.skip(force=True)
         else:
+            self.fast_forward = False
+            self.need_save = False
             raise KeyError("Couldn't resume script.")
+
+    def save(self, solved=False):
+        if not self.fast_forward:
+            self.solved = solved
+            save_game()
+        self.need_save = False
 
     @property
     def root_script(self):
@@ -501,12 +523,25 @@ class ScriptPlayer:
         self.stack[-1][1] = v
 
     @property
-    def waiting(self):
+    def _waiting(self):
         return self.stack[-1][2]
+
+    @_waiting.setter
+    def _waiting(self, v):
+        self.stack[-1][2] = v
+
+    @property
+    def waiting(self):
+        if self._waiting is None:
+            return None
+        return self._waiting[0]
 
     @waiting.setter
     def waiting(self, v):
-        self.stack[-1][2] = v
+        if v is None:
+            self._waiting = v
+        else:
+            self._waiting = v, 0
 
     @property
     def dialogue_choice(self):
@@ -530,6 +565,8 @@ class ScriptPlayer:
         return not self.dialogue_choice
 
     def play_subscript(self, script):
+        if self.need_save:
+            self.save(solved=True)
         self.stack.append([script, 0, None, None])
         if scene.animations:
             scene.on_animation_finish(self.next)
@@ -545,6 +582,8 @@ class ScriptPlayer:
             self.do_next()
 
     def next(self):
+        if self.need_save:
+            self.save(solved=True)
         if self.step >= len(self.script.contents):
             if len(self.stack) > 1:
                 self.end_subscript()
@@ -588,7 +627,7 @@ class ScriptPlayer:
 
     def stop_waiting(self):
         if self.waiting:
-            save_game()
+            self.need_save = self._waiting
             self.waiting = None
             self.do_next()
 
@@ -635,7 +674,8 @@ class ScriptPlayer:
         self.skippable = True
 
     def do_action(self, action):
-        self.waiting = action.verb
+        self._waiting = action.verb, action.uid
+        self.save(solved=False)
 
     def do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
@@ -650,10 +690,14 @@ class ScriptPlayer:
                 "Unsupported stage direction %r for %s" % (d.verb, d.character)
             )
         if d.object:
-            object = scene.get(d.object)
-            if not object:
-                raise ScriptError("%s is not on set" % d.object)
-            handler(actor, object)
+            if d.verb == 'gives':
+                # Items are given, not scene objects
+                handler(actor, d.object)
+            else:
+                object = scene.get(d.object)
+                if not object:
+                    raise ScriptError("%s is not on set" % d.object)
+                handler(actor, object)
         else:
             handler(actor)
         self.do_next()
@@ -858,23 +902,57 @@ def update(dt):
     clock.tick(dt)
 
 
-def save_game():
-    import pickle, json
+def get_saves():
+    import os
+    if not os.path.exists('saves'):
+        return
+
+    for p in os.listdir('saves'):
+        mo = re.match('^save-(\d+).pck$', p)
+        if mo:
+            yield p, int(mo.group(1))
+
+
+def save_game(solved=True):
+    import re
+    import os
+    import pickle
     save_data = {
         'inventory': inventory.__getstate__(),
         'player': player._get_state(),
         'scene': scene._get_state()
     }
 
-    with open('savegame.pck', 'wb') as f:
+    try:
+        os.mkdir('saves')
+    except IOError:
+        pass
+    try:
+        last_save = max(num for path, num in get_saves())
+    except ValueError:
+        next_save = 1
+    else:
+        next_save = last_save + 1
+    save_path = os.path.join('saves', 'save-%d.pck' % next_save)
+    with open(save_path, 'wb') as f:
         pickle.dump(save_data, f, -1)
 
 
 def load_savegame():
     global scene, player, inventory
+
+    import os
     import pickle
+
     try:
-        f = open('savegame.pck', 'rb')
+        last_save = max(get_saves(), key=lambda s: s[1])[0]
+    except ValueError:
+        # No save data
+        return
+
+    save_path = os.path.join('saves', last_save)
+    try:
+        f = open(save_path, 'rb')
     except (IOError, OSError) as e:
         # No save data
         return
