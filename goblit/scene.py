@@ -33,7 +33,7 @@ class Scene:
         self.bubble = None
         self.animations = []
         self.grid = None
-        self._on_animation_finish = []
+        self._on_animation_finish = set()
 
     def get_actor(self, name):
         """Get the named actor."""
@@ -150,6 +150,7 @@ class Scene:
         if exclusive:
             npcs.append(goal)
         route = self.grid.route(actor.pos, goal, npcs=npcs, strict=strict)
+        self.animations = [a for a in self.animations if a.actor != actor]
         self.animations.append(Move(route, actor, on_move_end=on_move_end))
 
     def update(self, dt):
@@ -166,7 +167,7 @@ class Scene:
             self._fire_on_animation_finish()
 
     def on_animation_finish(self, callback):
-        self._on_animation_finish.append(callback)
+        self._on_animation_finish.add(callback)
 
     def _fire_on_animation_finish(self):
         for c in self._on_animation_finish:
@@ -175,7 +176,7 @@ class Scene:
             except Exception:
                 import traceback
                 traceback.print_exc()
-        del self._on_animation_finish[:]
+        self._on_animation_finish.clear()
 
     def draw(self, screen):
         screen.blit(self.room_bg, (0, 0))
@@ -429,7 +430,10 @@ class ScriptPlayer:
 
     def end_subscript(self):
         self.stack.pop()
-        if not self.waiting and not self.dialogue_choice:
+        if self.dialogue_choice:
+            if len(self.dialogue_choice.choices) == 1:
+                self.dialogue_choice.choose(self.dialogue_choice.choices[0])
+        elif not self.waiting:
             self.do_next()
 
     def next(self):

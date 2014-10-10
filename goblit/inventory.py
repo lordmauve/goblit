@@ -1,3 +1,4 @@
+from copy import copy
 from pygame import Rect
 from .loaders import load_image
 from .actions import Action
@@ -155,6 +156,8 @@ class Inventory:
 
     def add(self, item):
         """Add an item to the inventory."""
+        if item in self.items:
+            item = copy(item)
         self.items.append(item)
 
     def remove(self, item):

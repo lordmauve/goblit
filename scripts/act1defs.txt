@@ -23,10 +23,9 @@
     [GOBLIT moves to FIREPLACE]
     GOBLIT: Looks hot. Someone must have wanted a cup of tea.
 
-    .. allow:: Pick up KETTLE
+    .. deny:: Pick up KETTLE
 
-        GOBLIT: Ouch! That is HOT.
-        GOBLIT: I think I'm scalded for life.
+        GOBLIT: It's really hot! I'll just leave it there for now.
 
 .. allow:: Look at YORICK
 

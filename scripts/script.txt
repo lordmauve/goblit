@@ -47,6 +47,11 @@ WIZARD TOX: Spells to prepare, armies to enchant...
 {Speak to WIZARD TOX}
 WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
+.. allow:: Take KETTLE
+
+    GOBLIT: Ouch! That is HOT.
+    GOBLIT: I think I'm scalded for life.
+
 .. deny:: Give MUG to WIZARD TOX
 
     GOBLIT: He wants a cup of tea, not an empty cup.
@@ -96,7 +101,7 @@ PRINCESS AMELIA: Hello, Wizard Tox!
 PRINCESS AMELIA: ...
 PRINCESS AMELIA: Hello? Who are you?
 
-.. choose-one::
+.. choose-any::
 
     .. choice:: Just Goblit.
 
@@ -120,10 +125,13 @@ PRINCESS AMELIA: I'm a big fan of magic actually.
 PRINCESS AMELIA: Sometimes I come here to read the magic books.
 PRINCESS AMELIA: But, as a princess, they don't really let me play around with the dark arts!
 GOBLIT: You're... you're Princess Amelia!
-PRINCESS AMELIA: *blush*
+[PRINCESS AMELIA blushes]
+[pause]
 WIZARD TOX: Stop dawdling, boy, and offer the princess some tea!
+[GOBLIT turns to face PRINCESS AMELIA]
 GOBLIT: Um... Would you like a cup of tea?
 PRINCESS AMELIA: Sure!
+[PRINCESS AMELIA moves to DOWN STAGE CENTER]
 
 .. allow:: Take Y WAND
 
@@ -146,7 +154,7 @@ GOBLIT: So that's what that does.
 
     GOBLIT: Surely I should serve royalty first?
 
-{Give CUP OF TEA TEA to PRINCESS AMELIA}
+{Give CUP OF TEA to PRINCESS AMELIA}
 
 PRINCESS AMELIA: *gack*
 PRINCESS AMELIA: Well, thank you for the thought anyway.
@@ -159,23 +167,24 @@ WIZARD TOX: Goodbye, princess.
 
 WIZARD TOX: Tsk. I do not approve of women learning magic.
 
-.. choice:: Why not?
+.. choose-any::
+    .. choice:: Why not?
 
-    GOBLIT: Why shouldn't women learn magic?
-    WIZARD TOX: Their brains are not built for it, you know.
-    WIZARD TOX: They'd end up pulling a frog from behind a child's ear.
-    WIZARD TOX: Or turning a frog into a person! Can you imagine?
+        GOBLIT: Why shouldn't women learn magic?
+        WIZARD TOX: Their brains are not built for it, you know.
+        WIZARD TOX: They'd end up pulling a frog from behind a child's ear.
+        WIZARD TOX: Or turning a frog into a person! Can you imagine?
 
-.. choice:: ...that's a bit sexist!
+    .. choice:: ...that's a bit sexist!
 
-    GOBLIT: ...that's a bit...
-    WIZARD TOX: And what would they even call a female wizard? A wizard-ess? Ha ha ha.
+        GOBLIT: ...that's a bit...
+        WIZARD TOX: And what would they even call a female wizard? A wizard-ess? Ha ha ha.
 
-.. choice:: Why do you let Princess Amelia read magic books?
+    .. choice:: Why do you let Princess Amelia read magic books?
 
-    GOBLIT: Why do you let Princess Amelia read magic books?
-    WIZARD TOX: Can you imagine what an earful I'd get from Queen Joan if I didn't?
-    WIZARD TOX: Besides, she won't be able to do real magic without a wand.
+        GOBLIT: Why do you let Princess Amelia read magic books?
+        WIZARD TOX: Can you imagine what an earful I'd get from Queen Joan if I didn't?
+        WIZARD TOX: Besides, she won't be able to do real magic without a wand.
 
 {Give CUP OF TEA to WIZARD TOX}
 WIZARD TOX: What would I want tea for? I've got lunch with the Chancellor.

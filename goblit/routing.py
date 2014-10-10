@@ -194,6 +194,8 @@ class Grid:
         r = [(sx * x, sy * y) for x, y in r]
         if strict:
             r[-1] = goal
+        if len(r) > 1:
+            return r[1:]
         return r
 
     def _reconstruct_path(self, came_from, goal):
