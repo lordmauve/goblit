@@ -1,3 +1,4 @@
+import sys
 import re
 import random
 from itertools import chain
@@ -275,7 +276,7 @@ class Scene:
 
     HIT_ACTIONS = [
         'Look at %s',
-        'Look out of %s',
+        'Look out of %s'
     ]
 
     def get_objects(self, pos):
@@ -479,12 +480,7 @@ class ScriptPlayer:
 
     def _set_state(self, v):
         """Skip forward to the step we were waiting for."""
-        if isinstance(v, tuple):
-            waiting, solved = v
-        else:
-            waiting = v
-            solved = True
-
+        waiting, solved = v
         self.fast_forward = True
         while not self.finished:
             if self._waiting == waiting:
@@ -793,7 +789,10 @@ def load():
     player = ScriptPlayer.from_file('script')
 
     scene.init_scene()
-    load_savegame()
+    if len(sys.argv) == 2:
+        load_savegame(sys.argv[1])
+    else:
+        load_savegame()
 
 
 def on_mouse_down(pos, button):
@@ -938,21 +937,25 @@ def save_game(solved=True):
         pickle.dump(save_data, f, -1)
 
 
-def load_savegame():
+def load_savegame(filename=None):
     global scene, player, inventory
 
     import os
     import pickle
 
-    try:
-        last_save = max(get_saves(), key=lambda s: s[1])[0]
-    except ValueError:
-        # No save data
-        return
+    if not filename:
+        try:
+            last_save = max(get_saves(), key=lambda s: s[1])[0]
+        except ValueError:
+            # No save data
+            return
 
-    save_path = os.path.join('saves', last_save)
+        filename = os.path.join('saves', last_save)
+
+    print("Loading", filename)
+
     try:
-        f = open(save_path, 'rb')
+        f = open(filename, 'rb')
     except (IOError, OSError) as e:
         # No save data
         return

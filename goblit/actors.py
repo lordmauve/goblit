@@ -44,7 +44,10 @@ AMELIA = Animation({
     ], loop),
     'blushing': Sequence([
         Frame(load_image('amelia-blushing'), (-21, -87))
-    ], loop),
+    ] * 30, 'default'),
+    'disgusted': Sequence([
+        Frame(load_image('amelia-disgust'), (-21, -87))
+    ] * 30, 'default'),
     'walking': Sequence(
         load_sequence('amelia-walking', 4, (-46, -105)), loop),
 })
@@ -298,7 +301,7 @@ class NPC(Actor):
             def do_give():
                 self.face(actor)
                 actor.face(self)
-                inventory.add(item)
+                inventory.gain(item)
             self.move_to(actor.floor_pos(), on_move_end=do_give, strict=False)
 
 
@@ -326,6 +329,10 @@ class Amelia(NPC):
     @stage_direction('blushes')
     def blush(self):
         self.sprite.play('blushing')
+
+    @stage_direction('is disgusted')
+    def disgust(self):
+        self.sprite.play('disgusted')
 
 
 class Ralph(NPC):

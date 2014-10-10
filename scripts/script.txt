@@ -159,10 +159,11 @@ GOBLIT: So that's what that does.
 
 {Give CUP OF TEA to PRINCESS AMELIA}
 
+[PRINCESS AMELIA is disgusted]
 PRINCESS AMELIA: *gack*
-PRINCESS AMELIA: Well, thank you for the thought anyway.
+PRINCESS AMELIA: Well, thank you for the thought.
 PRINCESS AMELIA: I can't stay, anyway. I just came to drop this back.
-[PRINCESS AMELIA gives SPELLBOOK]
+[PRINCESS AMELIA gives LITTLE BOOK OF SPELLS]
 PRINCESS AMELIA: I guess I'll see you around, Goblit!
 [PRINCESS AMELIA moves to ENTRANCE]
 [PRINCESS AMELIA turns to face WIZARD TOX]
@@ -196,16 +197,21 @@ WIZARD TOX: Tsk. I do not approve of women learning magic.
 
 [WIZARD TOX turns back to desk]
 
+.. deny:: Speak to WIZARD TOX
+
+    WIZARD TOX: Where's my cup of tea?
+
 {Give CUP OF TEA to WIZARD TOX}
 WIZARD TOX: What would I want tea for? I've got lunch with the Chancellor.
 WIZARD TOX: Is that the time?
 WIZARD TOX: You - stay here.
 [WIZARD TOX leaves]
-[GOBLIT moves to CENTRE STAGE]
+[GOBLIT moves to NEAR PARROT]
 
 [WIZARD TOX enters]
 WIZARD TOX: And don't touch anything, catch fire, etc, etc.
 [WIZARD TOX leaves]
+[GOBLIT moves to CENTRE STAGE]
 
 Scene 2
 -------
@@ -230,6 +236,7 @@ GOBLIT: Doesn't matter.
         RALPH: That's why he's the richest wizard in the kingdom.
         GOBLIT: Why isn't he helping with the war?
         RALPH: There's a war?
+        [pause]
 
     .. choice:: Princess Amelia
 
@@ -245,31 +252,35 @@ GOBLIT: Doesn't matter.
 [RALPH leaves]
 
 GOBLIT: I wonder where I can get some snazzy glasses?
-{Use GLASSES on PURPLE GOO}
-GOBLIT: Hmm, snazzy.
+#{Use GLASSES on PURPLE GOO}
+#GOBLIT: Hmm, snazzy.
 
 Scene 3
 -------
 
 [QUEEN JOAN enters]
-QUEEN JOAN: Where is the apprentice?
-
-{Use CLOAK on PURPLE GOO}
-
+[QUEEN JOAN turns to face GOBLIT]
 QUEEN JOAN: You! Are you Tox's apprentice?
 
 .. choose-any::
 
     .. choice:: ...sure?
 
+        GOBLIT: ...sure?
+
     .. choice:: I'm Apprentice Wizard Goblit!
 
+        GOBLIT: I'm Apprentice Wizard Goblit!
+
     .. choice:: So far, I just make tea.
+
+        GOBLIT: So far, I just make tea.
 
 QUEEN JOAN: Whatever. Listen, I'm afraid Wizard Tox has been eaten.
 GOBLIT: EATEN!?!
 QUEEN JOAN: Yes, by a dragon. Surely you know we're at war?
 GOBLIT: ...yes? Yes. Of course.
+[pause]
 
 .. choose-all::
     .. choice:: Who with?
@@ -279,7 +290,7 @@ GOBLIT: ...yes? Yes. Of course.
         QUEEN JOAN: Voltak the Evil and the seven legions of Hell.
         QUEEN JOAN: Usual kind of war.
 
-    .. choice:: Why?
+    .. choice:: Why are we at way?
 
         GOBLIT: What are we warring over, your majesty?
         QUEEN JOAN: Oh, just our very existence.
@@ -294,8 +305,44 @@ GOBLIT: ...yes? Yes. Of course.
         QUEEN JOAN: While at lunch with the chancellor.
         QUEEN JOAN: In THIS CASTLE!
 
+[pause]
 QUEEN JOAN: So... you're now Grand Wizard.
-GOBLIT: I...
+
+.. choose-all::
+
+    .. choice:: The role
+
+        GOBLIT: What does Grand Wizard entail?
+        QUEEN JOAN: Oh, doing whatever spells need doing.
+        QUEEN JOAN: Appearing on a horse at dawn on the fifth day.
+        QUEEN JOAN: Generally saving the realm.
+
+    .. choice:: Why me?
+
+        GOBLIT: Why me?
+        QUEEN JOAN: You are Wizard Tox's apprentice?
+        QUEEN JOAN: How do you think he got the job?
+
+        .. choose-one::
+
+            .. choice:: Knowledge
+                GOBLIT: His knowledge of the many ways of sorcery?
+
+            .. choice:: Wisdom
+                GOBLIT: His sage wisdom and judgement?
+
+            .. choice:: Expertise
+                GOBLIT: His mastery of the three basic spells?
+
+        QUEEN JOAN: No, his master was skewered by a spike daemon.
+        GOBLIT: *gulp*
+
+    .. choice:: My level of expertise
+
+        GOBLIT: I'm not sure I'm qualified...
+        QUEEN JOAN: Nonsense. You've got a wizarding certificate, level one, right?
+        GOBLIT: Yes...?
+
 QUEEN JOAN: Get to it.
 QUEEN JOAN: I want this war over. Cast a spell or something.
 QUEEN JOAN: Turn them all into frogs, perhaps.
@@ -304,7 +351,7 @@ QUEEN JOAN: Don't you dare leave here until you've got a spell ready.
 
 GOBLIT: Um. Maybe I should read some spells, then.
 
-{Use BOOKSHELF}
+{Use BOOKCASE}
 
 
 Act 2
@@ -344,24 +391,25 @@ RALPH: This is priceless.
 RALPH: You're the worst wizard in the kingdom.
 RALPH: You only just passed the basic certification!
 
-.. choice:: I turned someone into a frog!
+.. choose-all::
+    .. choice:: I turned someone into a frog!
 
-    GOBLIT: I turned a man into a frog!
-    RALPH: That was a toad. And he still had man lips.
+        GOBLIT: I turned a man into a frog!
+        RALPH: That was a toad. And he still had man lips.
 
-.. choice:: I sawed a women in half!
+    .. choice:: I sawed a women in half!
 
-    GOBLIT: I sawed a woman in half!
-    RALPH: Sure. But you put her legs back on the wrong way round afterwards.
+        GOBLIT: I sawed a woman in half!
+        RALPH: Sure. But you put her legs back on the wrong way round afterwards.
 
-.. choice:: I pulled a coin from a child's ear!
+    .. choice:: I pulled a coin from a child's ear!
 
-    GOBLIT: I pulled a coin from a child's ear!
-    RALPH: And then you tried to put it back in.
+        GOBLIT: I pulled a coin from a child's ear!
+        RALPH: And then you tried to put it back in.
 
 RALPH: Anyway, I remembered you were talking about a girl.
 GOBLIT: Ah... Princess Amelia...
-RALPH: PRINCESS AMELIA AMELIA?!
+RALPH: PRINCESS AMELIA?!
 GOBLIT: *blush* What? No.
 RALPH: Anyway, whoever she is, I bet she likes flowers.
 RALPH: And I'm your mate, so I'm sorting you out.
@@ -369,6 +417,7 @@ RALPH: I picked this in the castle gardens.
 [RALPH gives FLOWER]
 GOBLIT: It's a bit wilted.
 RALPH: It's been in my pocket.
+GOBLIT: I should find it some water.
 
 {Use TEA}
 GOBLIT: Urgh, that's really awful. Why did I make that?
