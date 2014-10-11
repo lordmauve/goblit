@@ -594,6 +594,8 @@ GOBLIT: That should about do it.
 
 {Use Y WAND with PENTAGRAM}
 
+.. music:: mephistopheles
+
 [DOUBLE MEPHISTOPHELES appears]
 [DOUBLE MEPHISTOPHELES turns to face GOBLIT]
 DOUBLE MEPHISTOPHELES: wwhhaatt iiss hhaappppeenniinngg??
@@ -602,6 +604,7 @@ GOBLIT: Er...
 
 {Take CRYSTALS}
 
+.. music:: main
 [DOUBLE MEPHISTOPHELES disappears]
 GOBLIT: That didn't work.
 
@@ -681,6 +684,11 @@ PRINCESS AMELIA: Should I, Goblit?
 MEPHISTOPHELES: Ok, I guess we have a deal.
 MEPHISTOPHELES: *click* War is over. Grudges forgotten.
 GOBLIT: That was a bit of an anticlimax.
+
+.. allow:: Look out of WINDOW
+
+    [GOBLIT looks out of window]
+    GOBLIT: It's shaping up to be a sunny and pleasant day.
 
 [QUEEN JOAN enters]
 [MEPHISTOPHELES turns to face QUEEN JOAN]

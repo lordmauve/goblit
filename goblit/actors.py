@@ -410,6 +410,11 @@ class Pentagram(Actor, SceneItem):
     def name(self, v):
         self._name = v
 
+    @property
+    def z(self):
+        """Z-index of actor in scene is related to y-coordinate."""
+        return 0
+
     def use_actions(self, item):
         """Get actions for using item with this object."""
         acts = [Action(
@@ -690,8 +695,7 @@ class Goblit(NPC):
         self.scene.set_bg('room-unlit')
         chandelier = self.scene.get('CHANDELIER')
         pentagram = self.scene.get('PENTAGRAM')
-        chandelier.z = pentagram.z + 1
-        self.chandelier_drop = FallingSprite(chandelier, 0, 0, pentagram.pos[1] - 40, on_move_end=self.finish_chandelier)
+        self.chandelier_drop = FallingSprite(chandelier, 0, 0, pentagram.pos[1] - 45, on_move_end=self.finish_chandelier)
         self.scene.animations = [
             FallingSprite(self.knife, 250, 0, self.pos[1], on_move_end=self.finish_snip),
             self.chandelier_drop
@@ -784,10 +788,12 @@ class DoubleMephistopheles(NPC):
     @stage_direction('appears')
     def appear(self):
         self.set_position()
+        self.scene.set_bg('room-mephistopheles')
 
     @stage_direction('disappears')
     def disappear(self):
         self.unspawn()
+        self.scene.set_bg('room-unlit')
 
 
 class Mephistopheles(DoubleMephistopheles):
@@ -797,11 +803,3 @@ class Mephistopheles(DoubleMephistopheles):
     SPRITE = Animation({
         'default': make_floating_sequence('mephistopheles', -32, -138)
     })
-
-    @stage_direction('appears')
-    def appear(self):
-        self.set_position()
-
-    @stage_direction('disappears')
-    def disappear(self):
-        self.unspawn()

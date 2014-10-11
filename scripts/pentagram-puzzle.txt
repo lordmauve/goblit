@@ -8,6 +8,7 @@
 
 .. allow:: Use LETTER OPENER with FIREPLACE
 
+    [GOBLIT moves to FIREPLACE]
     .. craft:: LETTER OPENER -> HOT LETTER OPENER
     GOBLIT: Great for opening letters on really cold days.
 
