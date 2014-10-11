@@ -473,16 +473,16 @@ class TitleBanner:
         screen.fill((0, 0, 0))
         sw = screen.get_width()
         w = self.surf.get_width()
-        screen.blit(self.surf, (sw // 2 - w // 2, 200))
+        screen.blit(self.surf, (sw // 2 - w // 2, 170))
 
 
 class ScriptPlayer:
     @classmethod
-    def from_file(cls, name, clock=clock, on_finish=None):
+    def from_file(cls, name, clock=clock):
         s = scripts.parse_file(name)
-        return cls(s, clock, on_finish)
+        return cls(s, clock)
 
-    def __init__(self, script, clock, on_finish=None):
+    def __init__(self, script, clock):
         self.clock = clock
         self.stack = []
         self.skippable = False  # If we can safely skip the delay
@@ -490,11 +490,14 @@ class ScriptPlayer:
         self.fast_forward = False
         self.need_save = False
         self.banner = None
-        self.on_finish = on_finish
         self.stack.append([script, 0, None, None])
 
     def start(self):
         self.next()
+
+    def on_finish(self):
+        import sys
+        sys.exit(0)
 
     def _get_state(self):
         """Get the waiting state."""
