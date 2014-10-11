@@ -50,8 +50,41 @@
 
         GOBLIT: I don't know what you want me to do.
         GOBLIT: Seriously?
-
+        GOBLIT: Nah.
+        GOBLIT: Does nothing.
+        GOBLIT: Sorry.
+        GOBLIT: Can't seem to make much of that.
+        GOBLIT: Ok. No, wait, I mean no.
 
 .. deny:: Use LETTER OPENER with MAIL
 
     GOBLIT: It's just an elastic band. I don't need this.
+
+.. deny:: Use LETTER OPENER with *
+
+    GOBLIT: That doesn't need opening.
+
+.. deny:: Use EX PARROT with FIREPLACE
+
+    GOBLIT: I don't want to cremate him. Quite fond of the little guy.
+
+.. deny:: Use CANDLESTICK with FIREPLACE
+
+    GOBLIT: I don't want to melt it.
+
+.. deny:: Use CANDLES with FIREPLACE
+
+    GOBLIT: I don't want to melt them before I put them on the pentagram.
+
+.. deny:: Use ENVELOPE with FIREPLACE
+
+    GOBLIT: Not before I've read it!
+
+.. deny:: Use LITTLE BOOK OF SPELLS with SPELLBOOK
+
+    GOBLIT: I've combined them to create one double spellbook!
+    GOBLIT: I'm kidding; that does nothing.
+
+.. deny:: Use LETTER with *
+
+    GOBLIT: Or I could just read it?
