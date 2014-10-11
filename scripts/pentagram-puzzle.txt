@@ -1,3 +1,11 @@
+.. deny:: Use LETTER OPENER with CANDLESTICK
+
+    GOBLIT: It's not sharp enough.
+
+.. deny:: Use CANDLESTICK with PENTAGRAM
+
+    GOBLIT: I'm going to need more than one candle to power this thing up.
+
 .. allow:: Use LETTER OPENER with FIREPLACE
 
     .. craft:: LETTER OPENER -> HOT LETTER OPENER
@@ -5,7 +13,7 @@
 
 .. allow:: Use HOT LETTER OPENER with CANDLESTICK
 
-    .. craft:: CANDLESTICK -> CANDLES
+    .. craft:: HOT LETTER OPENER + CANDLESTICK -> CANDLES + LETTER OPENER
     GOBLIT: Like a hot knife through butter.
     GOBLIT: But with wax instead of the butter.
 
@@ -13,6 +21,14 @@
 
     .. craft:: LETTER OPENER + CATAPULT -> DEADLY CATAPULT
     PRINCESS AMELIA: I don't like where this is going...
+
+.. deny:: Use DEADLY CATAPULT with PRINCESS AMELIA
+
+    GOBLIT: What?! No way!
+
+.. deny:: Use DEADLY CATAPULT with *
+
+    GOBLIT: I could do some serious damage. I'd better not try.
 
 .. allow:: Use DEADLY CATAPULT with CHANDELIER
 
@@ -36,6 +52,10 @@
 
     [PENTAGRAM has candles]
 
+    .. allow:: Speak to PRINCESS AMELIA
+
+        PRINCESS AMELIA: You'd better light the candles.
+
     .. allow:: Use LETTER with FIREPLACE
 
         [GOBLIT moves to FIREPLACE]
@@ -51,3 +71,6 @@
 
     [PENTAGRAM is lit]
 
+.. allow:: Put CRYSTALS onto PENTAGRAM
+
+    [PENTAGRAM has crystals]

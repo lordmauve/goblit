@@ -373,6 +373,7 @@ GOBLIT: Um. Maybe I should read some spells, then.
 {Look at BOOKS}
 
 [GOBLIT moves to BOOKCASE LEFT]
+GOBLIT: There's got to be a spell in here somewhere that'll win this war.
 [pause]
 
 Act 2
@@ -461,7 +462,7 @@ GOBLIT: I wonder what spell she meant?
 
 {Read LITTLE BOOK OF SPELLS}
 GOBLIT: Ah, there's a spell in here for an invincibility potion.
-GOBLIT: That will be what Princess Amelia meant.
+GOBLIT: That *must* be what Princess Amelia meant.
 
 A short while later...
 ----------------------
@@ -579,9 +580,8 @@ A little while later...
 
     PRINCESS AMELIA: We'll need some candles and crystals to power it up.
 
-.. allow:: Put CRYSTALS onto PENTAGRAM
+.. include:: pentagram-puzzle
 
-    [PENTAGRAM has crystals]
 
 {PENTAGRAM is ready}
 
@@ -595,6 +595,7 @@ GOBLIT: That should about do it.
 {Use Y WAND with PENTAGRAM}
 
 [DOUBLE MEPHISTOPHELES appears]
+[DOUBLE MEPHISTOPHELES turns to face GOBLIT]
 DOUBLE MEPHISTOPHELES: wwhhaatt iiss hhaappppeenniinngg??
 DOUBLE MEPHISTOPHELES: wwhhyy aarree tthheerree ttwwoo ooff yyoouu??
 GOBLIT: Er...
@@ -611,6 +612,8 @@ GOBLIT: That didn't work.
 {Use Y WAND with PRINCESS AMELIA}
 GOBLIT: Will you help me?
 PRINCESS AMELIA: Sure!
+.. lose:: CRYSTALS
+[PENTAGRAM is ready]
 [GOBLIT moves to GOBLIT SUMMONING POSITION; PRINCESS AMELIA moves to AMELIA SUMMONING POSITION]
 [GOBLIT turns to face PRINCESS AMELIA; PRINCESS AMELIA turns to face GOBLIT]
 [GOBLIT blushes; PRINCESS AMELIA blushes]
@@ -646,6 +649,7 @@ MEPHISTOPHELES: Can't stand wars, me.
 MEPHISTOPHELES: Consider it done.
 [pause]
 MEPHISTOPHELES: There's just the simple matter of payment.
+[MEPHISTOPHELES turns to face PRINCESS AMELIA]
 PRINCESS AMELIA: Payment? What price do you command?
 MEPHISTOPHELES: Oh, hey. Wow, you're a pretty one.
 MEPHISTOPHELES: How'd you like to grab a coffee with me, back in Hades?
@@ -655,6 +659,7 @@ PRINCESS AMELIA: No!
 MEPHISTOPHELES: Tell you what, I'll stop the war, you come on a date with me...
 MEPHISTOPHELES: And we'll it quits! How about it?
 [pause]
+[PRINCESS AMELIA turns to face GOBLIT]
 PRINCESS AMELIA: Should I, Goblit?
 
 .. choose-any::
@@ -667,7 +672,7 @@ PRINCESS AMELIA: Should I, Goblit?
 
         GOBLIT: No! I can't bear it.
         GOBLIT: Princess... I love you.
-        PRINCESS AMELIA: Aw, that's sweet.
+        PRINCESS AMELIA: I lo...
         MEPHISTOPHELES: Beat it, loser! You want this war stopped or not?
         GOBLIT: I guess we have no choice.
 
@@ -678,13 +683,16 @@ GOBLIT: That was a bit of an anticlimax.
 [QUEEN JOAN enters]
 [MEPHISTOPHELES turns to face QUEEN JOAN]
 QUEEN JOAN: What's all this racket?
+[PRINCESS AMELIA turns to face QUEEN JOAN; GOBLIT turns to face QUEEN JOAN]
 QUEEN JOAN: You! How dare you show your face round here!
 MEPHISTOPHELES: Princess Joan?
-QUEEN JOAN: QUEEN JOAN Joan!
+QUEEN JOAN: QUEEN Joan!
 QUEEN JOAN: You... You ran out on us! How could you! Amelia was just 2 years old!
+[PRINCESS AMELIA looks upstage]
 MEPHISTOPHELES: Shiiiiiiiiiiiiiit. This is my daughter?
 PRINCESS AMELIA: You... you're my... dad?
 MEPHISTOPHELES: Search your feelings. You know it to be true.
+[PRINCESS AMELIA is angry]
 PRINCESS AMELIA: Nooooooooo!
 QUEEN JOAN: Oh, honey. I'm sorry. I never told you... it was just too hard.
 [pause]

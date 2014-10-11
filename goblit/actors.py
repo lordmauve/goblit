@@ -753,7 +753,7 @@ class Amelia(NPC):
 
 class Ralph(NPC):
     NAME = 'RALPH'
-    COLOR = (211, 255, 255)
+    COLOR = (36, 211, 255)
     SPRITE = RALPH
 
 
