@@ -139,3 +139,17 @@
         GOBLIT: "How to turn a lemon into an orange."
         GOBLIT: "How to levitate a carpet."
         GOBLIT: "How to grow magic beans."
+
+.. deny:: Take LETTER OPENER
+
+    [GOBLIT moves to BESIDE DESK]
+    .. random::
+        WIZARD TOX: Leave that alone!
+        WIZARD TOX: Stop touching things!
+
+.. deny:: Take CANDLESTICK
+
+    [GOBLIT moves to BESIDE DESK]
+    .. random::
+        WIZARD TOX: Leave that alone!
+        WIZARD TOX: Stop touching things!

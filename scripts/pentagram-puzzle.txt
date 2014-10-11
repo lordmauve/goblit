@@ -1,12 +1,3 @@
-A little while later...
------------------------
-
-[PENTAGRAM is at CENTRE STAGE]
-
-.. allow:: Take CANDLESTICK
-
-    GOBLIT: It's a big candle.
-
 .. allow:: Use LETTER OPENER with FIREPLACE
 
     .. craft:: LETTER OPENER -> HOT LETTER OPENER
@@ -60,4 +51,3 @@ A little while later...
 
     [PENTAGRAM is lit]
 
-{PENTAGRAM is ready}

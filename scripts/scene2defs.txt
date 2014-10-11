@@ -22,6 +22,14 @@
 
     GOBLIT: Who wouldn't want to carry a dead parrot around?
 
+.. allow:: Take CANDLESTICK
+
+    GOBLIT: It's a big candle.
+
+.. allow:: Take LETTER OPENER
+
+    GOBLIT: This is bound to come in handy.
+
 .. allow:: Look out of WINDOW
 
     [GOBLIT looks out of window]

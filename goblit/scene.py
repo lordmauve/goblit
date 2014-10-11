@@ -464,6 +464,18 @@ class Banner:
         self.bubble.draw(screen)
 
 
+class TitleBanner:
+    def __init__(self):
+        from .loaders import load_image
+        self.surf = load_image('title')
+
+    def draw(self, screen):
+        screen.fill((0, 0, 0))
+        sw = screen.get_width()
+        w = self.surf.get_width()
+        screen.blit(self.surf, (sw // 2 - w // 2, 200))
+
+
 class ScriptPlayer:
     @classmethod
     def from_file(cls, name, clock=clock, on_finish=None):
@@ -479,7 +491,10 @@ class ScriptPlayer:
         self.need_save = False
         self.banner = None
         self.on_finish = on_finish
-        self.play_subscript(script)
+        self.stack.append([script, 0, None, None])
+
+    def start(self):
+        self.next()
 
     def _get_state(self):
         """Get the waiting state."""
@@ -562,9 +577,8 @@ class ScriptPlayer:
         self.stack[-2][3] = None
 
     def is_interactive(self):
-        """Return True if we're in interactive mode.
-        """
-        return not banner and bool(self.waiting or self.dialogue_choice)
+        """Return True if we're in interactive mode."""
+        return not self.banner and bool(self.waiting or self.dialogue_choice)
 
     def show_inventory(self):
         """Should the inventory panel be drawn.
@@ -761,13 +775,12 @@ class ScriptPlayer:
 
 
 # Script player
-banner = None
 player = None
 scene = None
 
 
 def load():
-    global player, scene
+    global player, scene, banner
     scene = Scene()
     scene.load()
     Cursor.load()
@@ -775,9 +788,13 @@ def load():
 
     scene.init_scene()
     if len(sys.argv) == 2:
-        load_savegame(sys.argv[1])
+        if load_savegame(sys.argv[1]):
+            return
     else:
-        load_savegame()
+        if load_savegame():
+            return
+    player.banner = TitleBanner()
+    clock.schedule(player.cancel_banner, 5)
 
 
 def on_mouse_down(pos, button):
@@ -937,14 +954,14 @@ def load_savegame(filename=None):
 
         filename = os.path.join('saves', last_save)
 
-    print("Loading", filename)
-
     try:
         f = open(filename, 'rb')
     except (IOError, OSError) as e:
         # No save data
+        print(filename, "does not exist. Starting from the beginning.")
         return
 
+    print("Loading", filename)
     with f:
         save_data = pickle.load(f)
 

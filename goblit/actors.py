@@ -104,7 +104,7 @@ CAULDRON = Animation({
         Frame(load_image('cauldron-bubbling'), (-43, -95))
     ], loop),
     'blue': Sequence([
-        Frame(load_image('cauldron-bubbling'), (-43, -95))
+        Frame(load_image('cauldron-blue'), (-43, -95))
     ], loop),
     'ready': Sequence([
         Frame(load_image('cauldron-ready'), (-43, -95))
@@ -242,7 +242,7 @@ def stage_direction(name):
 
 
 class Actor(metaclass=ActorMeta):
-    HEIGHT = 120
+    HEIGHT = 125
 
     def __init__(self, scene):
         self.scene = scene
