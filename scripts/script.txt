@@ -101,8 +101,8 @@ GOBLIT: I wonder what spell she meant?
 GOBLIT: Ah, there's a spell in here for an invincibility potion.
 GOBLIT: That will be what Princess Amelia meant.
 
-Some hours later
-----------------
+A short while later...
+----------------------
 
 [CAULDRON is at CENTRE STAGE]
 [GOBLIT is at CENTRE STAGE RIGHT]
@@ -121,6 +121,12 @@ GOBLIT: It says that the potion is made with "Blue Eggs and Spam".
     GOBLIT: The potion doesn't need cold, disgusting tea.
 
 {Add COLD KETTLE to CAULDRON}
+.. gain:: COLD KETTLE
+
+.. allow:: Use COLD KETTLE with MUG
+
+    .. craft:: MUG -> MUG OF WATER
+    GOBLIT: I'm amazed there's still water left in this kettle.
 
 [CAULDRON is filled]
 GOBLIT: Right, we're ready to brew.
@@ -172,6 +178,7 @@ QUEEN JOAN: Hello, daughter. Keep an eye on this idiot wizard for me, will you?
 GOBLIT: Hey, the invincibility potion you sent me was a wash-out!
 PRINCESS AMELIA: Invincibility potion?
 GOBLIT: That you mentioned in your letter! How could you?
+[PRINCESS AMELIA is angry]
 PRINCESS AMELIA: HEY! It was YOU doing the spell!
 [PRINCESS AMELIA turns back on GOBLIT]
 
@@ -203,14 +210,15 @@ GOBLIT: Ah, we need to make a pentagram. Candles, crystals, that kind of thing.
 
 .. allow:: Use LETTER OPENER with FIREPLACE
 
-    .. lose:: LETTER OPENER
-    .. gaim:: HOT LETTER OPENER
+    .. craft:: LETTER OPENER -> HOT LETTER OPENER
     GOBLIT: Great for opening letters on really cold days.
 
-.. allow:: Use HOT LETTER
+.. allow:: Use HOT LETTER OPENER with CANDLESTICK
 
-{Use LETTER OPENER with FIREPLACE}
-{Use HOT LETTER OPENER with CANDLESTICK}
+    .. craft:: CANDLESTICK -> CANDLES
+    GOBLIT: Like a hot knife through butter.
+    GOBLIT: But with wax instead of the butter.
+
 {Use CANDLES with PENTAGRAM}
 
 {Use Y WAND with RUBBER BAND}

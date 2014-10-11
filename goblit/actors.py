@@ -98,29 +98,43 @@ CAULDRON = Animation({
     ], loop),
 })
 
-FONT_NAME = 'fonts/RosesareFF0000.ttf'
-FONT = Font(FONT_NAME, 16)
+FONT = (Font('fonts/RosesareFF0000.ttf', 16), False)
+BIG_FONT = (Font('fonts/LiberationSerif-Bold.ttf', 100), True)
 
 
 class FontBubble:
-    def __init__(self, text, pos=(0, 0), color=(255, 255, 255), anchor='center'):
+    def __init__(
+            self, text,
+            pos=(0, 0),
+            color=(255, 255, 255),
+            anchor='center',
+            font=FONT,
+            outline=1):
         self.text = text
         self.pos = pos
         self.color = color
         self.anchor = anchor
+        self.font = font
+        self.outline = outline
         self._build_surf()
 
     def _build_surf(self):
-        base = FONT.render(self.text, False, self.color)
-        black = FONT.render(self.text, False, (0, 0, 0))
+        font, antialias = self.font
+        base = font.render(self.text, antialias, self.color)
+        if not self.outline:
+            self.surf = base
+            return
+        black = font.render(self.text, antialias, (0, 0, 0))
 
+        o = self.outline
+        o2 = o * 2
         w, h = base.get_size()
-        self.surf = pygame.Surface((w + 2, h + 2), pygame.SRCALPHA)
+        self.surf = pygame.Surface((w + o2, h + o2), pygame.SRCALPHA)
 
-        for off in [(0, 0), (0, 2), (2, 0), (2, 2)]:
+        for off in [(0, 0), (0, o2), (o2, 0), (o2, o2)]:
             self.surf.blit(black, off)
 
-        self.surf.blit(base, (1, 1))
+        self.surf.blit(base, (o, o))
 
     def pos_center(self):
         x, y = self.pos
@@ -430,6 +444,10 @@ class NPC(Actor):
     @stage_direction('is disgusted')
     def disgust(self):
         self.sprite.play('disgusted')
+
+    @stage_direction('is angry')
+    def angry(self):
+        self.sprite.play('angry')
 
     @stage_direction('gives')
     def give(self, item):

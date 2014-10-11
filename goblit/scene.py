@@ -436,51 +436,24 @@ def directive(func):
     return _wrapper
 
 
-class DialogueChoice:
-    def __init__(self, player, directive):
-        self.player = player
-        for d in directive.contents:
-            if not isinstance(d, scripts.Directive) or d.name != 'choice':
-                raise ScriptError(
-                    "Children of choose-any directives must be choice "
-                    "directives"
-                )
-        self.directive = directive
+class Banner:
+    def __init__(self, title):
+        self.title = title
         self._build()
 
-    @property
-    def choices(self):
-        return self.directive.contents
-
     def _build(self):
-        from .actors import FontBubble
-        self.bubbles = []
-        for i, d in enumerate(self.choices):
-            bubble = FontBubble(d.data, (40, 460 + 40 * i), color=(255, 240, 180), anchor='left')
-            self.bubbles.append(bubble)
-
-    def for_point(self, pos):
-        for directive, bubble in zip(self.choices, self.bubbles):
-            if bubble.bounds.collidepoint(pos):
-                return Action(directive.data, partial(self.choose, directive))
-
-    def choose(self, script):
-        self.player.dialogue_choice = None
-        self.player.play_subscript(script)
+        from .actors import FontBubble, FONT, BIG_FONT
+        font = BIG_FONT if self.title.level == 1 else FONT
+        self.bubble = FontBubble(
+            self.title.name,
+            pos=(480, 260),
+            font=font,
+            outline=0
+        )
 
     def draw(self, screen):
-        for b in self.bubbles:
-            b.draw(screen)
-
-
-class AllDialogueChoice(DialogueChoice):
-    def choose(self, script):
-        self.choices.remove(script)
-        if not self.choices:
-            self.player.dialogue_choice = None
-        else:
-            self._build()
-        self.player.play_subscript(script)
+        screen.fill((0, 0, 0))
+        self.bubble.draw(screen)
 
 
 class ScriptPlayer:
@@ -496,6 +469,7 @@ class ScriptPlayer:
         self.finished = False
         self.fast_forward = False
         self.need_save = False
+        self.banner = None
         self.on_finish = on_finish
         self.play_subscript(script)
 
@@ -579,7 +553,7 @@ class ScriptPlayer:
     def is_interactive(self):
         """Return True if we're in interactive mode.
         """
-        return bool(self.waiting or self.dialogue_choice)
+        return not banner and bool(self.waiting or self.dialogue_choice)
 
     def show_inventory(self):
         """Should the inventory panel be drawn.
@@ -698,9 +672,14 @@ class ScriptPlayer:
         prev_directives = self.walk_script(self.script_so_far())
         return [d for d in prev_directives if d.name in ('allow', 'deny')]
 
+    def estimate_line_time(self, line):
+        words = line.split()
+        return 1.0 + 0.2 * len(words) + 0.01 * len(line)
+
     def do_line(self, line):
+        t = self.estimate_line_time(line.line)
         scene.say(line.character, line.line)
-        self.clock.schedule(self.cancel_line, 3)
+        self.clock.schedule(self.cancel_line, t)
         self.skippable = True
 
     def do_pause(self, pause):
@@ -710,6 +689,17 @@ class ScriptPlayer:
     def do_action(self, action):
         self._waiting = action.verb, action.uid
         self.save(solved=False)
+
+    def do_scenetitle(self, title):
+        if self.fast_forward:
+            self.do_next()
+            return
+        self.banner = Banner(title)
+        self.clock.schedule(self.cancel_banner, 6 if title.level == 1 else 3)
+
+    def cancel_banner(self):
+        self.banner = None
+        self.do_next()
 
     def base_do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
@@ -756,6 +746,7 @@ class ScriptPlayer:
 
 
 # Script player
+banner = None
 player = None
 scene = None
 
@@ -955,6 +946,9 @@ def load_savegame(filename=None):
 
 
 def draw(screen):
+    if player.banner:
+        player.banner.draw(screen)
+        return
     scene.draw(screen)
     if player.dialogue_choice:
         player.dialogue_choice.draw(screen)
