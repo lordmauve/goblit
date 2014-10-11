@@ -1,8 +1,10 @@
 from copy import copy
+from collections import defaultdict
 from pygame import Rect
+
 from .loaders import load_image
 from .actions import Action
-from collections import defaultdict
+from .errors import ScriptError
 
 
 class SceneItem:
@@ -43,11 +45,17 @@ class SceneItem:
         do things go above purely aesthetic ones.
 
         """
-        return [Action('Look at %s' % self.name)]
+        return [Action('Look at %s' % self.name, self.look_this_way)]
 
-    def give_item(self, actor):
+    def look_this_way(self):
+        """Make Goblit look this way."""
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            actor.face(self)
+
+    def give_item(self):
         """Actually pick up the thing."""
-        actor.face(self)
+        self.look_this_way()
         inventory.add(self.item)
         self.scene.unspawn_object(self)
 
@@ -89,10 +97,12 @@ class FloorItem(SceneItem):
         if actor:
             actor.move_to(
                 self.pos,
-                on_move_end=lambda: self.give_item(actor),
+                on_move_end=self.give_item,
                 strict=False,
                 exclusive=True
             )
+        else:
+            raise ScriptError("GOBLIT is not on set")
 
 
 class PointItem(SceneItem):
@@ -123,8 +133,10 @@ class PointItem(SceneItem):
         if actor:
             actor.move_to(
                 self.navpoint,
-                on_move_end=lambda: self.give_item(actor)
+                on_move_end=self.give_item
             )
+        else:
+            raise ScriptError("GOBLIT is not on set")
 
 
 class FixedItem(PointItem):

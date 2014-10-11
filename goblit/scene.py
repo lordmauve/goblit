@@ -698,7 +698,7 @@ class ScriptPlayer:
         self._waiting = action.verb, action.uid
         self.save(solved=False)
 
-    def do_stagedirection(self, d):
+    def base_do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
         if not actor:
             if d.verb in ('enters', 'is gone', 'appears', 'is standing by'):
@@ -721,6 +721,14 @@ class ScriptPlayer:
                 handler(actor, object)
         else:
             handler(actor)
+
+    def do_stagedirection(self, d):
+        self.base_do_stagedirection(d)
+        self.do_next()
+
+    def do_multistagedirection(self, d):
+        for direction in d.directions:
+            self.base_do_stagedirection(direction)
         self.do_next()
 
     def do_directive(self, directive):

@@ -132,3 +132,10 @@
 
     .. deny:: Take Y WAND
         GOBLIT: I was told not to touch anything.
+
+.. allow:: Read LITTLE BOOK OF SPELLS
+
+    .. random::
+        GOBLIT: "How to turn a lemon into an orange."
+        GOBLIT: "How to levitate a carpet."
+        GOBLIT: "How to grow magic beans."

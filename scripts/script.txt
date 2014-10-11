@@ -8,6 +8,7 @@
 .. gain:: CUP OF TEA
 .. gain:: KETTLE
 .. gain:: LITTLE BOOK OF SPELLS
+.. include:: scene2defs
 
 
 Act 2
@@ -35,7 +36,8 @@ RALPH: You only just passed the basic certification!
     .. choice:: I turned someone into a frog!
 
         GOBLIT: I turned a man into a frog!
-        RALPH: That was a toad. And he still had man lips.
+        RALPH: No, you turned him into a frenchman.
+        GOBLIT: ...and?
 
     .. choice:: I sawed a women in half!
 
@@ -49,8 +51,9 @@ RALPH: You only just passed the basic certification!
 
 RALPH: Anyway, I remembered you were talking about a girl.
 GOBLIT: Ah... Princess Amelia...
+[GOBLIT blushes]
 RALPH: PRINCESS AMELIA?!
-GOBLIT: *blush* What? No.
+GOBLIT: What? No.
 RALPH: Anyway, whoever she is, I bet she likes flowers.
 RALPH: And I'm your mate, so I'm sorting you out.
 RALPH: I picked this in the castle gardens.
@@ -61,10 +64,13 @@ RALPH: Find it some water. It'll be fine.
 
 {Read LETTER}
 .. lose:: LETTER
+[GOBLIT moves to DOWN STAGE CENTRE]
 GOBLIT: "Dear Goblit, I know you're trying hard to finish the war."
 GOBLIT: "I remembered reading something in the spellbook I gave you,"
 GOBLIT: "Love A."
 RALPH: Who's 'A'?
+[GOBLIT moves to CENTRE STAGE]
+[GOBLIT turns to face RALPH]
 
 .. choose-any::
     .. choice:: It's Princess Amelia.
@@ -98,6 +104,8 @@ GOBLIT: That will be what Princess Amelia meant.
 Some hours later
 ----------------
 
+.. spawn:: CAULDRON
+[GOBLIT is standing by CENTRE STAGE RIGHT]
 GOBLIT: It says that the potion is made with "Blue Eggs and Spam".
 
 {Use EX PARROT with POTION}

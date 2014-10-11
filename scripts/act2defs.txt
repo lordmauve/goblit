@@ -5,9 +5,16 @@
 
     GOBLIT: It's not that sharp.
 
+.. deny:: Give COLD TEA to RALPH
+
+    [RALPH turns to face GOBLIT]
+    RALPH: No thanks. I only drink organic sencha tea.
+
 .. allow:: Drink COLD TEA
 
     .. craft:: COLD TEA -> MUG
+    [GOBLIT is disgusted]
+    GOBLIT: *gack*
     GOBLIT: Urgh, that's really awful. Why did I make that?
 
 .. allow:: Use COLD KETTLE with MUG

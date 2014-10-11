@@ -20,6 +20,12 @@ GOBLIT = Animation({
     ], loop),
     'walking': Sequence(
         load_sequence('goblit-walking', 4, (-46, -105)), loop),
+    'blushing': Sequence([
+        Frame(load_image('goblit-blushing'), (-18, -81))
+    ] * 30, 'default'),
+    'disgusted': Sequence([
+        Frame(load_image('goblit-disgust'), (-18, -81))
+    ] * 30, 'default'),
     'look-back': Sequence([
         Frame(load_image('goblit-back'), (-18, -81))
     ], loop)
@@ -170,9 +176,14 @@ class Actor(metaclass=ActorMeta):
 
     def show(self, pos=None, dir='right', initial='default'):
         self.visible = True
-        self.sprite = self.SPRITE.create_instance(pos or self._last_pos)
-        self.sprite.dir = 'right'
-        self.sprite.play(initial)
+        if not self.sprite:
+            self.sprite = self.SPRITE.create_instance(pos or self._last_pos)
+            self.sprite.dir = 'right'
+            self.sprite.play(initial)
+        else:
+            self.sprite.pos = pos
+            self.sprite.dir = dir
+            self.sprite.play(initial)
 
     def hide(self):
         self._last_pos = self.sprite.pos
@@ -266,6 +277,8 @@ class Actor(metaclass=ActorMeta):
                 strict=strict,
                 exclusive=exclusive
             )
+        else:
+            on_move_end()
 
     @stage_direction('enters')
     def enter(self, navpoint='ENTRANCE'):
@@ -295,12 +308,13 @@ class Actor(metaclass=ActorMeta):
                 on_move_end=self.unspawn
             )
 
-    @stage_direction('looks out of window')
-    def look_out_of_window(self):
-        self.move_to(
-            self.scene.get('WINDOW'),
-            on_move_end=lambda: self.sprite.play('look-back')
-        )
+    @stage_direction('blushes')
+    def blush(self):
+        self.sprite.play('blushing')
+
+    @stage_direction('is disgusted')
+    def disgust(self):
+        self.sprite.play('disgusted')
 
 
 class Goblit(Actor):
@@ -319,6 +333,13 @@ class Goblit(Actor):
             Action('Drink %s' % item.name),
             Action('Read %s' % item.name)
         ]
+
+    @stage_direction('looks out of window')
+    def look_out_of_window(self):
+        self.move_to(
+            self.scene.get('WINDOW'),
+            on_move_end=lambda: self.sprite.play('look-back')
+        )
 
 
 class NPC(Actor):
@@ -357,14 +378,6 @@ class Amelia(NPC):
     NAME = 'PRINCESS AMELIA'
     COLOR = (255, 220, 100)
     SPRITE = AMELIA
-
-    @stage_direction('blushes')
-    def blush(self):
-        self.sprite.play('blushing')
-
-    @stage_direction('is disgusted')
-    def disgust(self):
-        self.sprite.play('disgusted')
 
 
 class Ralph(NPC):

@@ -43,3 +43,7 @@
         GOBLIT: I don't know what you want me to do.
         GOBLIT: Seriously?
 
+
+.. deny:: Use LETTER OPENER with MAIL
+
+    GOBLIT: It's just an elastic band. I don't need this.

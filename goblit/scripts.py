@@ -14,7 +14,11 @@ LINE_RE = re.compile(r'([A-Z ]+): (.*)')
 
 PAUSE_RE = re.compile(r'\[pause\]')
 ACTION_RE = re.compile(r'{(.*)}')
+DIRECTION = re.compile(r'([A-Z ]+)? +([a-z ]+?)(?: +([A-Z ]+))?\s*$')
 STAGE_DIRECTION_RE = re.compile(
+    r'\[(.+)\]'
+)
+MULTI_STAGE_DIRECTION_RE = re.compile(
     r'\[([A-Z ]+)? +([a-z ]+?)(?: +([A-Z ]+))?\]'
 )
 INDENT_RE = re.compile(r'^([ \t]+)(.*)')
@@ -44,8 +48,27 @@ class Action:
     def __init__(self, verb):
         self.verb = verb
 
+
+def make_stage_direction(instructions):
+    directions = []
+    for i in instructions.split(';'):
+        i = i.strip()
+        mo = DIRECTION.match(i)
+        if not mo:
+            raise ParseError("Couldn't parse stage direction %r" % i)
+        directions.append(StageDirection(*mo.groups()))
+    if len(directions) == 0:
+        raise ParseError("No directions found in stage direction.")
+    elif len(directions) == 0:
+        return directions[0]
+    else:
+        return MultiStageDirection(directions)
+
+
+
 Line = namedtuple('Line', 'character line')
 StageDirection = namedtuple('StageDirection', 'character verb object')
+MultiStageDirection = namedtuple('MultiStageDirection', 'directions')
 Title = namedtuple('SceneTitle', 'name level')
 Gift = namedtuple('Gift', 'character object')
 
@@ -67,7 +90,7 @@ TOKEN_TYPES = [
     (LINE_RE, Line),
     (PAUSE_RE, Pause),
     (ACTION_RE, Action),
-    (STAGE_DIRECTION_RE, StageDirection),
+    (STAGE_DIRECTION_RE, make_stage_direction),
     (UNDERLINE_RE, Underline),
     (GIFT_RE, Gift)
 ]

@@ -38,10 +38,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1680"
-     inkscape:window-height="1026"
-     inkscape:window-x="1366"
-     inkscape:window-y="24"
+     inkscape:window-width="1301"
+     inkscape:window-height="744"
+     inkscape:window-x="65"
+     inkscape:window-y="540"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata6224">
@@ -51,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -196,7 +196,7 @@
        x="0"
        y="0"
        xlink:href="#g8071"
-       id="down_stage_center"
+       id="down_stage_centre"
        transform="translate(465.12594,399.03867)"
        width="960"
        height="427"
