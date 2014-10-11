@@ -739,6 +739,11 @@ class Tox(NPC):
         self.sprite.play('sitting-at-desk')
         self.sprite.dir = 'right'
 
+    @stage_direction('stands up')
+    def stand_up(self):
+        self.sprite.play('default')
+        self.scene.set_bg('room')
+
 
 class Amelia(NPC):
     NAME = 'PRINCESS AMELIA'

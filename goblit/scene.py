@@ -107,7 +107,7 @@ class Scene:
         self.room_bg = load_image(name)
 
     def load(self):
-        self.set_bg('room')
+        self.set_bg('room-tox')
         self.room_fg = load_image('foreground')
         self.hitmap = HitMap.from_svg('hit-areas')
         self.navpoints = points_from_svg('navigation-points')

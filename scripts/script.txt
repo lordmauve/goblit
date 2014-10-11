@@ -196,6 +196,7 @@ WIZARD TOX: Tsk. I do not approve of women learning magic.
     WIZARD TOX: Where's my cup of tea?
 
 {Give CUP OF TEA to WIZARD TOX}
+[WIZARD TOX stands up]
 WIZARD TOX: What would I want tea for? I've got lunch with the Chancellor.
 .. gain:: CUP OF TEA
 WIZARD TOX: Is that the time?
