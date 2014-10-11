@@ -112,7 +112,7 @@ class PointItem(SceneItem):
         return self.scene.navpoints[self.navpoint]
 
     def click_actions(self):
-        """Floor items can be picked up."""
+        """Point items can be taken."""
         return (
             [Action('Take %s' % self.name, self.take)] +
             super().click_actions()
@@ -125,6 +125,20 @@ class PointItem(SceneItem):
                 self.navpoint,
                 on_move_end=lambda: self.give_item(actor)
             )
+
+
+class FixedItem(PointItem):
+    """An item that can't be picked up, but can be used in place."""
+    def click_actions(self):
+        return []
+
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        return [Action('Use %s with %s' % (item.name, self.name))]
+
+    def _respawn_state(self):
+        func, params = super()._respawn_state()
+        return 'spawn_fixed_object_near_navpoint', params
 
 
 class ItemDict(defaultdict):

@@ -13,7 +13,7 @@ from .navpoints import points_from_svg
 from .routing import Grid
 from . import clock
 from . import scripts
-from .inventory import FloorItem, PointItem, Item
+from .inventory import FloorItem, PointItem, Item, FixedItem
 from .transitions import Move
 from .geom import dist
 from .inventory import inventory
@@ -143,6 +143,19 @@ class Scene:
             raise KeyError("Unknown navpoint %s" % navpoint)
         self.objects.append(PointItem(self, item, pos, navpoint))
 
+    def spawn_fixed_object_near_navpoint(self, item, pos, navpoint):
+        """Spawn an object that can't be picked up.
+
+        pos is the screen position of the object.
+
+        Actors approach the given navpoint to approach the object.
+
+        """
+        item = Item.items[item]
+        if navpoint not in self.navpoints:
+            raise KeyError("Unknown navpoint %s" % navpoint)
+        self.objects.append(FixedItem(self, item, pos, navpoint))
+
     def unspawn_object(self, obj):
         self.objects.remove(obj)
 
@@ -260,7 +273,8 @@ class Scene:
         if wildcards:
             for k, v in self.object_scripts.items():
                 if '*' in k:
-                    if fnmatch(action_name, k):
+                    match = fnmatch(action_name, k)
+                    if match:
                         return v
 
     def make_action_handler(self, base_action, wildcards=True):
