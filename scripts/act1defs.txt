@@ -7,6 +7,10 @@
 
     GOBLIT: Are those electric lightbulbs?
 
+.. allow:: Look at CANDLESTICK
+
+    GOBLIT: Why do we need that when we have electric lighting?
+
 .. allow:: Look at PAINTING
 
     [GOBLIT moves to UP STAGE RIGHT]
@@ -99,7 +103,7 @@
 
 .. deny:: Use MUG with SOCK
 
-    GOBLIT: You picked up a mug and a sock and thought I'd magically combine them?
+    GOBLIT: You picked up a mug and a sock and thought combining them would be the first puzzle?
 
 .. deny:: Use MUG with KETTLE
 

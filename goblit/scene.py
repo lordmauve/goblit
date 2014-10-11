@@ -59,9 +59,15 @@ class Scene:
             raise KeyError(name)
 
     def _get_state(self):
+        scripts = []
+        for binding, d in self.object_scripts.items():
+            if d:
+                scripts.append((True, d.uid))
+            else:
+                scripts.append((False, binding))
         return {
             'objects': [o._respawn_state() for o in self.objects],
-            'object_scripts': [d.uid for d in self.object_scripts.values()]
+            'object_scripts': scripts
         }
 
     def _set_state(self, v):
@@ -72,9 +78,11 @@ class Scene:
         all_directives = player.binding_directives_seen()
         directives_by_uid = {d.uid: d for d in all_directives}
         directives_by_action = {d.data: d for d in all_directives}
-        self.object_scripts = {}
         errors = 0
-        for uid in v['object_scripts']:
+        for is_bound, uid in v['object_scripts']:
+            if not is_bound:
+                self.object_scripts[uid] = None
+                continue
             try:
                 d = directives_by_uid[uid]
             except KeyError:
@@ -713,7 +721,7 @@ class ScriptPlayer:
 
     @simple_directive
     def directive_unbind(self, directive):
-        del scene.object_scripts[directive.data]
+        scene.object_scripts[directive.data] = None
 
     @simple_directive
     def directive_rename(self, directive):
@@ -735,11 +743,24 @@ class ScriptPlayer:
         """Craft an item from others."""
         mo = re.match(r'^([A-Z +]+?)\s*->\s*([A-Z ]+)$', directive.data)
         if not mo:
-            raise ScriptError("Couldn't parse craft directive %r" % directive.data)
+            raise ScriptError(
+                "Couldn't parse craft directive %r" % directive.data)
 
-        inputs, outputs = ([item.strip() for item in g.split('+')] for g in mo.groups())
+        inputs, outputs = (
+            [item.strip() for item in g.split('+') if item.strip()]
+            for g in mo.groups()
+        )
+        if not inputs:
+            raise ScriptError(
+                "No inputs for craft directive %r" % directive.data)
+        if not outputs:
+            raise ScriptError(
+                "No outputs for craft directive %r" % directive.data)
         for i in inputs:
-            inventory.lose(i)
+            try:
+                inventory.lose(i)
+            except ValueError:
+                raise ScriptError("Player does not have %s" % i)
         for o in outputs:
             inventory.gain(o)
 

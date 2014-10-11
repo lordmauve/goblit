@@ -369,20 +369,17 @@ Scene 2
 
 .. allow:: Use COLD TEA with GOBLIT
 
-    .. lose:: COLD TEA
-    .. gain:: MUG
+    .. craft:: COLD TEA -> MUG
     GOBLIT: Urgh, that's really awful. Why did I make that?
 
 .. allow:: Use COLD KETTLE with MUG
 
-    .. lose:: MUG
-    .. gain:: MUG OF WATER
+    .. craft:: MUG -> MUG OF WATER
+    GOBLIT: Done.
 
 .. allow:: Use WILTED FLOWER with MUG OF WATER
 
-    .. lose:: WILTED FLOWER
-    .. gain:: FLOWER
-
+    .. craft:: WILTED FLOWER -> FLOWER
     GOBLIT: That'll be just fine.
 
 [RALPH enters]
@@ -392,9 +389,7 @@ GOBLIT: I didn't know I had a mailbox.
 
 .. allow:: Use LETTERS with GOBLIT
 
-    .. gain:: LETTER
-    .. gain:: RUBBER BAND
-    .. gain:: JUNK MAIL
+    .. craft:: LETTERS -> LETTER + RUBBER BAND + JUNK MAIL
 
 RALPH: So, I hear you're now Grand Wizard!
 RALPH: This is priceless.

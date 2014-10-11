@@ -72,14 +72,6 @@
        y="103"
        inkscape:label="#rect6343" />
     <rect
-       inkscape:label="#rect6343"
-       y="55"
-       x="421.00003"
-       height="38"
-       width="94"
-       id="chandelier"
-       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-    <rect
        style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="fireplace"
        width="66"
@@ -95,14 +87,6 @@
        x="696"
        y="78"
        inkscape:label="#rect7739" />
-    <rect
-       style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="strange_goo"
-       width="61.518288"
-       height="58.689861"
-       x="448.30569"
-       y="154.7639"
-       inkscape:label="#rect7612" />
     <rect
        style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="heap"

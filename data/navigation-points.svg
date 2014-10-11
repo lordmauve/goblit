@@ -29,7 +29,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="232.25727"
+     inkscape:cx="571.66852"
      inkscape:cy="208.21618"
      inkscape:document-units="px"
      inkscape:current-layer="layer6"
@@ -244,6 +244,15 @@
        width="960"
        transform="translate(663.50775,310.77164)"
        id="up_stage_right"
+       xlink:href="#g8071"
+       y="0"
+       x="0" />
+    <use
+       inkscape:label="#use8078"
+       height="427"
+       width="960"
+       transform="translate(839.71277,365.67471)"
+       id="beside_desk"
        xlink:href="#g8071"
        y="0"
        x="0" />
