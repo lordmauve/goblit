@@ -790,6 +790,9 @@ def load():
     player = ScriptPlayer.from_file('script')
 
     scene.init_scene()
+
+    from .music import play_music
+
     if len(sys.argv) == 2:
         if load_savegame(sys.argv[1]):
             return
@@ -798,6 +801,7 @@ def load():
             return
     player.banner = TitleBanner()
     clock.schedule(player.cancel_banner, 5)
+    play_music('main')
 
 
 def on_mouse_down(pos, button):
@@ -921,10 +925,12 @@ def save_game(solved=True):
     import re
     import os
     import pickle
+    from . import music
     save_data = {
         'inventory': inventory.__getstate__(),
         'player': player._get_state(),
-        'scene': scene._get_state()
+        'scene': scene._get_state(),
+        'music': music.music_name
     }
 
     try:
@@ -977,6 +983,13 @@ def load_savegame(filename=None):
 
     scene._set_state(save_data['scene'])
     inventory.__setstate__(save_data['inventory'])
+    from . import music
+    music_name = save_data.get('music')
+    if music_name:
+        music.play_music(music_name)
+    else:
+        music.play_music('main')
+
     return True
 
 

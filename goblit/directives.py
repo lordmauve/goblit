@@ -4,6 +4,7 @@ from .errors import ScriptError
 from .scene import player, scene, directive
 from .dialogue import DialogueChoice, AllDialogueChoice
 from .inventory import inventory
+from .music import play_music
 
 
 @directive
@@ -128,6 +129,19 @@ def directive_choose_any(directive):
 def directive_choose_all(directive):
     """A dialogue in which the player will go through all options."""
     player.dialogue_choice = AllDialogueChoice(player, directive)
+
+
+@directive
+def directive_music(directive):
+    """Play some music."""
+    if player.fast_forward:
+        return
+    try:
+        play_music(directive.data)
+    except Exception:
+        import traceback
+        print("Couldn't play music", directive.data)
+        traceback.print_exc()
 
 
 @directive

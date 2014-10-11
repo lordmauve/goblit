@@ -621,6 +621,8 @@ PRINCESS AMELIA: Sure!
 [GOBLIT begins summoning; PRINCESS AMELIA begins summoning]
 [pause]
 
+.. music:: mephistopheles
+
 [MEPHISTOPHELES appears]
 [GOBLIT looks upstage; PRINCESS AMELIA looks upstage]
 MEPHISTOPHELES: Oh, yeah, that's better.
@@ -703,6 +705,8 @@ GOBLIT: Um. This is awkward.
 [pause]
 
 .. lose-all::
+
+.. music:: epilogue
 
 Epilogue
 ========
