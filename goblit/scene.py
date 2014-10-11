@@ -731,6 +731,19 @@ class ScriptPlayer:
             raise ScriptError("No such item %s" % directive.data)
 
     @simple_directive
+    def directive_craft(self, directive):
+        """Craft an item from others."""
+        mo = re.match(r'^([A-Z +]+?)\s*->\s*([A-Z ]+)$', directive.data)
+        if not mo:
+            raise ScriptError("Couldn't parse craft directive %r" % directive.data)
+
+        inputs, outputs = ([item.strip() for item in g.split('+')] for g in mo.groups())
+        for i in inputs:
+            inventory.lose(i)
+        for o in outputs:
+            inventory.gain(o)
+
+    @simple_directive
     def directive_lose(self, directive):
         """Lose an item."""
         try:

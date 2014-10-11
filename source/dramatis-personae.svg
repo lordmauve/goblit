@@ -58,9 +58,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="324.29596"
-     inkscape:cy="714.45747"
+     inkscape:zoom="1"
+     inkscape:cx="102.21517"
+     inkscape:cy="521.77559"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -2711,7 +2711,7 @@
     <g
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
-       inkscape:export-filename="/home/mauve/dev/goblit/source/amelia-standing.png"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/amelia-disgust.png"
        transform="translate(233.863,244)"
        id="g9609">
       <g
@@ -2837,5 +2837,12 @@
          id="path9651"
          inkscape:connector-curvature="0" />
     </g>
+    <rect
+       y="583.14862"
+       x="24.04163"
+       height="9.1923885"
+       width="9.1923885"
+       id="rect9733"
+       style="color:#000000;fill:#63ff67;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
   </g>
 </svg>

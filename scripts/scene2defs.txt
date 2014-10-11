@@ -1,0 +1,45 @@
+.. allow:: Look at PAINTING
+
+    GOBLIT: It's Wizard Tox, and he's sitting on a dragon.
+
+.. allow:: Look at YORICK
+
+    [GOBLIT turns to face YORICK]
+    GOBLIT: Hey, man!
+    [pause]
+    GOBLIT: Jeez, just can't get a rise out of this guy.
+
+.. allow:: Look at PARROT
+
+    [GOBLIT moves to NEAR PARROT]
+    GOBLIT: Oo's a pretty boy then?
+    GOBLIT: Remarkable bird, the Norwegian Blue. Beautiful plumage.
+    GOBLIT: Wait a second... this parrot is dead!
+
+    .. rename:: PARROT -> EX PARROT
+
+.. allow:: Take EX PARROT
+
+    GOBLIT: Who wouldn't want to carry a dead parrot around?
+
+.. allow:: Look out of WINDOW
+
+    [GOBLIT looks out of window]
+    GOBLIT: Oh! There are hordes of enemies attacking the castle!
+    GOBLIT: On the plus side, weather looks bright.
+
+.. deny:: Use Y WAND with *
+
+    .. random::
+        GOBLIT: Doesn't seem to do anything.
+        GOBLIT: It fizzed a bit, then nothing.
+        GOBLIT: Am I holding this right?
+
+.. allow:: Use * with *
+    # This is a wildcard, when we don't know how to react.
+
+    .. random::
+
+        GOBLIT: I don't know what you want me to do.
+        GOBLIT: Seriously?
+

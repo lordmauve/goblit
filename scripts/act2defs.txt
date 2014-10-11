@@ -1,0 +1,2 @@
+.. rename:: KETTLE -> COLD KETTLE
+.. rename:: TEA -> COLD TEA

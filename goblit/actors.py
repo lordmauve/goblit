@@ -60,6 +60,14 @@ RALPH = Animation({
         load_sequence('ralph-walking', 4, (-46, -105)), loop),
 })
 
+JOAN = Animation({
+    'default': Sequence([
+        Frame(load_image('joan-standing'), (-22, -98))
+    ], loop),
+    'walking': Sequence(
+        load_sequence('joan-walking', 4, (-46, -105)), loop),
+})
+
 FONT_NAME = 'fonts/RosesareFF0000.ttf'
 FONT = Font(FONT_NAME, 16)
 
@@ -339,3 +347,9 @@ class Ralph(NPC):
     NAME = 'RALPH'
     COLOR = (211, 255, 255)
     SPRITE = RALPH
+
+
+class Joan(NPC):
+    NAME = 'QUEEN JOAN'
+    COLOR = (99, 255, 103)
+    SPRITE = JOAN

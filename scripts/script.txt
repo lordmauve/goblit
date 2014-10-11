@@ -71,9 +71,8 @@ WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 .. allow:: Use SOCK with LOOSE TEA
 
     [GOBLIT moves to TEA PILE]
-    .. lose:: SOCK
+    .. craft:: SOCK -> TEA SOCK
     GOBLIT: Ok, I've filled the sock with tea.
-    .. gain:: TEA SOCK
 
 .. deny:: Use TEA SOCK with LOOSE TEA
 
@@ -85,15 +84,12 @@ WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
 
 .. allow:: Use TEA SOCK with MUG
 
-    .. lose:: TEA SOCK
-    .. lose:: MUG
-    .. gain:: MUG WITH TEA SOCK
+    .. craft:: TEA SOCK + MUG -> MUG WITH TEA SOCK
 
     GOBLIT: Just need some water now.
 
 {Use MUG WITH TEA SOCK with KETTLE}
-.. lose:: MUG WITH TEA SOCK
-.. gain:: CUP OF TEA
+.. craft:: MUG WITH TEA SOCK -> CUP OF TEA
 GOBLIT: I'm not sure this was a good idea.
 
 [PRINCESS AMELIA enters]
@@ -216,6 +212,8 @@ WIZARD TOX: And don't touch anything, catch fire, etc, etc.
 Scene 2
 -------
 
+.. include:: scene2defs
+
 [RALPH enters]
 GOBLIT: Hey Ralph.
 RALPH: Hey, man. You get the job then?
@@ -290,7 +288,7 @@ GOBLIT: ...yes? Yes. Of course.
         QUEEN JOAN: Voltak the Evil and the seven legions of Hell.
         QUEEN JOAN: Usual kind of war.
 
-    .. choice:: Why are we at way?
+    .. choice:: Why are we at war?
 
         GOBLIT: What are we warring over, your majesty?
         QUEEN JOAN: Oh, just our very existence.
@@ -323,7 +321,7 @@ QUEEN JOAN: So... you're now Grand Wizard.
         QUEEN JOAN: You are Wizard Tox's apprentice?
         QUEEN JOAN: How do you think he got the job?
 
-        .. choose-one::
+        .. choose-any::
 
             .. choice:: Knowledge
                 GOBLIT: His knowledge of the many ways of sorcery?
@@ -351,42 +349,54 @@ QUEEN JOAN: Don't you dare leave here until you've got a spell ready.
 
 GOBLIT: Um. Maybe I should read some spells, then.
 
-{Use BOOKCASE}
+{Look at BOOKS}
 
 
 Act 2
 =====
+
+.. include:: act2defs
 
 Scene 1
 -------
 
 GOBLIT: Nothing. Nothing of any use.
 
-[PRINCESS AMELIA enters]
-PRINCESS AMELIA: Your glasses look ridiculous.
-
-.. choose-any::
-    .. choice:: Er... they are for a spell.
-
-        GOBLIT: Oh, these? They are... for... scrying.
-        PRINCESS AMELIA: Scrying?
-        GOBLIT: Scrying... on purple things.
-
-    .. choice:: Not snazzy?
-
-        GOBLIT: You don't think they are kind of snazzy?
-        PRINCESS AMELIA: ...no.
-
-[GOBLIT removes glasses]
-
-# TODO: More dialogue
+# TODO: Scene with Amelia?
 
 Scene 2
 -------
 
+.. allow:: Use COLD TEA with GOBLIT
+
+    .. lose:: COLD TEA
+    .. gain:: MUG
+    GOBLIT: Urgh, that's really awful. Why did I make that?
+
+.. allow:: Use COLD KETTLE with MUG
+
+    .. lose:: MUG
+    .. gain:: MUG OF WATER
+
+.. allow:: Use WILTED FLOWER with MUG OF WATER
+
+    .. lose:: WILTED FLOWER
+    .. gain:: FLOWER
+
+    GOBLIT: That'll be just fine.
 
 [RALPH enters]
-RALPH: Ha ha. I hear you're now Grand Wizard!
+RALPH: You've got mail!
+GOBLIT: I didn't know I had a mailbox.
+[RAPLH gives MAIL]
+
+.. allow:: Use LETTERS with GOBLIT
+
+    .. gain:: LETTER
+    .. gain:: RUBBER BAND
+    .. gain:: JUNK MAIL
+
+RALPH: So, I hear you're now Grand Wizard!
 RALPH: This is priceless.
 RALPH: You're the worst wizard in the kingdom.
 RALPH: You only just passed the basic certification!
@@ -414,38 +424,52 @@ GOBLIT: *blush* What? No.
 RALPH: Anyway, whoever she is, I bet she likes flowers.
 RALPH: And I'm your mate, so I'm sorting you out.
 RALPH: I picked this in the castle gardens.
-[RALPH gives FLOWER]
+[RALPH gives WILTED FLOWER]
 GOBLIT: It's a bit wilted.
 RALPH: It's been in my pocket.
-GOBLIT: I should find it some water.
+RALPH: Find it some water. It'll be fine.
 
-{Use TEA}
-GOBLIT: Urgh, that's really awful. Why did I make that?
-{Use KETTLE with MUG}
-{Use FLOWER with MUG}
-GOBLIT: That'll be just fine.
+{Use LETTER OPENER with LETTER}
+.. lose:: LETTER
+GOBLIT: "Dear Goblit, I know you're trying hard to finish the war."
+GOBLIT: "I remembered reading something in the spellbook I gave you,"
+GOBLIT: "Love A."
+RALPH: Who's 'A'?
 
-RALPH: I was thinking about your war problem.
-RALPH: Why don't you make an invincibility potion?
-RALPH: Give it to the troops.
-RALPH: Anyway, I've got to go. Necromancer Vox is going to teach me to cast FIREBALLS.
-GOBLIT: Awesome.
+.. choose-any::
+    .. choice:: It's Princess Amelia.
+
+        GOBLIT: It's Princess Amelia.
+        RALPH: Yeah, right. Princess Amelia writes to you.
+        RALPH: And I'm Voltak the Evil.
+
+    .. choice:: Some other wizard.
+
+        GOBLIT: A... Distinguished Collegue.
+        RALPH: Why does he love you?
+        GOBLIT: Accident with a love potion.
+        RALPH: Yeah, that makes sense.
+
+GOBLIT: I'd better dig out that spellbook.
+RALPH: You don't want to come play Magician Tennis?
+GOBLIT: What's Magician Tennis?
+RALPH: Like normal tennis, but with magicians.
+[pause]
+GOBLIT: No, I'm good, thanks. I don't have time to play tennis; there's a war on.
+RALPH: Meh. Your loss. Smell ya later.
 [RALPH leaves]
 
-{Use BOOKSHELF}
+{Use LITTLE BOOK OF SPELLS with GOBLIT}
+GOBLIT: Ah, there's a spell in here for an invincibility potion.
+GOBLIT: That will be what Princess Amelia meant.
 
 Scene 3
 -------
 
-GOBLIT: According to the spell, I'm going to need EGGS, FLOUR and MILK.
+GOBLIT: It says that the potion is made with "Blue Eggs and Spam".
 
-{Take EX PARROT}
-{Take FLOWER}
-{Take MUG}
-{Use MUG with CAT}
-{Use CAT MILK with POTION}
 {Use EX PARROT with POTION}
-{Use FLOWER with POTION}
+{Use JUNK MAIL with POTION}
 
 GOBLIT: That looks excellent.
 GOBLIT: I'll go tell Queen Joan.
@@ -471,45 +495,43 @@ GOBLIT: It was meant to be an invincibility potion.
 QUEEN JOAN: GOBLIT, I want results. Don't fail me again!
 [QUEEN JOAN leaves]
 
-[RALPH enters]
-RALPH: You got mail!
-GOBLIT: I didn't know I had a mailbox.
-{RAPLH gives LETTERS}
-{Use LETTERS}
-GOBLIT: "Dear Goblit, I know you're trying hard to finish the war."
-GOBLIT: "I remembered reading something in the spellbook I gave you,..."
-GOBLIT: "something about summoning a demon spirit to fight on our side."
-GOBLIT: "Love A."
-RALPH: Who's 'A'?
-
-.. choice:: It's Princess Amelia.
-
-    GOBLIT: It's Princess Amelia.
-    RALPH: Yeah, right. Princess Amelia writes to you.
-    RALPH: And I'm Voltak the Evil.
-
-.. choice:: Some other wizard.
-
-    GOBLIT: A... Distinguished Collegue.
-    RALPH: Why does he love you?
-    GOBLIT: Accident with a love potion.
-    RALPH: Yeah, that makes sense.
-
-GOBLIT: I'd better dig out that spellbook.
-RALPH: You don't want to come play Magician Tennis?
-GOBLIT: What's Magician Tennis?
-RALPH: Like normal tennis, but with magicians.
-[pause]
-GOBLIT: No, I'm good, thanks. I don't have time to play tennis; there's a war on.
-RALPH: Meh. Your loss. Smell ya later.
-[RALPH leaves]
-
 Scene 2
 -------
 
+
+[PRINCESS AMELIA enters]
+GOBLIT: Hey, the invincibility potion you sent me was a wash-out!
+PRINCESS AMELIA: Invincibility potion?
+GOBLIT: That you mentioned in your letter?
+PRINCESS AMELIA: I was suggesting you summon the daemon lord Mephistopheles.
+PRINCESS AMELIA: He could help us win the war.
+PRINCESS AMELIA: My mother has mentioned him a few times.
+PRINCESS AMELIA: I think he owes us something?
+
+{Use LITTLE BOOK OF SPELLS with GOBLIT}
+
+GOBLIT: Ah, we need to make a pentagram. Candles, crystals, that kind of thing.
+
+.. allow:: Take CANDLESTICK
+
+    GOBLIT: It's a big candle.
+
+.. allow:: Use LETTER OPENER with FIREPLACE
+
+    .. lose:: LETTER OPENER
+    .. gaim:: HOT LETTER OPENER
+    GOBLIT: Great for opening letters on really cold days.
+
+.. allow:: Use HOT LETTER
+
+{Use LETTER OPENER with FIREPLACE}
+{Use HOT LETTER OPENER with CANDLESTICK}
+{Use CANDLES with PENTAGRAM}
+
 {Use Y WAND with RUBBER BAND}
-{Use CATAPULT with CHANDELIER}
-{Take CRYSTALS}
+{Use LETTER OPENER with CATAPULT}
+{Use LOADED CATAPULT with CHANDELIER}
+{Take CHANDELIER}
 {Use CRYSTALS with PENTAGRAM}
 {Use WAND with EMPOWERED PENTAGRAM}
 
@@ -523,7 +545,6 @@ GOBLIT: Er...
 [DOUBLE MEPHISTOPHELES disappears]
 GOBLIT: That didn't work.
 
-[PRINCESS AMELIA enters]
 
 # TODO:
 
@@ -600,3 +621,60 @@ GOBLIT: Um. This is awkward.
 
 {Take CRYSTAL}
 [MEPHISTOPHELES disappears]
+
+
+Epilogue
+========
+
+[PRINCESS AMELIA is gone]
+[QUEEN JOAN is gone]
+[PRINCESS AMELIA enters]
+PRINCESS AMELIA: Hi Goblit. I'm sorry about all the drama.
+.. choose-all::
+    .. choice:: Your father
+        GOBLIT: I'm sorry your father's a demon.
+        PRINCESS AMELIA: He's not the worst kind of demon.
+        PRINCESS AMELIA: Mother tells me he's more of a scallywag.
+        PRINCESS AMELIA: But he's got a good heart.
+        GOBLIT: Will you see him again?
+        PRINCESS AMELIA: Maybe I will.
+
+    .. choice:: At least the war is over.
+        GOBLIT: We ended the war.
+
+
+{Give FLOWER to PRINCESS AMELIA}
+[PRINCESS AMELIA blushes]
+PRINCESS AMELIA: Ah, that's sweet. Thank you, Goblit.
+
+.. choose-any::
+    .. choice:: Game of Wizard Tennis?
+
+        GOBLIT: Would you like to play a game of Magician Tennis?
+        PRINCESS AMELIA: What's Magician Tennis?
+        GOBLIT: Like normal tennis, but with magicians.
+
+    .. choice:: Cup of tea?
+
+        GOBLIT: Would you like a cup of tea?
+        [PRINCESS AMELIA is disgusted]
+
+    .. choice:: Want me to saw you in half?
+
+        GOBLIT: I know a cool trick... want to be sawn in half?
+
+PRINCESS AMELIA: No... no thanks.
+PRINCESS AMELIA: If you like, you can take me for coffee?
+GOBLIT: Ok!
+PRINCESS AMELIA: And then maybe you can show me how to turn a man into a frog?
+GOBLIT: Sure!
+[PRINCESS AMELIA leaves]
+[GOBLIT leaves]
+
+The End
+=======
+
+[RALPH enters]
+RALPH: That's the end. You can go home now.
+RALPH: This game was brought to you by Daniel Pope, for Pyweek 19.
+[RALPH leaves]
