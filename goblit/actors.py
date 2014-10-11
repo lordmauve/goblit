@@ -1,3 +1,4 @@
+from math import sin, pi
 import pygame
 from pygame.font import Font
 from .animations import Sequence, Frame, Animation, loop
@@ -32,7 +33,10 @@ GOBLIT = Animation({
     ] * 30, 'default'),
     'look-back': Sequence([
         Frame(load_image('goblit-back'), (-18, -81))
-    ], loop)
+    ], loop),
+    'summoning': Sequence([
+        Frame(load_image('goblit-summoning'), (-40, -81))
+    ] * 30, 'look-back'),
 })
 
 TOX = Animation({
@@ -64,6 +68,12 @@ AMELIA = Animation({
     ] * 30, 'default'),
     'walking': Sequence(
         load_sequence('amelia-walking', 4, (-46, -105)), loop),
+    'summoning': Sequence([
+        Frame(load_image('amelia-summoning'), (-27, -87))
+    ] * 30, 'look-back'),
+    'look-back': Sequence([
+        Frame(load_image('amelia-look-back'), (-22, -87))
+    ], loop),
 })
 
 RALPH = Animation({
@@ -411,10 +421,32 @@ class Pentagram(Actor, SceneItem):
                     lambda: self.on_given(item)
                 )
             )
+        if self.is_ready:
+            acts.append(
+                Action(
+                    'Use %s with %s' % (item.name, self.NAME)
+                )
+            )
         return acts
 
     def click_actions(self):
-        return [Action('Look at %s' % self.name)]
+        base = [Action('Look at %s' % self.name)]
+        if self.is_ready:
+            return [Action('Take CRYSTALS', self.on_remove_crystals)] + base
+        return base
+
+    def on_remove_crystals(self):
+        from .inventory import inventory
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            def do_give():
+                actor.face(self)
+                self.crystals = False
+                self.update_sprite()
+                inventory.gain('CRYSTALS')
+            actor.move_to(self.floor_pos(), on_move_end=do_give, strict=False)
+        else:
+            inventory.remove(item)
 
     def ready(self):
         from .scene import player
@@ -424,6 +456,14 @@ class Pentagram(Actor, SceneItem):
     candles = False
     crystals = False
     lit = False
+
+    @property
+    def is_ready(self):
+        return self.candles and self.crystals and self.lit
+
+    @is_ready.setter
+    def is_ready(self, v):
+        self.candles = self.crystals = self.lit = v
 
     def get_sprite(self):
         parts = []
@@ -460,6 +500,11 @@ class Pentagram(Actor, SceneItem):
         self.crystals = True
         self.update_sprite()
 
+    @stage_direction('is ready')
+    def make_ready(self):
+        self.is_ready = True
+        self.update_sprite()
+
 
 class NPC(Actor):
     def use_actions(self, item):
@@ -468,7 +513,7 @@ class NPC(Actor):
             Action(
                 'Give %s to %s' % (item.name, self.NAME),
                 lambda: self.on_given(item)
-            )
+            ),
         ]
 
     def click_actions(self):
@@ -557,6 +602,14 @@ class NPC(Actor):
     def angry(self):
         self.sprite.play('angry')
 
+    @stage_direction('begins summoning')
+    def summon(self):
+        self.sprite.play('summoning')
+
+    @stage_direction('looks upstage')
+    def look_back(self):
+        self.sprite.play('look-back')
+
     @stage_direction('gives')
     def give(self, item):
         from .inventory import inventory
@@ -569,7 +622,7 @@ class NPC(Actor):
             self.move_to(actor.floor_pos(), on_move_end=do_give, strict=False)
         else:
             inventory.gain(item)
-            raise SCriptError("GOBLIT is not on set to give to")
+            raise ScriptError("GOBLIT is not on set to give to")
 
 
 class Joan(NPC):
@@ -678,6 +731,15 @@ class Amelia(NPC):
     COLOR = (255, 220, 100)
     SPRITE = AMELIA
 
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        base = super().use_actions(item)
+        if item.name == 'Y WAND':
+            return [
+                Action('Use %s with %s' % (item.name, self.name))
+            ] + base
+        return base
+
 
 class Ralph(NPC):
     NAME = 'RALPH'
@@ -689,3 +751,46 @@ class Joan(NPC):
     NAME = 'QUEEN JOAN'
     COLOR = (99, 255, 103)
     SPRITE = JOAN
+
+
+def make_floating_sequence(imname, xoff, yoff):
+    im = load_image(imname)
+    heights = (round(10 * sin(0.1 * pi * t)) for t in range(20))
+    return Sequence(
+        [Frame(im, (xoff, yoff + h)) for h in heights],
+        loop
+    )
+
+
+class DoubleMephistopheles(NPC):
+    NAME = 'DOUBLE MEPHISTOPHELES'
+    COLOR = (255, 0, 0)
+
+    SPRITE = Animation({
+        'default': make_floating_sequence('double-mephistopheles', -32, -138)
+    })
+
+    @stage_direction('appears')
+    def appear(self):
+        self.set_position()
+
+    @stage_direction('disappears')
+    def disappear(self):
+        self.unspawn()
+
+
+class Mephistopheles(DoubleMephistopheles):
+    NAME = 'MEPHISTOPHELES'
+    COLOR = (255, 0, 0)
+
+    SPRITE = Animation({
+        'default': make_floating_sequence('mephistopheles', -32, -138)
+    })
+
+    @stage_direction('appears')
+    def appear(self):
+        self.set_position()
+
+    @stage_direction('disappears')
+    def disappear(self):
+        self.unspawn()

@@ -30,7 +30,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
      inkscape:cx="571.66852"
-     inkscape:cy="208.21618"
+     inkscape:cy="151.64764"
      inkscape:document-units="px"
      inkscape:current-layer="layer6"
      showgrid="false"
@@ -38,10 +38,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1301"
-     inkscape:window-height="744"
-     inkscape:window-x="65"
-     inkscape:window-y="540"
+     inkscape:window-width="1680"
+     inkscape:window-height="1026"
+     inkscape:window-x="1366"
+     inkscape:window-y="24"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata6224">
@@ -256,5 +256,23 @@
        xlink:href="#g8071"
        y="0"
        x="0" />
+    <use
+       inkscape:label="#use8078"
+       height="427"
+       width="960"
+       transform="translate(440.3772,403.28131)"
+       id="amelia_summoning_position"
+       xlink:href="#g8071"
+       y="0"
+       x="0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g8071"
+       id="goblit_summoning_position"
+       transform="translate(491.28889,403.28131)"
+       width="960"
+       height="427"
+       inkscape:label="#use8078" />
   </g>
 </svg>

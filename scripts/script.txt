@@ -23,94 +23,47 @@
 
 GOBLIT: Ah, we need to make a pentagram. Candles, crystals, that kind of thing.
 
-A little while later...
------------------------
-
-[PENTAGRAM is at CENTRE STAGE]
-
-.. gain:: DEADLY CATAPULT
-
-.. allow:: Take CANDLESTICK
-
-    GOBLIT: It's a big candle.
-
-.. allow:: Use LETTER OPENER with FIREPLACE
-
-    .. craft:: LETTER OPENER -> HOT LETTER OPENER
-    GOBLIT: Great for opening letters on really cold days.
-
-.. allow:: Use HOT LETTER OPENER with CANDLESTICK
-
-    .. craft:: CANDLESTICK -> CANDLES
-    GOBLIT: Like a hot knife through butter.
-    GOBLIT: But with wax instead of the butter.
-
-.. allow:: Use LETTER OPENER with CATAPULT
-
-    .. craft:: LETTER OPENER + CATAPULT -> DEADLY CATAPULT
-    PRINCESS AMELIA: I don't like where this is going...
-
-.. allow:: Use DEADLY CATAPULT with CHANDELIER
-
-    [GOBLIT moves to ENTRANCE]
-    [GOBLIT turns to face CHANDELIER]
-    GOBLIT: I hope this works.
-    .. craft:: DEADLY CATAPULT -> Y WAND
-    [GOBLIT fires catapult]
-    PRINCESS AMELIA: It's amazing to watch you work.
-
-
-.. allow:: Pick up LETTER OPENER
-
-
-.. allow:: Use Y WAND with RUBBER BAND
-
-    .. craft:: Y WAND + RUBBER BAND -> CATAPULT
-    GOBLIT: I could have fun with this.
-
-.. allow:: Put CANDLES onto PENTAGRAM
-
-    [PENTAGRAM has candles]
-
-    .. allow:: Use LETTER with FIREPLACE
-
-        [GOBLIT moves to FIREPLACE]
-        GOBLIT: Needs must, I suppose.
-        .. craft:: LETTER -> BURNING LETTER
-
 .. allow:: Put CRYSTALS onto PENTAGRAM
 
     [PENTAGRAM has crystals]
 
-.. allow:: Take FALLEN CHANDELIER
+.. include:: pentagram-puzzle
 
-    GOBLIT: I'll just keep these.
-    .. craft:: FALLEN CHANDELIER -> CRYSTALS
-
-.. allow:: Light candles with BURNING LETTER
-
-    [PENTAGRAM is lit]
-
-{PENTAGRAM is ready}
-{Use WAND with EMPOWERED PENTAGRAM}
+[PENTAGRAM is at CENTRE STAGE]
+[PENTAGRAM is ready]
+{Use Y WAND with PENTAGRAM}
 
 [DOUBLE MEPHISTOPHELES appears]
 DOUBLE MEPHISTOPHELES: wwhhaatt iiss hhaappppeenniinngg??
 DOUBLE MEPHISTOPHELES: wwhhyy aarree tthheerree ttwwoo ooff yyoouu??
 GOBLIT: Er...
 
-{Take CRYSTAL}
+{Take CRYSTALS}
 
 [DOUBLE MEPHISTOPHELES disappears]
 GOBLIT: That didn't work.
+
+.. deny:: Use Y WAND with PENTAGRAM
+
+    GOBLIT: I'm not trying that again.
+
 
 
 # TODO:
 
 
 {Use Y WAND with PRINCESS AMELIA}
+GOBLIT: Will you help me?
+PRINCESS AMELIA: Sure!
+[GOBLIT moves to GOBLIT SUMMONING POSITION; PRINCESS AMELIA moves to AMELIA SUMMONING POSITION]
+[GOBLIT turns to face PRINCESS AMELIA; PRINCESS AMELIA turns to face GOBLIT]
+[GOBLIT blushes; PRINCESS AMELIA blushes]
+[pause]
+[GOBLIT begins summoning; PRINCESS AMELIA begins summoning]
+[pause]
 
 [MEPHISTOPHELES appears]
+[GOBLIT looks upstage; PRINCESS AMELIA looks upstage]
 MEPHISTOPHELES: Oh, yeah, that's better.
 GOBLIT: Oh Great Mephistopheles! My Queen commands you!
 MEPHISTOPHELES: *sigh* How can I help you lovely folks?
