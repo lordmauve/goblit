@@ -531,12 +531,20 @@ class NPC(Actor):
             pos = obj
         else:
             pos = obj.pos
-        px = self.sprite.pos[0]
-        if px < pos[0]:
-            self.sprite.dir = 'right'
-        elif px > pos[0]:
-            self.sprite.dir = 'left'
-        self.sprite.play('default')
+        target_x, target_y = pos
+        px, py = self.sprite.pos
+        if 'look-back' in self.SPRITE.sequences and target_y < py - 10 and px - 50 < target_x < px + 50:
+            if px < target_x:
+                self.sprite.dir = 'right'
+            elif px > target_x:
+                self.sprite.dir = 'left'
+            self.sprite.play('look-back')
+        else:
+            if px < target_x:
+                self.sprite.dir = 'right'
+            elif px > target_x:
+                self.sprite.dir = 'left'
+            self.sprite.play('default')
 
     @stage_direction('turns back on')
     def face_away(self, obj):
