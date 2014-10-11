@@ -123,11 +123,6 @@ class Scene:
         actor.show(pos, dir, initial)
         self.objects.append(actor)
 
-    def hide_actor(self, name):
-        actor = self.actors[name]
-        actor.hide()
-        self.objects.remove(actor)
-
     def spawn_object_on_floor(self, item, pos):
         """Spawn an object that is not on the floor.
 
@@ -166,7 +161,16 @@ class Scene:
     def unspawn_object(self, obj):
         self.objects.remove(obj)
 
-    unspawn_actor = unspawn_object
+    def unspawn_actor(self, actor):
+        if isinstance(actor, str):
+            actor = self.actors[name]
+        try:
+            self.objects.remove(actor)
+        except ValueError:
+            raise ValueError("%s is not on set" % actor.name)
+        actor.hide()
+
+    hide_actor = unspawn_actor
 
     def rename(self, current_name, new_name):
         """Rename an object or hit area."""
@@ -646,8 +650,17 @@ class ScriptPlayer:
         while self.skippable and not self.waiting and not self.finished:
             self.skip()
 
-    def stop_waiting(self):
-        if self.waiting:
+    def stop_waiting(self, action=None):
+        if action:
+            for s in reversed(self.stack):
+                w = s[2]
+                if w and w[0] == action:
+                    s[2] = None
+                    self.do_next()
+                    return
+            else:
+                print("Not waiting for %s" % action)
+        elif self.waiting:
             self.need_save = self._waiting
             self.waiting = None
             self.do_next()
@@ -701,7 +714,7 @@ class ScriptPlayer:
     def base_do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
         if not actor:
-            if d.verb in ('enters', 'is gone', 'appears', 'is standing by'):
+            if d.verb in ('enters', 'is gone', 'appears', 'is standing by', 'is at'):
                 actor = scene.actors[d.character]
             else:
                 raise ScriptError("Actor %s is not on set" % d.character)

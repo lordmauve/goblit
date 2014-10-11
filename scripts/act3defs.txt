@@ -1,0 +1,7 @@
+.. deny:: Give WILTED FLOWER to PRINCESS AMELIA
+
+    GOBLIT: I need to perk it up a bit.
+
+.. deny:: Give COLD CUP OF TEA to PRINCESS AMELIA
+
+    GOBLIT: I don't think she'd want it after the last time.

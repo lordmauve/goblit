@@ -5,6 +5,7 @@ from .loaders import load_image, load_frames
 from .geom import dist
 from .actions import Action
 from .errors import ScriptError
+from .inventory import SceneItem
 
 
 def load_sequence(base, num, offset):
@@ -49,6 +50,9 @@ AMELIA = Animation({
     'default': Sequence([
         Frame(load_image('amelia-standing'), (-21, -87))
     ], loop),
+    'angry': Sequence([
+        Frame(load_image('amelia-angry'), (-21, -87))
+    ], loop),
     'blushing': Sequence([
         Frame(load_image('amelia-blushing'), (-21, -87))
     ] * 30, 'default'),
@@ -73,6 +77,25 @@ JOAN = Animation({
     ], loop),
     'walking': Sequence(
         load_sequence('joan-walking', 4, (-46, -105)), loop),
+})
+
+
+CAULDRON = Animation({
+    'default': Sequence([
+        Frame(load_image('cauldron'), (-43, -95))
+    ], loop),
+    'full': Sequence([
+        Frame(load_image('cauldron-full'), (-43, -95))
+    ], loop),
+    'bubbling': Sequence([
+        Frame(load_image('cauldron-bubbling'), (-43, -95))
+    ], loop),
+    'blue': Sequence([
+        Frame(load_image('cauldron-bubbling'), (-43, -95))
+    ], loop),
+    'ready': Sequence([
+        Frame(load_image('cauldron-ready'), (-43, -95))
+    ], loop),
 })
 
 FONT_NAME = 'fonts/RosesareFF0000.ttf'
@@ -187,6 +210,7 @@ class Actor(metaclass=ActorMeta):
 
     def hide(self):
         self._last_pos = self.sprite.pos
+        self.visible = False
         self.sprite = None
 
     def _respawn_state(self):
@@ -222,17 +246,22 @@ class Actor(metaclass=ActorMeta):
     def draw(self, screen):
         self.sprite.draw(screen)
 
-    def use_actions(self, item):
-        """Get actions for using item with this object."""
-        return [
-            Action(
-                'Give %s to %s' % (item.name, self.NAME),
-                lambda: self.on_given(item)
-            )
-        ]
+    @stage_direction('is at')
+    def set_position(self, navpoint='CENTRE STAGE'):
+        """Show the character."""
+        if isinstance(navpoint, str):
+            navpoint = self.scene.navpoints[navpoint]
+        if not self.visible:
+            self.scene.spawn_actor(self.NAME, navpoint)
+        else:
+            self.sprite.pos = navpoint
 
-    def click_actions(self):
-        return [Action('Speak to %s' % self.NAME, self.click)]
+    @stage_direction('is gone')
+    def unspawn(self):
+        self.scene.unspawn_actor(self)
+
+    def face(self, *args):
+        pass
 
     def on_given(self, item):
         """This actor is given an object."""
@@ -246,6 +275,82 @@ class Actor(metaclass=ActorMeta):
             actor.move_to(self.floor_pos(), on_move_end=do_give, strict=False)
         else:
             inventory.remove(item)
+
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        return []
+
+    def click_actions(self):
+        return []
+
+
+class Cauldron(Actor, SceneItem):
+    NAME = 'CAULDRON'
+    SPRITE = CAULDRON
+
+    _name = None
+
+    @property
+    def name(self):
+        return self._name or self.NAME
+
+    @name.setter
+    def name(self, v):
+        self._name = v
+
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        return [
+            Action(
+                'Add %s to %s' % (item.name, self.name),
+                lambda: self.on_given(item)
+            )
+        ]
+
+    def click_actions(self):
+        return [Action('Look at %s' % self.name)]
+
+    def ready(self):
+        from .scene import player
+        self.sprite.play('ready')
+        player.stop_waiting('%s is ready' % self.name)
+
+    @stage_direction('is filled')
+    def fill(self):
+        self.sprite.play('full')
+
+    blue = False
+    bubbling = False
+
+    @stage_direction('turns blue')
+    def turn_blue(self):
+        self.blue = True
+        if self.bubbling:
+            self.ready()
+        else:
+            self.sprite.play('blue')
+
+    @stage_direction('starts bubbling')
+    def start_bubbling(self):
+        self.bubbling = True
+        if self.blue:
+            self.ready()
+        else:
+            self.sprite.play('bubbling')
+
+
+class NPC(Actor):
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        return [
+            Action(
+                'Give %s to %s' % (item.name, self.NAME),
+                lambda: self.on_given(item)
+            )
+        ]
+
+    def click_actions(self):
+        return [Action('Speak to %s' % self.NAME, self.click)]
 
     def click(self):
         actor = self.scene.get_actor('GOBLIT')
@@ -266,6 +371,19 @@ class Actor(metaclass=ActorMeta):
             self.sprite.dir = 'left'
         self.sprite.play('default')
 
+    @stage_direction('turns back on')
+    def face_away(self, obj):
+        if isinstance(obj, tuple):
+            pos = obj
+        else:
+            pos = obj.pos
+        px = self.sprite.pos[0]
+        if px < pos[0]:
+            self.sprite.dir = 'left'
+        elif px > pos[0]:
+            self.sprite.dir = 'right'
+        self.sprite.play('angry')
+
     @stage_direction('moves to')
     def move_to(self, pos, on_move_end=None, strict=True, exclusive=False):
         if isinstance(pos, str):
@@ -278,7 +396,8 @@ class Actor(metaclass=ActorMeta):
                 exclusive=exclusive
             )
         else:
-            on_move_end()
+            if on_move_end:
+                on_move_end()
 
     @stage_direction('enters')
     def enter(self, navpoint='ENTRANCE'):
@@ -294,10 +413,6 @@ class Actor(metaclass=ActorMeta):
             if isinstance(navpoint, str):
                 navpoint = self.scene.navpoints[navpoint]
             self.scene.spawn_actor(self.NAME, navpoint)
-
-    @stage_direction('is gone')
-    def unspawn(self):
-        self.scene.unspawn_actor(self)
 
     @stage_direction('leaves')
     def leave(self):
@@ -316,8 +431,28 @@ class Actor(metaclass=ActorMeta):
     def disgust(self):
         self.sprite.play('disgusted')
 
+    @stage_direction('gives')
+    def give(self, item):
+        from .inventory import inventory
+        actor = self.scene.get_actor('GOBLIT')
+        if actor:
+            def do_give():
+                self.face(actor)
+                actor.face(self)
+                inventory.gain(item)
+            self.move_to(actor.floor_pos(), on_move_end=do_give, strict=False)
+        else:
+            inventory.gain(item)
+            raise SCriptError("GOBLIT is not on set to give to")
 
-class Goblit(Actor):
+
+class Joan(NPC):
+    NAME = 'QUEEN JOAN'
+    COLOR = (99, 255, 103)
+    SPRITE = JOAN
+
+
+class Goblit(NPC):
     NAME = 'GOBLIT'
     COLOR = (255, 255, 255)
     SPRITE = GOBLIT
@@ -340,22 +475,6 @@ class Goblit(Actor):
             self.scene.get('WINDOW'),
             on_move_end=lambda: self.sprite.play('look-back')
         )
-
-
-class NPC(Actor):
-    @stage_direction('gives')
-    def give(self, item):
-        from .inventory import inventory
-        actor = self.scene.get_actor('GOBLIT')
-        if actor:
-            def do_give():
-                self.face(actor)
-                actor.face(self)
-                inventory.gain(item)
-            self.move_to(actor.floor_pos(), on_move_end=do_give, strict=False)
-        else:
-            inventory.gain(item)
-            raise SCriptError("GOBLIT is not on set to give to")
 
 
 class Tox(NPC):

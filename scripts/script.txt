@@ -104,23 +104,59 @@ GOBLIT: That will be what Princess Amelia meant.
 Some hours later
 ----------------
 
-.. spawn:: CAULDRON
-[GOBLIT is standing by CENTRE STAGE RIGHT]
+[CAULDRON is at CENTRE STAGE]
+[GOBLIT is at CENTRE STAGE RIGHT]
 GOBLIT: It says that the potion is made with "Blue Eggs and Spam".
 
-{Use EX PARROT with POTION}
-{Use JUNK MAIL with POTION}
+.. allow:: Read LITTLE BOOK OF SPELLS
 
-GOBLIT: That looks excellent.
+    GOBLIT: This potion is made with "Blue Eggs and Spam".
+
+.. deny:: Add * to CAULDRON
+
+    GOBLIT: Wait, first we need some liquid in the cauldron.
+
+.. deny:: Add COLD TEA to CAULDRON
+
+    GOBLIT: The potion doesn't need cold, disgusting tea.
+
+{Add COLD KETTLE to CAULDRON}
+
+[CAULDRON is filled]
+GOBLIT: Right, we're ready to brew.
+
+.. deny:: Add * to CAULDRON
+
+    GOBLIT: I'm not sure the spell calls for that.
+
+.. allow:: Add EX PARROT to CAULDRON
+
+    GOBLIT: It's an Ex- Blue. Nearly the same.
+    [CAULDRON turns blue]
+
+.. allow:: Add JUNK MAIL to CAULDRON
+
+    GOBLIT: Spam, spam, spam, eggs and spam.
+    [CAULDRON starts bubbling]
+    GOBLIT: Ooh, that pissed it off.
+
+{CAULDRON is ready}
+GOBLIT: Blue eggs and spam, Goblit I am!
 GOBLIT: I'll go tell Queen Joan.
 [GOBLIT leaves]
 
 Act 3
 =====
 
-[QUEEN JOAN enters]
+.. include:: act3defs
+
+[CAULDRON is gone]
+[GOBLIT is standing by FIREPLACE]
+[pause]
+[QUEEN JOAN enters; GOBLIT moves to CENTRE STAGE RIGHT]
 QUEEN JOAN: GOBLIT!
 GOBLIT: M-maam?
+[QUEEN JOAN moves to CENTRE STAGE]
 QUEEN JOAN: Why did you give my men an invisibility potion?
 GOBLIT: An invisibility potion?
 QUEEN JOAN: It was a disaster! Our men couldn't see EACH OTHER!
@@ -129,13 +165,29 @@ QUEEN JOAN: Meanwhile, the clever ones took the opportunity and left!
 QUEEN JOAN: It took me ages to press-gang all those men!
 [pause]
 GOBLIT: It was meant to be an invincibility potion.
-QUEEN JOAN: GOBLIT, I want results. Don't fail me again!
-[QUEEN JOAN leaves]
-
-[PRINCESS AMELIA enters]
+QUEEN JOAN: GOBLIT, I want results!
+[QUEEN JOAN moves to CENTRE STAGE LEFT; PRINCESS AMELIA enters; GOBLIT moves to CENTRE STAGE]
+QUEEN JOAN: Hello, daughter. Keep an eye on this idiot wizard for me, will you?
+[QUEEN JOAN leaves; PRINCESS AMELIA moves to CENTRE STAGE LEFT]
 GOBLIT: Hey, the invincibility potion you sent me was a wash-out!
 PRINCESS AMELIA: Invincibility potion?
-GOBLIT: That you mentioned in your letter?
+GOBLIT: That you mentioned in your letter! How could you?
+PRINCESS AMELIA: HEY! It was YOU doing the spell!
+[PRINCESS AMELIA turns back on GOBLIT]
+
+.. deny:: Speak to PRINCESS AMELIA
+
+    [PRINCESS AMELIA turns back on GOBLIT]
+    .. random::
+        PRINCESS AMELIA: I'm too angry to talk to you right now.
+        PRINCESS AMELIA: Go away!
+
+{Give FLOWER to PRINCESS AMELIA}
+[PRINCESS AMELIA turns to face GOBLIT]
+GOBLIT: I'm sorry I yelled. I got this for you.
+[PRINCESS AMELIA blushes]
+PRINCESS AMELIA: Thanks.
+[pause]
 PRINCESS AMELIA: I was suggesting you summon the daemon lord Mephistopheles.
 PRINCESS AMELIA: He could help us win the war.
 PRINCESS AMELIA: My mother has mentioned him a few times.

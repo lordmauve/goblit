@@ -1,4 +1,5 @@
-from .inventory import Item
+from .inventory import Item, SceneItem
+from .animations import Sequence, Frame, Animation, loop
 
 Item('TEA SOCK', 'sock')
 
@@ -15,4 +16,3 @@ def spawn_all(scene):
     scene.spawn_object_near_navpoint('Y WAND', (242, h - 177), 'BOOKCASE BACK')
     scene.spawn_object_near_navpoint('CANDLESTICK', (816, h - 238), 'BESIDE DESK')
     scene.spawn_object_near_navpoint('LETTER OPENER', (781, h - 122), 'BESIDE DESK')
-

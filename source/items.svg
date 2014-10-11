@@ -530,9 +530,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="580.51753"
-     inkscape:cy="538.62745"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="891.05341"
+     inkscape:cy="546.59172"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1454,7 +1454,7 @@
            sodipodi:cy="251.90868"
            sodipodi:rx="4.7287765"
            sodipodi:ry="1.3700194"
-           d="m 440.17397,251.90868 a 4.7287765,1.3700194 0 1 1 -9.45756,0 4.7287765,1.3700194 0 1 1 9.45756,0 z"
+           d="m 440.17397,251.90868 c 0,0.75664 -2.11715,1.37002 -4.72878,1.37002 -2.61163,0 -4.72878,-0.61338 -4.72878,-1.37002 0,-0.75664 2.11715,-1.37002 4.72878,-1.37002 2.61163,0 4.72878,0.61338 4.72878,1.37002 z"
            transform="matrix(1,0,0,1.1555887,-0.47832457,-38.829767)" />
         <path
            style="fill:none;stroke:#868686;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2867,7 +2867,10 @@
     <g
        transform="translate(335.5,211.15906)"
        style="display:inline"
-       id="g11860">
+       id="g11860"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/cauldron.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <g
          transform="translate(-29.75,-15)"
          id="g11731">
@@ -3042,7 +3045,10 @@
     </g>
     <g
        id="g12151"
-       transform="translate(-109.60155,0)">
+       transform="translate(-109.60155,0)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/cauldron-bubbling.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <use
          height="1052.3622"
          width="744.09448"
@@ -3298,6 +3304,126 @@
            x="1067.2609"
            id="tspan12379"
            sodipodi:role="line">X   A</tspan></text>
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/cauldron-full.png"
+       transform="translate(27.39845,0)"
+       id="g5214">
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g11860"
+         id="use5216"
+         transform="translate(225.92062,0)"
+         width="744.09448"
+         height="1052.3622" />
+      <g
+         transform="translate(561.55561,211.15906)"
+         style="display:inline"
+         id="g5218">
+        <path
+           sodipodi:type="arc"
+           style="color:#000000;fill:#c7ffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.62287426000000001;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;opacity:0.39917695"
+           id="path5220"
+           sodipodi:cx="388.5"
+           sodipodi:cy="269.13858"
+           sodipodi:rx="42"
+           sodipodi:ry="3.5"
+           d="m 430.5,269.13858 c 0,1.933 -18.80404,3.5 -42,3.5 -23.19596,0 -42,-1.567 -42,-3.5 0,-1.933 18.80404,-3.5 42,-3.5 23.19596,0 42,1.567 42,3.5 z"
+           transform="matrix(0.64598479,0,0,1.765356,214.53493,-172.75394)" />
+      </g>
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/cauldron-bubbling.png"
+       transform="translate(-109.60155,-122.68303)"
+       id="g5998">
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g11860"
+         id="use6000"
+         transform="translate(225.92062,0)"
+         width="744.09448"
+         height="1052.3622" />
+      <g
+         transform="translate(561.55561,211.15906)"
+         style="display:inline"
+         id="g6002">
+        <path
+           sodipodi:type="arc"
+           style="color:#000000;fill:#c7ffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.62287426;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;opacity:0.39917698000000001"
+           id="path6004"
+           sodipodi:cx="388.5"
+           sodipodi:cy="269.13858"
+           sodipodi:rx="42"
+           sodipodi:ry="3.5"
+           d="m 430.5,269.13858 c 0,1.933 -18.80404,3.5 -42,3.5 -23.19596,0 -42,-1.567 -42,-3.5 0,-1.933 18.80404,-3.5 42,-3.5 23.19596,0 42,1.567 42,3.5 z"
+           transform="matrix(0.64598479,0,0,1.765356,214.53493,-172.75394)" />
+        <path
+           transform="matrix(1.0190748,0,0,0.63560622,-478.95341,-24.342026)"
+           d="m 918.5,514.73718 c 0,1.03554 -1.567,1.875 -3.5,1.875 -1.933,0 -3.5,-0.83946 -3.5,-1.875 0,-1.03553 1.567,-1.875 3.5,-1.875 1.933,0 3.5,0.83947 3.5,1.875 z"
+           sodipodi:ry="1.875"
+           sodipodi:rx="3.5"
+           sodipodi:cy="514.73718"
+           sodipodi:cx="915"
+           id="path6006"
+           style="opacity:0.5;color:#000000;fill:none;stroke:#ffffff;stroke-width:0.68409276;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           sodipodi:type="arc" />
+        <path
+           sodipodi:type="arc"
+           style="opacity:0.5;color:#000000;fill:none;stroke:#ffffff;stroke-width:0.68409276;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="path6008"
+           sodipodi:cx="915"
+           sodipodi:cy="514.73718"
+           sodipodi:rx="3.5"
+           sodipodi:ry="1.875"
+           d="m 918.5,514.73718 c 0,1.03554 -1.567,1.875 -3.5,1.875 -1.933,0 -3.5,-0.83946 -3.5,-1.875 0,-1.03553 1.567,-1.875 3.5,-1.875 1.933,0 3.5,0.83947 3.5,1.875 z"
+           transform="matrix(1.0190748,0,0,0.63560622,-468.70341,-27.592026)" />
+        <path
+           transform="matrix(1.0190748,0,0,0.63560622,-455.20341,-23.592026)"
+           d="m 918.5,514.73718 c 0,1.03554 -1.567,1.875 -3.5,1.875 -1.933,0 -3.5,-0.83946 -3.5,-1.875 0,-1.03553 1.567,-1.875 3.5,-1.875 1.933,0 3.5,0.83947 3.5,1.875 z"
+           sodipodi:ry="1.875"
+           sodipodi:rx="3.5"
+           sodipodi:cy="514.73718"
+           sodipodi:cx="915"
+           id="path6010"
+           style="opacity:0.5;color:#000000;fill:none;stroke:#ffffff;stroke-width:0.68409276;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           sodipodi:type="arc" />
+      </g>
+    </g>
+    <g
+       id="g6029"
+       transform="translate(27.39845,-124.09724)"
+       inkscape:export-filename="/home/mauve/dev/goblit/graphics/cauldron-full.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <use
+         height="1052.3622"
+         width="744.09448"
+         transform="translate(225.92062,0)"
+         id="use6031"
+         xlink:href="#g11860"
+         y="0"
+         x="0" />
+      <g
+         id="g6033"
+         style="display:inline"
+         transform="translate(561.55561,211.15906)">
+        <path
+           transform="matrix(0.64598479,0,0,1.765356,214.53493,-172.75394)"
+           d="m 430.5,269.13858 c 0,1.933 -18.80404,3.5 -42,3.5 -23.19596,0 -42,-1.567 -42,-3.5 0,-1.933 18.80404,-3.5 42,-3.5 23.19596,0 42,1.567 42,3.5 z"
+           sodipodi:ry="3.5"
+           sodipodi:rx="42"
+           sodipodi:cy="269.13858"
+           sodipodi:cx="388.5"
+           id="path6035"
+           style="opacity:1;color:#000000;fill:#1d77a0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.62287426;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           sodipodi:type="arc" />
+      </g>
     </g>
   </g>
 </svg>
