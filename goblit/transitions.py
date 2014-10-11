@@ -1,5 +1,5 @@
 from collections import deque
-from .geom import dist
+from .geom import dist, screen_dist
 
 
 class Move:
@@ -63,4 +63,68 @@ class Move:
             self.actor.sprite.dir = 'right'
         elif tx < x:
             self.actor.sprite.dir = 'left'
+
+
+class MovingSprite:
+    """Move a sprite on the screen."""
+    def __init__(self, sprite, end, v=150, on_move_end=None):
+        self.sprite = sprite
+        self.start = sprite.pos
+        self.end = end
+        self.on_move_end = on_move_end
+        self.t = 0
+        self.total_duration = screen_dist(self.start, end) / v
+
+    @property
+    def pos(self):
+        return self.sprite.pos
+
+    def update(self, dt):
+        self.t += dt
+        frac = self.t / self.total_duration
+        if frac >= 1:
+            if self.on_move_end:
+                self.on_move_end()
+            return
+        x, y = self.start
+        tx, ty = self.end
+
+        x = round(frac * tx + (1 - frac) * x)
+        y = round(frac * ty + (1 - frac) * y)
+        self.sprite.pos = x, y
+
+
+class FallingSprite:
+    """Animate a falling sprite on the screen."""
+    GRAVITY = 500
+
+    def __init__(self, sprite, vx, vy, endy, on_move_end=None):
+        self.sprite = sprite
+        self.vx = vx
+        self.vy = 0
+        self.f_pos = self.sprite.pos
+        self.endy = endy
+        self.on_move_end = on_move_end
+
+    @property
+    def pos(self):
+        return self.sprite.pos
+
+    def update(self, dt):
+        dx = self.vx * dt
+        uv = self.vy
+        self.vy += self.GRAVITY * dt
+
+        x, y = self.f_pos
+        x += dx
+        y += 0.5 * (uv + self.vy) * dt
+
+        y = min(y, self.endy)
+
+        self.f_pos = x, y
+        self.sprite.pos = int(x), int(y)
+
+        if y >= self.endy:
+            if self.on_move_end:
+                self.on_move_end()
 

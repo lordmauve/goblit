@@ -21,6 +21,9 @@ GOBLIT = Animation({
     ], loop),
     'walking': Sequence(
         load_sequence('goblit-walking', 4, (-46, -105)), loop),
+    'catapulting': Sequence([
+        Frame(load_image('goblit-catapulting'), (-32, -83))
+    ] * 10, 'default'),
     'blushing': Sequence([
         Frame(load_image('goblit-blushing'), (-18, -81))
     ] * 30, 'default'),
@@ -96,6 +99,34 @@ CAULDRON = Animation({
     'ready': Sequence([
         Frame(load_image('cauldron-ready'), (-43, -95))
     ], loop),
+})
+
+
+PENTAGRAM_POS = (-128, -66)
+PENTAGRAM = Animation({
+    'default': Sequence([
+        Frame(load_image('pentagram'), PENTAGRAM_POS)
+    ], loop),
+    'crystals': Sequence([
+        Frame(load_image('pentagram-crystals'), PENTAGRAM_POS)
+    ], loop),
+    'candles': Sequence([
+        Frame(load_image('pentagram-candles'), PENTAGRAM_POS)
+    ], loop),
+    'candles-crystals': Sequence([
+        Frame(load_image('pentagram-candles-crystals'), PENTAGRAM_POS)
+    ], loop),
+    'candles-lit': Sequence([
+        Frame(load_image('pentagram-candles-lit'), PENTAGRAM_POS)
+    ], loop),
+    'ready': Sequence([
+        Frame(load_image('pentagram-candles-crystals-lit'), PENTAGRAM_POS)
+    ], loop),
+})
+
+KNIFE = Animation({
+    'default': Sequence(
+        load_sequence('knife', 12, (-18, -12)), loop),
 })
 
 FONT = (Font('fonts/RosesareFF0000.ttf', 16), False)
@@ -353,6 +384,83 @@ class Cauldron(Actor, SceneItem):
             self.sprite.play('bubbling')
 
 
+class Pentagram(Actor, SceneItem):
+    NAME = 'PENTAGRAM'
+    SPRITE = PENTAGRAM
+
+    _name = None
+
+    @property
+    def name(self):
+        return self._name or self.NAME
+
+    @name.setter
+    def name(self, v):
+        self._name = v
+
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        acts = [Action(
+            'Put %s onto %s' % (item.name, self.name),
+            lambda: self.on_given(item)
+        )]
+        if self.candles:
+            acts.append(
+                Action(
+                    'Light candles with %s' % (item.name),
+                    lambda: self.on_given(item)
+                )
+            )
+        return acts
+
+    def click_actions(self):
+        return [Action('Look at %s' % self.name)]
+
+    def ready(self):
+        from .scene import player
+        self.sprite.play('ready')
+        player.stop_waiting('%s is ready' % self.name)
+
+    candles = False
+    crystals = False
+    lit = False
+
+    def get_sprite(self):
+        parts = []
+        if self.candles:
+            parts.append('candles')
+        if self.crystals:
+            parts.append('crystals')
+        if self.lit:
+            parts.append('lit')
+        if len(parts) == 3:
+            return 'ready'
+        elif not parts:
+            return 'default'
+        return '-'.join(parts)
+
+    def update_sprite(self):
+        name = self.get_sprite()
+        self.sprite.play(name)
+        if name == 'ready':
+            self.ready()
+
+    @stage_direction('is lit')
+    def fill(self):
+        self.lit = True
+        self.update_sprite()
+
+    @stage_direction('has candles')
+    def add_candles(self):
+        self.candles = True
+        self.update_sprite()
+
+    @stage_direction('has crystals')
+    def add_crystals(self):
+        self.crystals = True
+        self.update_sprite()
+
+
 class NPC(Actor):
     def use_actions(self, item):
         """Get actions for using item with this object."""
@@ -475,6 +583,8 @@ class Goblit(NPC):
     COLOR = (255, 255, 255)
     SPRITE = GOBLIT
 
+    knife = None
+
     def click_action(self):
         """Clicking on Goblit does nothing."""
         return None
@@ -490,9 +600,61 @@ class Goblit(NPC):
     @stage_direction('looks out of window')
     def look_out_of_window(self):
         self.move_to(
-            self.scene.get('WINDOW'),
+            'WINDOW',
             on_move_end=lambda: self.sprite.play('look-back')
         )
+
+    @stage_direction('fires catapult')
+    def do_fire_catapult(self):
+        self.sprite.dir = 'right'
+        self.sprite.play('catapulting')
+        x, y = self.sprite.pos
+        ox, oy = 44, -76
+        start = (x + ox, y + oy)
+        self.knife = KNIFE.create_instance(start)
+        from .transitions import MovingSprite
+        self.scene.animations.append(
+            MovingSprite(
+                self.knife, (467, 427 - 390),
+                v=500,
+                on_move_end=self.do_snip
+            )
+        )
+        return True  # Block, we have to explicitly do_next on the player
+
+    def do_snip(self):
+        from .transitions import FallingSprite
+        self.scene.set_bg('room-unlit')
+        chandelier = self.scene.get('CHANDELIER')
+        pentagram = self.scene.get('PENTAGRAM')
+        chandelier.z = pentagram.z + 1
+        self.chandelier_drop = FallingSprite(chandelier, 0, 0, pentagram.pos[1] - 40, on_move_end=self.finish_chandelier)
+        self.scene.animations = [
+            FallingSprite(self.knife, 250, 0, self.pos[1], on_move_end=self.finish_snip),
+            self.chandelier_drop
+        ]
+
+    def finish_snip(self):
+        self.scene.spawn_object_on_floor('LETTER OPENER', self.knife.pos)
+        self.knife = None
+        self.scene.animations = []
+        from .scene import player
+        player.do_next()
+
+    def finish_chandelier(self):
+        self.scene.animations.remove(self.chandelier_drop)
+        c = self.scene.get('CHANDELIER')
+        p = self.scene.get('PENTAGRAM')
+        self.scene.unspawn_object(c)
+
+        x, y = c.pos
+        fc = self.scene.spawn_object_near_navpoint('FALLEN CHANDELIER', (x - 20, y + 20), 'CENTRE STAGE')
+        fc.z = p.z + 1
+
+    def draw(self, screen):
+        if self.knife:
+            self.knife.draw(screen)
+        self.sprite.draw(screen)
 
 
 class Tox(NPC):

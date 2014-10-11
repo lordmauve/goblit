@@ -103,8 +103,11 @@ class Scene:
         if errors:
             print("%s errors: game may not be completeable" % errors)
 
+    def set_bg(self, name):
+        self.room_bg = load_image(name)
+
     def load(self):
-        self.room_bg = load_image('room')
+        self.set_bg('room')
         self.room_fg = load_image('foreground')
         self.hitmap = HitMap.from_svg('hit-areas')
         self.navpoints = points_from_svg('navigation-points')
@@ -122,6 +125,7 @@ class Scene:
         actor = self.actors[name]
         actor.show(pos, dir, initial)
         self.objects.append(actor)
+        return actor
 
     def spawn_object_on_floor(self, item, pos):
         """Spawn an object that is not on the floor.
@@ -130,7 +134,9 @@ class Scene:
 
         """
         item = Item.items[item]
-        self.objects.append(FloorItem(self, item, pos))
+        i = FloorItem(self, item, pos)
+        self.objects.append(i)
+        return i
 
     def spawn_object_near_navpoint(self, item, pos, navpoint):
         """Spawn an object.
@@ -143,7 +149,9 @@ class Scene:
         item = Item.items[item]
         if navpoint not in self.navpoints:
             raise KeyError("Unknown navpoint %s" % navpoint)
-        self.objects.append(PointItem(self, item, pos, navpoint))
+        i = PointItem(self, item, pos, navpoint)
+        self.objects.append(i)
+        return i
 
     def spawn_fixed_object_near_navpoint(self, item, pos, navpoint):
         """Spawn an object that can't be picked up.
@@ -721,18 +729,22 @@ class ScriptPlayer:
                 object = scene.get(d.object)
                 if not object:
                     raise ScriptError("%s is not on set" % d.object)
-                handler(actor, object)
+                return handler(actor, object)
         else:
-            handler(actor)
+            return handler(actor)
 
     def do_stagedirection(self, d):
-        self.base_do_stagedirection(d)
-        self.do_next()
+        block = self.base_do_stagedirection(d)
+        if not block:
+            self.do_next()
 
     def do_multistagedirection(self, d):
+        block = False
         for direction in d.directions:
-            self.base_do_stagedirection(direction)
-        self.do_next()
+            b = self.base_do_stagedirection(direction)
+            block = block or b
+        if not block:
+            self.do_next()
 
     def do_directive(self, directive):
         from . import directives

@@ -50,3 +50,7 @@
 .. deny:: Use JUNK MAIL with FIREPLACE
 
     GOBLIT: Nah. There's a drive to recycle more.
+
+.. deny:: Use LETTER with FIREPLACE
+
+    GOBLIT: No! This has sentimental value.
