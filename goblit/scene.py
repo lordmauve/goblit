@@ -558,6 +558,9 @@ class ScriptPlayer:
     def dialogue_choice(self, v):
         self.stack[-1][3] = v
 
+    def break_dialogue(self):
+        self.stack[-2][3] = None
+
     def is_interactive(self):
         """Return True if we're in interactive mode.
         """

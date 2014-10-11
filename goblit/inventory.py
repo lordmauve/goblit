@@ -219,6 +219,10 @@ class Inventory:
             else:
                 self.items.append(item)
 
+    def clear(self):
+        self.selected = None
+        del self.items[:]
+
     def add(self, item):
         """Add an item to the inventory."""
         if item in self.items:

@@ -35,7 +35,7 @@ GOBLIT = Animation({
         Frame(load_image('goblit-back'), (-18, -81))
     ], loop),
     'summoning': Sequence([
-        Frame(load_image('goblit-summoning'), (-40, -81))
+        Frame(load_image('goblit-summoning'), (-48, -81))
     ] * 30, 'look-back'),
 })
 
@@ -69,7 +69,7 @@ AMELIA = Animation({
     'walking': Sequence(
         load_sequence('amelia-walking', 4, (-46, -105)), loop),
     'summoning': Sequence([
-        Frame(load_image('amelia-summoning'), (-27, -87))
+        Frame(load_image('amelia-summoning'), (-21, -87))
     ] * 30, 'look-back'),
     'look-back': Sequence([
         Frame(load_image('amelia-look-back'), (-22, -87))
@@ -206,7 +206,7 @@ class FontBubble:
 class SpeechBubble(FontBubble):
     def __init__(self, text, actor):
         x, y = actor.sprite.pos
-        super().__init__(text, (x, y - 120), actor.COLOR)
+        super().__init__(text, (x, y - actor.HEIGHT), actor.COLOR)
 
 
 ACTORS = []
@@ -242,6 +242,8 @@ def stage_direction(name):
 
 
 class Actor(metaclass=ActorMeta):
+    HEIGHT = 120
+
     def __init__(self, scene):
         self.scene = scene
         self.sprite = None
@@ -773,6 +775,7 @@ def make_floating_sequence(imname, xoff, yoff):
 class DoubleMephistopheles(NPC):
     NAME = 'DOUBLE MEPHISTOPHELES'
     COLOR = (255, 0, 0)
+    HEIGHT = 180
 
     SPRITE = Animation({
         'default': make_floating_sequence('double-mephistopheles', -32, -138)

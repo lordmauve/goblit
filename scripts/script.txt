@@ -68,21 +68,23 @@ MEPHISTOPHELES: Oh, yeah, that's better.
 GOBLIT: Oh Great Mephistopheles! My Queen commands you!
 MEPHISTOPHELES: *sigh* How can I help you lovely folks?
 
-.. choice:: Smite all our enemies.
+.. choose-all::
+    .. choice:: Smite all our enemies.
 
-    GOBLIT: Could you kill every single minion of Voltak the Evil?
-    MEPHISTOPHELES: Jeez! No?! That's genocide. Are you some kind of mad man?
-    MEPHISTOPHELES: Lots of those demons have wives and families!
+        GOBLIT: Could you kill every single minion of Voltak the Evil?
+        MEPHISTOPHELES: Jeez! No?! That's genocide. Are you some kind of mad man?
+        MEPHISTOPHELES: Lots of those demons have wives and families!
 
-.. choice:: Win the war.
+    .. choice:: Win the war.
 
-    GOBLIT: We are sort of at war. Could you help us win it?
-    MEPHISTOPHELES: To be honest, I'd rather not take sides.
+        GOBLIT: We are sort of at war. Could you help us win it?
+        MEPHISTOPHELES: To be honest, I'd rather not take sides.
 
-.. choice:: Stop the war.
+    .. choice:: Stop the war.
 
-    GOBLIT: Bring an end to this terrible war.
-    MEPHISTOPHELES: Oh, sure. No problem.
+        GOBLIT: Bring an end to this terrible war.
+        MEPHISTOPHELES: Oh, sure. No problem.
+        .. break::
 
 MEPHISTOPHELES: Can't stand wars, me.
 MEPHISTOPHELES: Consider it done.
@@ -99,25 +101,26 @@ MEPHISTOPHELES: And we'll it quits! How about it?
 [pause]
 PRINCESS AMELIA: Should I, Goblit?
 
-.. choice:: Yes, that's a great deal!
+.. choose-any::
+    .. choice:: Yes, that's a great deal!
 
-    GOBLIT: We have no choice!
-    PRINCESS AMELIA: I guess...
+        GOBLIT: We have no choice!
+        PRINCESS AMELIA: I guess...
 
-.. choice:: No, I couldn't bear it.
+    .. choice:: No, I couldn't bear it.
 
-    GOBLIT: No! I can't bear it.
-    GOBLIT: Princess... I love you.
-    PRINCESS AMELIA: Aw, that's sweet.
-    MEPHISTOPHELES: Beat it, loser! You want this war stopped or not?
-    GOBLIT: I guess we have no choice.
-
+        GOBLIT: No! I can't bear it.
+        GOBLIT: Princess... I love you.
+        PRINCESS AMELIA: Aw, that's sweet.
+        MEPHISTOPHELES: Beat it, loser! You want this war stopped or not?
+        GOBLIT: I guess we have no choice.
 
 MEPHISTOPHELES: Ok, I guess we have a deal.
 MEPHISTOPHELES: *click* War is over. Grudges forgotten.
 GOBLIT: That was a bit of an anticlimax.
 
 [QUEEN JOAN enters]
+[MEPHISTOPHELES turns to face QUEEN JOAN]
 QUEEN JOAN: What's all this racket?
 QUEEN JOAN: You! How dare you show your face round here!
 MEPHISTOPHELES: Princess Joan?
@@ -131,13 +134,16 @@ QUEEN JOAN: Oh, honey. I'm sorry. I never told you... it was just too hard.
 [pause]
 GOBLIT: Um. This is awkward.
 
-{Take CRYSTAL}
+{Take CRYSTALS}
 [MEPHISTOPHELES disappears]
+[pause]
 
+.. lose-all::
 
 Epilogue
 ========
 
+[PENTAGRAM is gone]
 [PRINCESS AMELIA is gone]
 [QUEEN JOAN is gone]
 [PRINCESS AMELIA enters]
@@ -155,36 +161,37 @@ PRINCESS AMELIA: Hi Goblit. I'm sorry about all the drama.
         GOBLIT: We ended the war.
 
 
-{Give FLOWER to PRINCESS AMELIA}
-[PRINCESS AMELIA blushes]
-PRINCESS AMELIA: Ah, that's sweet. Thank you, Goblit.
+PRINCESS AMELIA: So... what now?
 
-.. choose-any::
-    .. choice:: Game of Wizard Tennis?
+.. choose-all::
+    .. choice:: Game of Magician Tennis?
 
         GOBLIT: Would you like to play a game of Magician Tennis?
         PRINCESS AMELIA: What's Magician Tennis?
         GOBLIT: Like normal tennis, but with magicians.
+        [pause]
+        PRINCESS AMELIA: No.
 
     .. choice:: Cup of tea?
 
         GOBLIT: Would you like a cup of tea?
         [PRINCESS AMELIA is disgusted]
+        PRINCESS AMELIA: No... no thanks.
 
     .. choice:: Want me to saw you in half?
 
         GOBLIT: I know a cool trick... want to be sawn in half?
+        PRINCESS AMELIA: No!
 
-PRINCESS AMELIA: No... no thanks.
 PRINCESS AMELIA: If you like, you can take me for coffee?
 GOBLIT: Ok!
 PRINCESS AMELIA: And then maybe you can show me how to turn a man into a frog?
 GOBLIT: Sure!
-[PRINCESS AMELIA leaves]
-[GOBLIT leaves]
+[GOBLIT moves to ENTRANCE]
+[PRINCESS AMELIA leaves; GOBLIT leaves]
 
 The End
--------
+=======
 
 [RALPH enters]
 RALPH: That's the end. You can go home now.

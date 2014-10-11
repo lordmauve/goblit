@@ -73,6 +73,7 @@ def directive_craft(directive):
     for o in outputs:
         inventory.gain(o)
 
+
 @directive
 def directive_lose(directive):
     """Lose an item."""
@@ -82,6 +83,12 @@ def directive_lose(directive):
         raise ScriptError("No such item %s" % directive.data)
     except ValueError:
         raise ScriptError("Player does not have %s" % directive.data)
+
+
+@directive
+def directive_lose_all(directive):
+    """Clear the inventory."""
+    inventory.clear()
 
 
 def directive_choice(directive):
@@ -121,3 +128,8 @@ def directive_choose_any(directive):
 def directive_choose_all(directive):
     """A dialogue in which the player will go through all options."""
     player.dialogue_choice = AllDialogueChoice(player, directive)
+
+
+@directive
+def directive_break(directive):
+    player.break_dialogue()
