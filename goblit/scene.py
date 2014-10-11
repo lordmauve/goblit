@@ -18,6 +18,7 @@ from .transitions import Move
 from .geom import dist
 from .inventory import inventory
 from .actions import Action
+from .errors import ScriptError
 
 
 TITLE = 'The Legend of Goblit'
@@ -48,9 +49,15 @@ class Scene:
         """Get the named thing."""
         return (
             self.actors.get(name) or
+            self.get_object(name) or
             self.navpoints.get(name) or
             self.hitmap.get_point(name)
         )
+
+    def get_object(self, name):
+        for o in self.objects:
+            if o.name == name:
+                return o
 
     def __getitem__(self, name):
         """Get the named thing."""
@@ -407,10 +414,6 @@ class Cursor:
         cls._set(cls.POINTER)
 
 
-class ScriptError(Exception):
-    """A state problem means a script step can't play."""
-
-
 def simple_directive(func):
     """Shortcut for simple directives.
 
@@ -698,7 +701,7 @@ class ScriptPlayer:
     def do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
         if not actor:
-            if d.verb == 'enters':
+            if d.verb in ('enters', 'is gone', 'appears', 'is standing by'):
                 actor = scene.actors[d.character]
             else:
                 raise ScriptError("Actor %s is not on set" % d.character)
@@ -727,6 +730,14 @@ class ScriptPlayer:
             raise ScriptError("No handler for directive %s" % name)
         handler(directive)
 
+    @simple_directive
+    def directive_destroy(self, directive):
+        """Destroy an object."""
+        name = directive.data
+        obj = scene.get(name)
+        if obj:
+            scene.unspawn_object(obj)
+
     def directive_allow(self, directive):
         scene.object_scripts[directive.data] = directive
         self.do_next()
@@ -742,7 +753,10 @@ class ScriptPlayer:
         mo = re.match(r'^([A-Z ]+?)\s*->\s*([A-Z ]+)$', directive.data)
         if not mo:
             raise ScriptError("Couldn't parse rename directive %r" % directive.data)
-        scene.rename(*mo.groups())
+        try:
+            scene.rename(*mo.groups())
+        except KeyError as e:
+            raise ScriptError("No such object %r" % e.args[0])
 
     @simple_directive
     def directive_gain(self, directive):
@@ -755,7 +769,7 @@ class ScriptPlayer:
     @simple_directive
     def directive_craft(self, directive):
         """Craft an item from others."""
-        mo = re.match(r'^([A-Z +]+?)\s*->\s*([A-Z ]+)$', directive.data)
+        mo = re.match(r'^([A-Z +]+?)\s*->\s*([A-Z +]+)$', directive.data)
         if not mo:
             raise ScriptError(
                 "Couldn't parse craft directive %r" % directive.data)

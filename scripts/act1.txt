@@ -1,0 +1,342 @@
+Act 1
+=====
+
+[GOBLIT enters]
+GOBLIT: Hello?
+WIZARD TOX: hmm?
+[pause]
+GOBLIT: I say, hello? Grand Wizard Tox?
+[WIZARD TOX turns around]
+WIZARD TOX: *sigh* Yes?
+.. choose-all::
+
+    .. choice:: My name is Goblit.
+
+        GOBLIT: I'm Goblit.
+        WIZARD TOX: Goblet? That's a strange name.
+
+    .. choice:: About the assistant role?
+        GOBLIT: I was told you need an assistant?
+        WIZARD TOX: A vacancy has become available, yes.
+
+[GOBLIT moves to CENTRE STAGE]
+GOBLIT: I've got a level one certificate in wizarding...
+GOBLIT: I can do the three basic spells:
+GOBLIT: Turning people into frogs...
+GOBLIT: ...sawing women in half...
+GOBLIT: ...and finding coins in children's ears.
+WIZARD TOX: Hmph. Well, fine.
+WIZARD TOX: Don't touch anything, don't break anything, don't set anything on fire.
+WIZARD TOX: Including yourself.
+WIZARD TOX: Because I had to fill out a lot of forms when the last assistant did that.
+[WIZARD TOX turns back to desk]
+
+{Speak to WIZARD TOX}
+[WIZARD TOX turns around]
+WIZARD TOX: Look, I'm very busy - there's a war on, you know?
+GOBLIT: There is?
+WIZARD TOX: As Grand Master Wizard, I'm basically our only hope.
+WIZARD TOX: Spells to prepare, armies to enchant...
+[WIZARD TOX turns back to desk]
+
+{Speak to WIZARD TOX}
+WIZARD TOX: Fine, fine. You want something to do? Fetch me a cup of tea.
+
+.. allow:: Take KETTLE
+
+    GOBLIT: Ouch! That is HOT.
+    GOBLIT: I think I'm scalded for life.
+
+.. deny:: Give MUG to WIZARD TOX
+
+    GOBLIT: He wants a cup of tea, not an empty cup.
+
+.. allow:: Look at HEAP
+
+    [GOBLIT moves to TEA PILE]
+    GOBLIT: It's loose tea.
+    GOBLIT: Very loose tea.
+
+    .. rename:: HEAP -> LOOSE TEA
+
+    .. allow:: Look at LOOSE TEA
+
+        GOBLIT: I need something to put it in.
+
+.. allow:: Use SOCK with LOOSE TEA
+
+    [GOBLIT moves to TEA PILE]
+    .. craft:: SOCK -> TEA SOCK
+    GOBLIT: Ok, I've filled the sock with tea.
+
+.. deny:: Use TEA SOCK with LOOSE TEA
+
+    GOBLIT: It's already full of tea.
+
+.. deny:: Use MUG with LOOSE TEA
+
+    GOBLIT: That's not really the kind of cup of tea anyone wants.
+
+.. allow:: Use TEA SOCK with MUG
+
+    .. craft:: TEA SOCK + MUG -> MUG WITH TEA SOCK
+
+    GOBLIT: Just need some water now.
+
+{Use MUG WITH TEA SOCK with KETTLE}
+.. craft:: MUG WITH TEA SOCK -> CUP OF TEA
+GOBLIT: I'm not sure this was a good idea.
+
+[PRINCESS AMELIA enters]
+PRINCESS AMELIA: Hello, Wizard Tox!
+PRINCESS AMELIA: ...
+PRINCESS AMELIA: Hello? Who are you?
+
+.. choose-any::
+
+    .. choice:: Just Goblit.
+
+        GOBLIT: I'm Goblit... I...
+        PRINCESS AMELIA: I guess you're the new assistant?
+        GOBLIT: New assistant... yes, yes! I just started.
+        PRINCESS AMELIA: Oh, cool! What an amazing job!
+
+    .. choice:: I'm Apprentice Wizard Goblit!
+
+        GOBLIT: I'm Goblit, the new apprentice wizard here!
+        PRINCESS AMELIA: Oh, wow!
+
+    .. choice:: So far, I just make tea.
+
+        GOBLIT: My name is Goblit. I make the tea around here.
+        PRINCESS AMELIA: Oh, wow!
+        PRINCESS AMELIA: I bet you get to see some wonderful magic spells being cast!
+
+PRINCESS AMELIA: I'm a big fan of magic actually.
+PRINCESS AMELIA: Sometimes I come here to read the magic books.
+PRINCESS AMELIA: But, as a princess, they don't really let me play around with the dark arts!
+GOBLIT: You're... you're Princess Amelia!
+[PRINCESS AMELIA blushes]
+[pause]
+[WIZARD TOX turns around]
+WIZARD TOX: Stop dawdling, boy, and offer the princess some tea!
+[GOBLIT turns to face PRINCESS AMELIA]
+GOBLIT: Um... Would you like a cup of tea?
+PRINCESS AMELIA: Sure!
+[PRINCESS AMELIA moves to DOWN STAGE LEFT]
+
+# FIXME: Should offer some dialogue choices with the people on set at this point
+
+.. allow:: Take Y WAND
+
+    GOBLIT: It's glowing with magical energies. Ready for use!
+
+.. deny:: Give CUP OF TEA to PRINCESS AMELIA
+
+    GOBLIT: Sure... but then what would I give Wizard Tox?
+
+.. deny:: Give CUP OF TEA to WIZARD TOX
+
+    GOBLIT: Sure... but then what would I give Princess Amelia?
+
+{Use Y WAND with CUP OF TEA}
+
+.. gain:: CUP OF TEA
+GOBLIT: So that's what that does.
+
+.. deny:: Give CUP OF TEA to WIZARD TOX
+
+    GOBLIT: Surely I should serve royalty first?
+
+{Give CUP OF TEA to PRINCESS AMELIA}
+
+[PRINCESS AMELIA is disgusted]
+PRINCESS AMELIA: *gack*
+PRINCESS AMELIA: Well, thank you for the thought.
+PRINCESS AMELIA: I can't stay, anyway. I just came to drop this back.
+[PRINCESS AMELIA gives LITTLE BOOK OF SPELLS]
+PRINCESS AMELIA: I guess I'll see you around, Goblit!
+[PRINCESS AMELIA moves to ENTRANCE]
+[PRINCESS AMELIA turns to face WIZARD TOX]
+PRINCESS AMELIA: Goodbye, Wizard Tox!
+WIZARD TOX: Goodbye, princess.
+[PRINCESS AMELIA leaves]
+
+WIZARD TOX: Tsk. I do not approve of women learning magic.
+[WIZARD TOX turns back to desk]
+
+.. choose-any::
+    .. choice:: Why not?
+
+        GOBLIT: Why shouldn't women learn magic?
+        [WIZARD TOX turns around]
+        WIZARD TOX: Their brains are not built for it, you know.
+        WIZARD TOX: They'd end up pulling a frog from behind a child's ear.
+        WIZARD TOX: Or turning a frog into a person! Can you imagine?
+
+    .. choice:: ...that's a bit sexist!
+
+        GOBLIT: ...that's a bit...
+        WIZARD TOX: And what would they even call a female wizard? A wizard-ess? Ha ha ha.
+
+    .. choice:: Why do you let Princess Amelia read magic books?
+
+        GOBLIT: Why do you let Princess Amelia read magic books?
+        [WIZARD TOX turns around]
+        WIZARD TOX: Can you imagine what an earful I'd get from Queen Joan if I didn't?
+        WIZARD TOX: Besides, she won't be able to do real magic without a wand.
+
+[WIZARD TOX turns back to desk]
+
+.. deny:: Speak to WIZARD TOX
+
+    WIZARD TOX: Where's my cup of tea?
+
+{Give CUP OF TEA to WIZARD TOX}
+WIZARD TOX: What would I want tea for? I've got lunch with the Chancellor.
+WIZARD TOX: Is that the time?
+WIZARD TOX: You - stay here.
+[WIZARD TOX leaves]
+[GOBLIT moves to NEAR PARROT]
+
+[WIZARD TOX enters]
+WIZARD TOX: And don't touch anything, catch fire, etc, etc.
+[WIZARD TOX leaves]
+[GOBLIT moves to CENTRE STAGE]
+
+.. include:: scene2defs
+
+[RALPH enters]
+GOBLIT: Hey Ralph.
+RALPH: Hey, man. You get the job then?
+GOBLIT: I think so.
+RALPH: Why are you standing like that?
+GOBLIT: Oh, just doing my best not to catch fire.
+RALPH: Huh?
+GOBLIT: Doesn't matter.
+
+.. choose-all::
+    .. choice:: How are you?
+
+        GOBLIT: How did you interview go?
+        RALPH: Oh, great. Necromancer Vox has put me straight to work.
+        RALPH: I'm researching a spell to summon the Great Lords of Hell.
+        GOBLIT: That sounds... dangerous.
+        RALPH: Oh, sure. But Necromancer Vox likes the big showy spells.
+        RALPH: That's why he's the richest wizard in the kingdom.
+        GOBLIT: Why isn't he helping with the war?
+        RALPH: There's a war?
+        [pause]
+
+    .. choice:: Princess Amelia
+
+        GOBLIT: Do you know anything about women?
+        RALPH: Oh, sure. Women are easy.
+        RALPH: First, you have to wear some snazzy sunglasses.
+        RALPH: Second, you have to act cool.
+        RALPH: Third, you have to give them a gift, like perfume or something.
+        [pause]
+        GOBLIT: You don't know anything about women, do you?
+        RALPH: ...no.
+
+
+[QUEEN JOAN enters]
+[QUEEN JOAN turns to face RALPH]
+QUEEN JOAN: You! Are you Tox's apprentice?
+RALPH: No, I'm Vox's apprentice.
+QUEEN: Get out of here then.
+[QUEEN JOAN turns to face GOBLIT]
+[RALPH leaves]
+QUEEN JOAN: You! Are you Tox's apprentice?
+
+.. choose-any::
+
+    .. choice:: ...sure?
+
+        GOBLIT: ...sure?
+
+    .. choice:: I'm Apprentice Wizard Goblit!
+
+        GOBLIT: I'm Apprentice Wizard Goblit!
+
+    .. choice:: So far, I just make tea.
+
+        GOBLIT: So far, I just make tea.
+
+QUEEN JOAN: Whatever. Listen, I'm afraid Wizard Tox has been eaten.
+GOBLIT: EATEN!?!
+QUEEN JOAN: Yes, by a dragon. Surely you know we're at war?
+GOBLIT: ...yes? Yes. Of course.
+[pause]
+
+.. choose-all::
+    .. choice:: Who with?
+
+        GOBLIT: With whom are we warring, your majesty?
+        QUEEN JOAN: Oh, just some ancient, evil sorceror with hordes of minions.
+        QUEEN JOAN: Voltak the Evil and the seven legions of Hell.
+        QUEEN JOAN: Usual kind of war.
+
+    .. choice:: Why are we at war?
+
+        GOBLIT: What are we warring over, your majesty?
+        QUEEN JOAN: Oh, just our very existence.
+        QUEEN JOAN: We want to exerminate every last one of them.
+        QUEEN JOAN: They want to exerminate every last one of us.
+        QUEEN JOAN: Usual kind of war.
+
+    .. choice:: How's it going?
+
+        GOBLIT: Are we winning, your majesty?
+        QUEEN JOAN: How do you think it's going? Wizard Tox was just eaten by a dragon.
+        QUEEN JOAN: While at lunch with the chancellor.
+        QUEEN JOAN: In THIS CASTLE!
+
+[pause]
+QUEEN JOAN: So... you're now Grand Wizard.
+
+.. choose-all::
+
+    .. choice:: The role
+
+        GOBLIT: What does Grand Wizard entail?
+        QUEEN JOAN: Oh, doing whatever spells need doing.
+        QUEEN JOAN: Appearing on a horse at dawn on the fifth day.
+        QUEEN JOAN: Generally saving the realm.
+
+    .. choice:: Why me?
+
+        GOBLIT: Why me?
+        QUEEN JOAN: You are Wizard Tox's apprentice?
+        QUEEN JOAN: How do you think he got the job?
+
+        .. choose-any::
+
+            .. choice:: Knowledge
+                GOBLIT: His knowledge of the many ways of sorcery?
+
+            .. choice:: Wisdom
+                GOBLIT: His sage wisdom and judgement?
+
+            .. choice:: Expertise
+                GOBLIT: His mastery of the three basic spells?
+
+        QUEEN JOAN: No, his master was skewered by a spike daemon.
+        GOBLIT: *gulp*
+
+    .. choice:: My level of expertise
+
+        GOBLIT: I'm not sure I'm qualified...
+        QUEEN JOAN: Nonsense. You've got a wizarding certificate, level one, right?
+        GOBLIT: Yes...?
+
+QUEEN JOAN: Get to it.
+QUEEN JOAN: I want this war over. Cast a spell or something.
+QUEEN JOAN: Turn them all into frogs, perhaps.
+QUEEN JOAN: Don't you dare leave here until you've got a spell ready.
+[QUEEN JOAN leaves]
+
+GOBLIT: Um. Maybe I should read some spells, then.
+
+{Look at BOOKS}
+

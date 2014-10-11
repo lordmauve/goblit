@@ -1,2 +1,45 @@
-.. rename:: KETTLE -> COLD KETTLE
-.. rename:: TEA -> COLD TEA
+.. craft:: KETTLE -> COLD KETTLE
+.. craft:: CUP OF TEA -> COLD TEA
+
+.. allow:: Take LETTER OPENER
+
+    GOBLIT: It's not that sharp.
+
+.. allow:: Drink COLD TEA
+
+    .. craft:: COLD TEA -> MUG
+    GOBLIT: Urgh, that's really awful. Why did I make that?
+
+.. allow:: Use COLD KETTLE with MUG
+
+    .. craft:: MUG -> MUG OF WATER
+    GOBLIT: Done.
+
+.. allow:: Use WILTED FLOWER with MUG OF WATER
+
+    .. craft:: WILTED FLOWER + MUG OF WATER -> FLOWER
+    GOBLIT: That'll be just fine.
+
+.. allow:: Open MAIL
+
+    .. craft:: MAIL -> ENVELOPE + RUBBER BAND + JUNK MAIL
+
+    GOBLIT: There's a letter.
+    RALPH: Open it, man!
+
+.. allow:: Use LETTER OPENER with ENVELOPE
+
+    .. craft:: ENVELOPE -> LETTER
+
+.. allow:: Read JUNK MAIL
+
+    GOBLIT: "Yo Pizza. Pizza to your door in 30 minutes."
+    GOBLIT: I hate getting these.
+
+.. allow:: Read ENVELOPE
+
+    GOBLIT: It's addressed to me.
+
+.. deny:: Use JUNK MAIL with FIREPLACE
+
+    GOBLIT: Nah. There's a drive to recycle more.

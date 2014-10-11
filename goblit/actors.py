@@ -4,6 +4,7 @@ from .animations import Sequence, Frame, Animation, loop
 from .loaders import load_image, load_frames
 from .geom import dist
 from .actions import Action
+from .errors import ScriptError
 
 
 def load_sequence(base, num, offset):
@@ -273,13 +274,25 @@ class Actor(metaclass=ActorMeta):
         self.scene.spawn_actor(self.NAME, pos)
         self.move_to(navpoint)
 
+    @stage_direction('is standing by')
+    def set_position(self, navpoint='CENTRE STAGE'):
+        """Show the character."""
+        if not self.visible:
+            if isinstance(navpoint, str):
+                navpoint = self.scene.navpoints[navpoint]
+            self.scene.spawn_actor(self.NAME, navpoint)
+
+    @stage_direction('is gone')
+    def unspawn(self):
+        self.scene.unspawn_actor(self)
+
     @stage_direction('leaves')
     def leave(self):
         """Walk out of the room."""
         if self.visible:
             self.move_to(
                 'DOOR',
-                on_move_end=lambda: self.scene.unspawn_actor(self)
+                on_move_end=self.unspawn
             )
 
     @stage_direction('looks out of window')
@@ -299,6 +312,14 @@ class Goblit(Actor):
         """Clicking on Goblit does nothing."""
         return None
 
+    def use_actions(self, item):
+        """Get actions for using item with this object."""
+        return [
+            Action('Open %s' % item.name),
+            Action('Drink %s' % item.name),
+            Action('Read %s' % item.name)
+        ]
+
 
 class NPC(Actor):
     @stage_direction('gives')
@@ -311,6 +332,9 @@ class NPC(Actor):
                 actor.face(self)
                 inventory.gain(item)
             self.move_to(actor.floor_pos(), on_move_end=do_give, strict=False)
+        else:
+            inventory.gain(item)
+            raise SCriptError("GOBLIT is not on set to give to")
 
 
 class Tox(NPC):
