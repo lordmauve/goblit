@@ -414,7 +414,7 @@ class Cursor:
         cls._set(cls.POINTER)
 
 
-def simple_directive(func):
+def directive(func):
     """Shortcut for simple directives.
 
     Define a directive that doesn't take contents and which completes
@@ -422,13 +422,13 @@ def simple_directive(func):
 
     """
     @wraps(func)
-    def _wrapper(self, directive):
+    def _wrapper(directive):
         if directive.contents:
             raise ScriptError(
                 "%s directive may not have contents." % directive.name
             )
-        func(self, directive)
-        self.do_next()
+        func(directive)
+        player.do_next()
     return _wrapper
 
 
@@ -732,118 +732,14 @@ class ScriptPlayer:
         self.do_next()
 
     def do_directive(self, directive):
+        from . import directives
+        directives.player = self
+        directives.scene = scene
         name = directive.name
-        handler = getattr(self, 'directive_' + name.replace('-', '_'), None)
+        handler = getattr(directives, 'directive_' + name.replace('-', '_'), None)
         if not handler:
             raise ScriptError("No handler for directive %s" % name)
         handler(directive)
-
-    @simple_directive
-    def directive_destroy(self, directive):
-        """Destroy an object."""
-        name = directive.data
-        obj = scene.get(name)
-        if obj:
-            scene.unspawn_object(obj)
-
-    def directive_allow(self, directive):
-        scene.object_scripts[directive.data] = directive
-        self.do_next()
-
-    directive_deny = directive_allow
-
-    @simple_directive
-    def directive_unbind(self, directive):
-        scene.object_scripts[directive.data] = None
-
-    @simple_directive
-    def directive_rename(self, directive):
-        mo = re.match(r'^([A-Z ]+?)\s*->\s*([A-Z ]+)$', directive.data)
-        if not mo:
-            raise ScriptError("Couldn't parse rename directive %r" % directive.data)
-        try:
-            scene.rename(*mo.groups())
-        except KeyError as e:
-            raise ScriptError("No such object %r" % e.args[0])
-
-    @simple_directive
-    def directive_gain(self, directive):
-        """Gain an item."""
-        try:
-            inventory.gain(directive.data)
-        except KeyError:
-            raise ScriptError("No such item %s" % directive.data)
-
-    @simple_directive
-    def directive_craft(self, directive):
-        """Craft an item from others."""
-        mo = re.match(r'^([A-Z +]+?)\s*->\s*([A-Z +]+)$', directive.data)
-        if not mo:
-            raise ScriptError(
-                "Couldn't parse craft directive %r" % directive.data)
-
-        inputs, outputs = (
-            [item.strip() for item in g.split('+') if item.strip()]
-            for g in mo.groups()
-        )
-        if not inputs:
-            raise ScriptError(
-                "No inputs for craft directive %r" % directive.data)
-        if not outputs:
-            raise ScriptError(
-                "No outputs for craft directive %r" % directive.data)
-        for i in inputs:
-            try:
-                inventory.lose(i)
-            except ValueError:
-                raise ScriptError("Player does not have %s" % i)
-        for o in outputs:
-            inventory.gain(o)
-
-    @simple_directive
-    def directive_lose(self, directive):
-        """Lose an item."""
-        try:
-            inventory.lose(directive.data)
-        except KeyError:
-            raise ScriptError("No such item %s" % directive.data)
-        except ValueError:
-            raise ScriptError("Player does not have %s" % directive.data)
-
-    def directive_choice(self, directive):
-        """On its own, does nothing. Just plays the contents.
-
-        Useful for grouping.
-
-        """
-        self.play_subscript(directive)
-
-    def directive_random(self, directive):
-        """Pick one contents line at random.
-
-        For example,
-
-        .. random::
-
-            GOBLIT: Maybe I'll say this.
-            GOBLIT: Maybe I'll say that.
-            .. choice::
-                GOBLIT: Maybe I'll say this...
-                GOBLIT: ...then that.
-
-        """
-        s = scripts.Script([random.choice(directive.contents)])
-        self.skippable = True
-        self.play_subscript(s)
-
-    def choose_dialogue(self, script):
-        self.dialogue_choice = None
-
-    def directive_choose_any(self, directive):
-        self.dialogue_choice = DialogueChoice(self, directive)
-
-    def directive_choose_all(self, directive):
-        self.dialogue_choice = AllDialogueChoice(self, directive)
 
 
 # Script player
@@ -1040,7 +936,6 @@ def load_savegame(filename=None):
         print("Failed to restore script player state:", e.args[0])
         return
 
-    from . import inventory as inv
     scene._set_state(save_data['scene'])
     inventory.__setstate__(save_data['inventory'])
     return True
