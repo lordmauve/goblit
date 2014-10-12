@@ -77,16 +77,20 @@ class Scene:
             'object_scripts': scripts
         }
 
-    def _set_state(self, v):
+    def _set_state(self, state):
         self.objects = []
-        for funcname, params in v['objects']:
-            getattr(self, funcname)(**params)
+        for funcname, params in state['objects']:
+            extra = params.pop('__extra__', {})
+            obj = getattr(self, funcname)(**params)
+            if extra:
+                for k, v in extra.items():
+                    setattr(obj, k, v)
 
         all_directives = player.binding_directives_seen()
         directives_by_uid = {d.uid: d for d in all_directives}
         directives_by_action = {d.data: d for d in all_directives}
         errors = 0
-        for is_bound, uid in v['object_scripts']:
+        for is_bound, uid in state['object_scripts']:
             if not is_bound:
                 self.object_scripts[uid] = None
                 continue
@@ -164,7 +168,9 @@ class Scene:
         item = Item.items[item]
         if navpoint not in self.navpoints:
             raise KeyError("Unknown navpoint %s" % navpoint)
-        self.objects.append(FixedItem(self, item, pos, navpoint))
+        i = FixedItem(self, item, pos, navpoint)
+        self.objects.append(i)
+        return i
 
     def unspawn_object(self, obj):
         self.objects.remove(obj)

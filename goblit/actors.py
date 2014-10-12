@@ -276,8 +276,15 @@ class Actor(metaclass=ActorMeta):
             'name': self.name,
             'pos': self.pos,
             'dir': self.sprite.dir,
-            'initial': self.sprite.playing
+            'initial': self.sprite.playing,
+            '__extra__': self._extra_state()
         }
+
+    def _extra_state(self):
+        EXCLUDE = 'sprite', 'scene', 'visible', 'name'
+        return {k: v
+                for k, v in self.__dict__.items()
+                if k not in EXCLUDE and not k.startswith('_')}
 
     @property
     def pos(self):
@@ -717,6 +724,7 @@ class Goblit(NPC):
         x, y = c.pos
         fc = self.scene.spawn_object_near_navpoint('FALLEN CHANDELIER', (x - 20, y + 20), 'CENTRE STAGE')
         fc.z = p.z + 1
+        del self.chandelier_drop
 
     def draw(self, screen):
         if self.knife:
