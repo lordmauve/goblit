@@ -33,10 +33,7 @@ class Move:
     def skip(self):
         """Skip to the end of the move."""
         self.actor.sprite.pos = self.goal
-        self.actor.scene.end_animation(self)
         self.actor.sprite.play('default')
-        if self.on_move_end:
-            self.on_move_end()
 
     def update(self, dt):
         dt += self.last_dt
@@ -48,6 +45,7 @@ class Move:
                 self._next_point()
             else:
                 self.skip()
+                self.on_move_end()
                 return
 
         # Interpolate the last segment

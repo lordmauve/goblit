@@ -14,10 +14,9 @@ from .routing import Grid
 from . import clock
 from . import scripts
 from .inventory import FloorItem, PointItem, Item, FixedItem
-from .transitions import Move
 from .geom import dist
 from .inventory import inventory
-from .actions import Action
+from .actions import Action, MoveTo, Say, Pause, PCMoveTo, Generic
 from .errors import ScriptError
 
 
@@ -26,7 +25,9 @@ ICON = 'data/icon.png'
 
 
 class Scene:
-    def __init__(self):
+    def __init__(self, pc='GOBLIT'):
+        self.pc_name = pc
+        self.clock = clock
         self.room_bg = None
         self.room_fg = None
         self.objects = []
@@ -35,9 +36,13 @@ class Scene:
         self.object_scripts = {}
         self.hitmap = None
         self.bubble = None
-        self.animations = []
+        self.animation = None
         self.grid = None
         self._on_animation_finish = set()
+
+    def get_pc(self):
+        """Get the player character."""
+        return self.get_actor(self.pc_name)
 
     def get_actor(self, name):
         """Get the named actor."""
@@ -123,7 +128,6 @@ class Scene:
         self.spawn_actor('WIZARD TOX', (719, 339), initial='sitting-at-desk')
         from . import items
         items.spawn_all(self)
-        clock.each_tick(self.update)
 
     def spawn_actor(self, name, pos=None, dir='right', initial='default'):
         actor = self.actors[name]
@@ -237,38 +241,67 @@ class Scene:
     def close_bubble(self):
         self.bubble = None
 
-    def move(self, actor, goal, on_move_end=None, strict=True, exclusive=False):
+    def get_route(self, actor, goal, strict=True, exclusive=False):
+        """Get a route for actor to goal."""
         npcs = [a.pos for a in self.actors.values() if a != actor and a.visible]
         if exclusive:
             npcs.append(goal)
-        route = self.grid.route(actor.pos, goal, npcs=npcs, strict=strict)
-        self.animations = [a for a in self.animations if a.actor != actor]
-        self.animations.append(Move(route, actor, on_move_end=on_move_end))
+        return self.grid.route(actor.pos, goal, npcs=npcs, strict=strict)
 
-    def update(self, dt):
-        for a in self.animations:
-            a.update(dt)
+    def move(self, actor, goal, on_move_end=None, strict=True, exclusive=False):
+        """Move an actor to the goal.
 
-    def skip_animation(self):
-        for a in self.animations:
-            a.skip()
+        :param actor: An Actor instance to move.
+        :param goal: An (x, y) tuple to move to.
+        :param strict: If True, disregard NPCs if necessary in order to find
+                       a route.
+        :param exclusive: If True, move the actor close to the goal, but not
+                          onto it.
+        :param on_move_end: A callback to be called when the animation
+                            finishes.
 
-    def end_animation(self, a):
-        self.animations.remove(a)
-        if not self.animations:
-            self._fire_on_animation_finish()
+        """
+        action = MoveTo(actor.NAME, goal, strict=strict, exclusive=exclusive)
+        if on_move_end:
+            action += Generic(on_move_end)
+        self.play(action)
+
+    def play(self, anim):
+        """Play a scene action."""
+        if self.animation:
+            if hasattr(self.animation, 'cancel'):
+                self.animation.cancel()
+            elif hasattr(self.animation, 'skip'):
+                self.animation.skip()
+            else:
+                raise ValueError("Animation already playing.")
+        self.animation = anim
+        anim.on_finish = self._fire_on_animation_finish
+        anim.play(self)
+
+    def skip(self):
+        """Skip the scene action, if it can be skipped.
+
+        No callbacks will be fired.
+
+        """
+        if hasattr(self.animation, 'skip'):
+            self.animation.skip()
+            self.animation = None
+            self._on_animation_finish.clear()
 
     def on_animation_finish(self, callback):
         self._on_animation_finish.add(callback)
 
     def _fire_on_animation_finish(self):
-        for c in self._on_animation_finish:
+        self.animation = None
+        for c in list(self._on_animation_finish):
+            self._on_animation_finish.remove(c)
             try:
                 c()
             except Exception:
                 import traceback
                 traceback.print_exc()
-        self._on_animation_finish.clear()
 
     def draw(self, screen):
         screen.blit(self.room_bg, (0, 0))
@@ -491,7 +524,6 @@ class ScriptPlayer:
     def __init__(self, script, clock):
         self.clock = clock
         self.stack = []
-        self.skippable = False  # If we can safely skip the delay
         self.finished = False
         self.fast_forward = False
         self.need_save = False
@@ -601,7 +633,7 @@ class ScriptPlayer:
         if self.need_save:
             self.save(solved=True)
         self.stack.append([script, 0, None, None])
-        if scene.animations:
+        if scene.animation:
             scene.on_animation_finish(self.next)
         else:
             self.next()
@@ -624,7 +656,6 @@ class ScriptPlayer:
                 self.finished = True
                 self.on_finish()
             return
-        self.skippable = False
         instruction = self.script.contents[self.step]
         self.step += 1
         op = type(instruction).__name__.lower()
@@ -641,18 +672,18 @@ class ScriptPlayer:
             traceback.print_exc()
             self.do_next()
 
+    @property
+    def skippable(self):
+        return hasattr(scene.animation, 'skip')
+
     def skip(self, force=False):
         if force and self.dialogue_choice:
             self.dialogue_choice = None
 
         if force or self.skippable and not self.waiting:
-            self.clock.unschedule(self.cancel_line)
             self.clock.unschedule(self.next)
-            scene.close_bubble()
-            if scene.animations:
-                scene.skip_animation()
-            else:
-                self.next()
+            scene.skip()
+            self.next()
 
     def skip_all(self):
         while self.skippable and not self.waiting and not self.finished:
@@ -674,8 +705,7 @@ class ScriptPlayer:
             self.do_next()
 
     def do_next(self):
-        self.skippable = True
-        if scene.animations:
+        if scene.animation:
             scene.on_animation_finish(self.do_next)
         else:
             self.schedule_next(0)
@@ -683,10 +713,6 @@ class ScriptPlayer:
     def schedule_next(self, delay=2):
         self.clock.unschedule(self.next)  # In case we're already scheduled
         self.clock.schedule(self.next, delay)
-
-    def cancel_line(self):
-        scene.close_bubble()
-        self.next()
 
     def walk_script(self, script=None):
         """Iterate over every directive in the script."""
@@ -706,19 +732,13 @@ class ScriptPlayer:
         prev_directives = self.walk_script(self.script_so_far())
         return [d for d in prev_directives if d.name in ('allow', 'deny')]
 
-    def estimate_line_time(self, line):
-        words = line.split()
-        return 1.0 + 0.2 * len(words) + 0.01 * len(line)
-
     def do_line(self, line):
-        t = self.estimate_line_time(line.line)
-        scene.say(line.character, line.line)
-        self.clock.schedule(self.cancel_line, t)
-        self.skippable = True
+        scene.play(Say(line.character, line.line))
+        self.do_next()
 
     def do_pause(self, pause):
-        self.schedule_next()
-        self.skippable = True
+        scene.play(Pause(2))
+        self.do_next()
 
     def do_action(self, action):
         self._waiting = action.verb, action.uid
@@ -850,12 +870,7 @@ def on_mouse_down(pos, button):
                     if item:
                         inventory.select(item)
                         return
-                goblit = scene.get_actor('GOBLIT')
-                if goblit:
-                    try:
-                        goblit.move_to(pos)
-                    except ValueError:
-                        pass
+                scene.play(PCMoveTo(pos))
             inventory.deselect()
 
 

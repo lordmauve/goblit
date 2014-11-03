@@ -48,6 +48,9 @@ class Action:
     def __init__(self, verb):
         self.verb = verb
 
+    def __repr__(self):
+        return '{%s}' % self.verb
+
 
 def make_stage_direction(instructions):
     directions = []

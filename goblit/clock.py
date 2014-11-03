@@ -74,12 +74,13 @@ class Clock:
     def unschedule(self, callback):
         self.events = [e for e in self.events if e.callback != callback and e.callback is not None]
         heapq.heapify(self.events)
+        self._each_tick = [e for e in self._each_tick if e() != callback]
 
     def each_tick(self, callback):
         self._each_tick.append(mkref(callback))
 
     def _fire_each_tick(self, dt):
-        seen = []
+        dead = [None]
         for r in self._each_tick:
             cb = r()
             if cb is not None:
@@ -88,9 +89,8 @@ class Clock:
                 except Exception:
                     import traceback
                     traceback.print_exc()
-                else:
-                    seen.append(r)
-        self._each_tick = seen
+                    dead.append(cb)
+        self._each_tick = [e for e in self._each_tick if e() not in dead]
 
     def tick(self, dt):
         self.t += dt
