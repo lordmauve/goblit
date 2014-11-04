@@ -117,7 +117,6 @@ def directive_random(directive):
     """
     from .scripts import Script
     s = Script([random.choice(directive.contents)])
-    player.skippable = True
     player.play_subscript(s)
 
 

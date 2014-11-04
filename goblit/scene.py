@@ -16,7 +16,7 @@ from . import scripts
 from .inventory import FloorItem, PointItem, Item, FixedItem
 from .geom import dist
 from .inventory import inventory
-from .actions import Action, MoveTo, Say, Pause, PCMoveTo, Generic
+from .actions import Action, MoveTo, Say, Pause, PCMoveTo, Generic, SceneAction
 from .errors import ScriptError
 
 
@@ -27,6 +27,7 @@ ICON = 'data/icon.png'
 class Scene:
     def __init__(self, pc='GOBLIT'):
         self.pc_name = pc
+        self.banner = None
         self.clock = clock
         self.room_bg = None
         self.room_fg = None
@@ -483,10 +484,15 @@ def directive(func):
     return _wrapper
 
 
-class Banner:
+class Banner(SceneAction):
+    """A banner that displays some text."""
     def __init__(self, title):
         self.title = title
         self._build()
+
+    def duration(self):
+        """The duration for which to show the banner."""
+        return 6 if self.title.level == 1 else 3
 
     def _build(self):
         from .actors import FontBubble, FONT, BIG_FONT
@@ -498,15 +504,31 @@ class Banner:
             outline=0
         )
 
+    def play(self, scene):
+        scene.banner = self
+        self.scene = scene
+        self.scene.clock.schedule(self.finish, self.duration())
+
+    def skip(self):
+        self.scene.banner = None
+
+    def finish(self):
+        self.scene.banner = None
+        self.done()
+
     def draw(self, screen):
         screen.fill((0, 0, 0))
         self.bubble.draw(screen)
 
 
-class TitleBanner:
+class TitleBanner(Banner):
+    """A banner that displays a single image."""
     def __init__(self):
         from .loaders import load_image
         self.surf = load_image('title')
+
+    def duration(self):
+        return 5
 
     def draw(self, screen):
         screen.fill((0, 0, 0))
@@ -619,7 +641,7 @@ class ScriptPlayer:
 
     def is_interactive(self):
         """Return True if we're in interactive mode."""
-        return not self.banner and bool(self.waiting or self.dialogue_choice)
+        return bool(self.waiting or self.dialogue_choice)
 
     def show_inventory(self):
         """Should the inventory panel be drawn.
@@ -732,13 +754,16 @@ class ScriptPlayer:
         prev_directives = self.walk_script(self.script_so_far())
         return [d for d in prev_directives if d.name in ('allow', 'deny')]
 
+    def wait_for(self, scene_action):
+        """Queue a scene action and wait for it to finish before continuing."""
+        scene.play(scene_action)
+        scene.on_animation_finish(self.do_next)
+
     def do_line(self, line):
-        scene.play(Say(line.character, line.line))
-        self.do_next()
+        self.wait_for(Say(line.character, line.line))
 
     def do_pause(self, pause):
-        scene.play(Pause(2))
-        self.do_next()
+        self.wait_for(Pause(2))
 
     def do_action(self, action):
         self._waiting = action.verb, action.uid
@@ -748,12 +773,7 @@ class ScriptPlayer:
         if self.fast_forward:
             self.do_next()
             return
-        self.banner = Banner(title)
-        self.clock.schedule(self.cancel_banner, 6 if title.level == 1 else 3)
-
-    def cancel_banner(self):
-        self.banner = None
-        self.do_next()
+        self.wait_for(Banner(title))
 
     def base_do_stagedirection(self, d):
         actor = scene.get_actor(d.character)
@@ -825,8 +845,7 @@ def load():
     else:
         if load_savegame():
             return
-    player.banner = TitleBanner()
-    clock.schedule(player.cancel_banner, 5)
+    player.wait_for(TitleBanner())
     play_music('main')
 
 
@@ -1015,8 +1034,8 @@ def load_savegame(filename=None):
 
 
 def draw(screen):
-    if player.banner:
-        player.banner.draw(screen)
+    if scene.banner:
+        scene.banner.draw(screen)
         return
     scene.draw(screen)
     if player.dialogue_choice:
