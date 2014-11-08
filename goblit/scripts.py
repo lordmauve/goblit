@@ -12,27 +12,14 @@ COMMENT_RE = re.compile(r'\s*#.*')
 DIRECTIVE_RE = re.compile(r'.. ([\w-]+)::\s*(.+)?')
 LINE_RE = re.compile(r'([A-Z ]+): (.*)')
 
-PAUSE_RE = re.compile(r'\[pause\]')
 ACTION_RE = re.compile(r'{(.*)}')
 DIRECTION = re.compile(r'([A-Z ]+)? +([a-z ]+?)(?: +([A-Z ]+))?\s*$')
 STAGE_DIRECTION_RE = re.compile(
-    r'\[(.+)\]'
-)
-MULTI_STAGE_DIRECTION_RE = re.compile(
-    r'\[([A-Z ]+)? +([a-z ]+?)(?: +([A-Z ]+))?\]'
+    r'\[([^\]]+)\]$'
 )
 INDENT_RE = re.compile(r'^([ \t]+)(.*)')
 UNDERLINE_RE = re.compile(r'^(-+|=+)')
 TITLE_RE = re.compile(r'^(\w.*)')
-GIFT_RE = re.compile(
-    r'\[([A-Z ]+)? +gives +([A-Z ]+)\]'
-)
-
-
-class Pause:
-    """A brief pause."""
-    def __repr__(self):
-        return '[pause]'
 
 
 class Underline:
@@ -52,28 +39,31 @@ class Action:
         return '{%s}' % self.verb
 
 
+class StageDirection:
+    """One or more stage directions - actions that manipulate the scene.
+
+    These will be bound through the stagedirection binding system to
+    StageActions that perform the manipulation. The action returned is set
+    as the 'action' attribute. This lookup happens at script preparation time.
+
+    """
+    def __init__(self, directions):
+        self.directions = directions
+        self.action = None
+
+    def __repr__(self):
+        return '[%s]' % ('; '.join(self.directions))
+
+
 def make_stage_direction(instructions):
-    directions = []
-    for i in instructions.split(';'):
-        i = i.strip()
-        mo = DIRECTION.match(i)
-        if not mo:
-            raise ParseError("Couldn't parse stage direction %r" % i)
-        directions.append(StageDirection(*mo.groups()))
+    directions = [i.strip() for i in instructions.split(';') if i.strip()]
     if len(directions) == 0:
         raise ParseError("No directions found in stage direction.")
-    elif len(directions) == 0:
-        return directions[0]
-    else:
-        return MultiStageDirection(directions)
-
+    return StageDirection(directions)
 
 
 Line = namedtuple('Line', 'character line')
-StageDirection = namedtuple('StageDirection', 'character verb object')
-MultiStageDirection = namedtuple('MultiStageDirection', 'directions')
 Title = namedtuple('SceneTitle', 'name level')
-Gift = namedtuple('Gift', 'character object')
 
 
 class Directive:
@@ -91,11 +81,9 @@ class Directive:
 TOKEN_TYPES = [
     (DIRECTIVE_RE, Directive),
     (LINE_RE, Line),
-    (PAUSE_RE, Pause),
     (ACTION_RE, Action),
     (STAGE_DIRECTION_RE, make_stage_direction),
     (UNDERLINE_RE, Underline),
-    (GIFT_RE, Gift)
 ]
 
 

@@ -2,6 +2,7 @@ from .inventory import Item, SceneItem
 from .animations import Sequence, Frame, Animation, loop
 
 Item('TEA SOCK', 'sock')
+Item('EX PARROT', 'parrot')
 
 
 def spawn_all(scene):

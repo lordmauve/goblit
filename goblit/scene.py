@@ -16,8 +16,12 @@ from . import scripts
 from .inventory import FloorItem, PointItem, Item, FixedItem
 from .geom import dist
 from .inventory import inventory
-from .actions import Action, MoveTo, Say, Pause, PCMoveTo, Generic, SceneAction
+from .actions import Action, MoveTo, Say, Pause, PCMoveTo, Generic, SceneAction, ParallelAction
 from .errors import ScriptError
+from . import binding
+
+# This import actually does the binding - find a better place for it.
+import goblit.stagedirections
 
 
 TITLE = 'The Legend of Goblit'
@@ -56,6 +60,30 @@ class Scene:
         return (
             self.actors.get(name) or
             self.get_object(name) or
+            self.navpoints.get(name) or
+            self.hitmap.get_point(name)
+        )
+
+    def lookup_position(self, name):
+        """Get the screen position for the named thing.
+
+        name may refer to objects, actors, navpoints or regions in
+        the background hitmap.
+
+        Return None if no position was found.
+
+        """
+        if isinstance(name, tuple):
+            # don't panic if we've been passed a position by mistake
+            return name
+        obj = (
+            self.actors.get(name) or
+            self.get_object(name)
+        )
+        if obj:
+            return obj.pos
+
+        return (
             self.navpoints.get(name) or
             self.hitmap.get_point(name)
         )
@@ -273,9 +301,9 @@ class Scene:
             if hasattr(self.animation, 'cancel'):
                 self.animation.cancel()
             elif hasattr(self.animation, 'skip'):
-                self.animation.skip()
+                self.animation.skip(self)
             else:
-                raise ValueError("Animation already playing.")
+                self.animation.on_finish = None
         self.animation = anim
         anim.on_finish = self._fire_on_animation_finish
         anim.play(self)
@@ -287,7 +315,7 @@ class Scene:
 
         """
         if hasattr(self.animation, 'skip'):
-            self.animation.skip()
+            self.animation.skip(self)
             self.animation = None
             self._on_animation_finish.clear()
 
@@ -509,7 +537,7 @@ class Banner(SceneAction):
         self.scene = scene
         self.scene.clock.schedule(self.finish, self.duration())
 
-    def skip(self):
+    def skip(self, scene):
         self.scene.banner = None
 
     def finish(self):
@@ -551,6 +579,24 @@ class ScriptPlayer:
         self.need_save = False
         self.banner = None
         self.stack.append([script, 0, None, None])
+        self.prepare_script()
+
+    def prepare_script(self):
+        """Prepare the script, by binding all stage directions."""
+        for direction in self.walk_stagedirections():
+            actions = []
+            for d in direction.directions:
+                try:
+                    a = binding.lookup_stagedirection(d)
+                except ScriptError:
+                    print("Warning: No stage direction binding for %r" % d)
+            if not actions:
+                direction.action = Pause(0.5)
+            elif len(actions) == 1:
+                direction.action = actions[0]
+            else:
+                direction.action = ParallelAction(*actions)
+        binding.print_suggestions()
 
     def start(self):
         self.next()
@@ -737,13 +783,25 @@ class ScriptPlayer:
         self.clock.schedule(self.next, delay)
 
     def walk_script(self, script=None):
-        """Iterate over every directive in the script."""
+        """Iterate over the script."""
         if script is None:
             script = self.root_script.contents
         for s in script:
+            yield s
             if isinstance(s, scripts.Directive):
-                yield s
                 yield from self.walk_script(s.contents)
+
+    def walk_directives(self, script=None):
+        """Iterate over all directives in the script."""
+        for d in self.walk_script(script):
+            if isinstance(d, scripts.Directive):
+                yield d
+
+    def walk_stagedirections(self, script=None):
+        """Iterate over all stage directions in the script."""
+        for d in self.walk_script(script):
+            if isinstance(d, scripts.StageDirection):
+                yield d
 
     def script_so_far(self):
         pos = self.stack[0][1]
@@ -751,7 +809,7 @@ class ScriptPlayer:
 
     def binding_directives_seen(self):
         """Return a list of event binding directives in the script so far."""
-        prev_directives = self.walk_script(self.script_so_far())
+        prev_directives = self.walk_directives(self.script_so_far())
         return [d for d in prev_directives if d.name in ('allow', 'deny')]
 
     def wait_for(self, scene_action):
@@ -799,18 +857,14 @@ class ScriptPlayer:
         else:
             return handler(actor)
 
-    def do_stagedirection(self, d):
-        block = self.base_do_stagedirection(d)
-        if not block:
-            self.do_next()
+    def do_stagedirection(self, direction):
+        """Execute a stage direction.
 
-    def do_multistagedirection(self, d):
-        block = False
-        for direction in d.directions:
-            b = self.base_do_stagedirection(direction)
-            block = block or b
-        if not block:
-            self.do_next()
+        All stage directions should be prepared at this point so we can just
+        play the action.
+
+        """
+        self.wait_for(direction.action)
 
     def do_directive(self, directive):
         from . import directives
