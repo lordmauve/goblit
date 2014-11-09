@@ -588,10 +588,12 @@ class ScriptPlayer:
             for d in direction.directions:
                 try:
                     a = binding.lookup_stagedirection(d)
-                except ScriptError:
-                    print("Warning: No stage direction binding for %r" % d)
+                except ScriptError as e:
+                    print(e)
+                else:
+                    actions.append(a)
             if not actions:
-                direction.action = Pause(0.5)
+                direction.action = lambda scene: Pause(0.5)
             elif len(actions) == 1:
                 direction.action = actions[0]
             else:
@@ -814,8 +816,8 @@ class ScriptPlayer:
 
     def wait_for(self, scene_action):
         """Queue a scene action and wait for it to finish before continuing."""
-        scene.play(scene_action)
         scene.on_animation_finish(self.do_next)
+        scene.play(scene_action)
 
     def do_line(self, line):
         self.wait_for(Say(line.character, line.line))
@@ -833,30 +835,6 @@ class ScriptPlayer:
             return
         self.wait_for(Banner(title))
 
-    def base_do_stagedirection(self, d):
-        actor = scene.get_actor(d.character)
-        if not actor:
-            if d.verb in ('enters', 'is gone', 'appears', 'is standing by', 'is at'):
-                actor = scene.actors[d.character]
-            else:
-                raise ScriptError("Actor %s is not on set" % d.character)
-        handler = actor.stage_directions.get(d.verb)
-        if not handler:
-            raise ScriptError(
-                "Unsupported stage direction %r for %s" % (d.verb, d.character)
-            )
-        if d.object:
-            if d.verb == 'gives':
-                # Items are given, not scene objects
-                handler(actor, d.object)
-            else:
-                object = scene.get(d.object)
-                if not object:
-                    raise ScriptError("%s is not on set" % d.object)
-                return handler(actor, object)
-        else:
-            return handler(actor)
-
     def do_stagedirection(self, direction):
         """Execute a stage direction.
 
@@ -864,7 +842,11 @@ class ScriptPlayer:
         play the action.
 
         """
-        self.wait_for(direction.action)
+        ret = direction.action(scene)
+        if ret:
+            self.wait_for(ret)
+        else:
+            self.do_next()
 
     def do_directive(self, directive):
         from . import directives

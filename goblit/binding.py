@@ -1,6 +1,7 @@
 """Utilities for binding extra directives and stage directions."""
 import re
 from .errors import ScriptError
+from functools import partial
 from collections import OrderedDict
 
 
@@ -49,11 +50,11 @@ def suggest_binding(expression):
 
     num_args = pattern.count('*')
     if num_args == 1:
-        args = ['character']
+        args = ['scene', 'character']
     elif num_args == 2:
-        args = ['character', 'target']
+        args = ['scene', 'character', 'target']
     else:
-        args = ('noun%d' % i for i in range(1,  + 1))
+        args = ['scene'] + ['noun%d' % i for i in range(1,  + 1)]
 
     code = """
 @stagedirection({pattern!r})
@@ -83,12 +84,13 @@ def lookup_stagedirection(expression):
         if mo:
             params = mo.groups()
             required_args = func.__code__.co_argcount
+            required_args -= 1  # All stage direction bindings take 'scene'
             if required_args != len(params):
                 raise ScriptError(
                     "Incorrect number of patterns for binding of %s (found %d, function takes %d)" % (
                         func.__qualname__, len(params), required_args
                     )
                 )
-            return func(*params)
+            return lambda scene: func(scene, *params)
     suggest_binding(expression)
     raise ScriptError("No stage direction found matching %r." % expression)

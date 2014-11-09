@@ -1,5 +1,5 @@
 from itertools import chain
-from functools import partial
+from functools import partial, wraps
 from .errors import ScriptError
 from .transitions import Move
 
@@ -288,11 +288,42 @@ class Synchronous(SceneAction):
 
     """
     def play(self, scene):
-        self.do(scene)
+        self.safe_do(scene)
         self.done()
 
+    def safe_do(self, scene):
+        """Call do, catching any exceptions.
+
+        Exceptions will be printed, but not raised. This ensures that any
+        failing synchronous actions will not prevent other actions continuing.
+
+        """
+        try:
+            self.do(scene)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+
     def skip(self, scene):
-        self.do(scene)
+        self.safe_do(scene)
+
+
+class GenericSyncAction(Synchronous):
+    """A generic synchronous action that takes a 'do' callable.
+
+    The callable should accept a single 'scene' argument.
+
+    """
+    def __init__(self, do):
+        self.do = do
+
+
+def syncaction(func):
+    """Decorator to convert a function to a chainable action."""
+    @wraps(func)
+    def factory(*args, **kwargs):
+        return GenericSyncAction(lambda scene: func(scene, *args, **kwargs))
+    return factory
 
 
 class Spawn(Synchronous):
@@ -340,7 +371,7 @@ class Play(Synchronous):
         a = scene.get_actor(self.actor_name)
         if not a:
             self.error('{actor_name} is not on set to play "{animation}"')
-        if self.animation not in a.sprite.SEQUENCES:
+        if self.animation not in a.sprite.animation.sequences:
             self.error('{actor_name} does not support animation "{animation}"')
         a.sprite.play(self.animation)
 
@@ -355,7 +386,7 @@ class Face(Synchronous):
         pos = scene.lookup_position(self.target)
         if not pos:
             self.error('No such position/object {target}')
-        a = self.scene.get_actor(self.actor_name)
+        a = scene.get_actor(self.actor_name)
         if not a:
             self.error('{actor_name} is not on set to turn')
         self.do_turn(a, pos)
@@ -376,7 +407,7 @@ class FaceLeft(Synchronous):
         self.actor_name = actor_name
 
     def do(self, scene):
-        a = self.scene.get_actor(self.actor_name)
+        a = scene.get_actor(self.actor_name)
         if not a:
             self.error('{actor_name} is not on set to turn')
         self.do_turn(a)

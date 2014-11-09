@@ -500,7 +500,7 @@ class Pentagram(Actor, SceneItem):
             self.ready()
 
     @stage_direction('is lit')
-    def fill(self):
+    def light_candles(self):
         self.lit = True
         self.update_sprite()
 

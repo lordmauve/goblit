@@ -18,6 +18,10 @@
     GOBLIT: Like a hot knife through butter.
     GOBLIT: But with wax instead of the butter.
 
+    .. deny::  Use LETTER OPENER with FIREPLACE
+
+        GOBLIT: Nah, I've done that already.
+
 .. allow:: Use LETTER OPENER with CATAPULT
 
     .. craft:: LETTER OPENER + CATAPULT -> DEADLY CATAPULT
